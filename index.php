@@ -19,6 +19,30 @@ require_once './inc/dbconn.php';
 $curr_genreID   = !empty($_GET['g']) ? $_GET['g'] : '';
 $curr_companyID = !empty($_GET['c']) ? $_GET['c'] : '';
 
+
+/*
+ * Den default-falls peichern (die 10 neustern Filme)
+ * Er wird nur überschrieben, falls eine andere ID übergeben wurde.
+ */
+$sql_select_movie = $sql_select_moviesNew10;
+
+/*
+ * wenn eine genreID übergeben wurde
+ * nimm die genre sql;
+ */
+if (!empty($curr_genreID)) {
+    $sql_select_movie = $sql_select_moviesByGenreId($curr_genreID);
+}
+
+/*
+ * wenn keine genreID übergeben wurde, und stattdessen eine companyID,
+ * nimm die company sql;
+ */
+elseif (!empty($curr_companyID)) {
+    $sql_select_movie = $sql_select_moviesByCompanyId($curr_companyID);
+}
+
+$handle_movies = mysqli_query($conn, $sql_select_movie);
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +50,7 @@ $curr_companyID = !empty($_GET['c']) ? $_GET['c'] : '';
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <title>###Seitentitel###</title>
+        <title>###Seitentitel###</title><!-- TODO: Dynamisieren -->
         <link rel="stylesheet" href="css/main.css" />
     </head>
 
@@ -59,20 +83,15 @@ $curr_companyID = !empty($_GET['c']) ? $_GET['c'] : '';
 
                 <div class="col-sm-8 col-md-9">
 
-
                     <div class="well well-sm">
-                        ###ANZAHL_FILME_GEFUNDEN###
+                        <?php echo $handle_movies->num_rows; ?> Filme Gefunden
                     </div>
                     
                     <?php
-                    
-                    $handle_moviesNew10 = mysqli_query($conn, $sql_select_moviesNew10);
-                    
-                    while (($data = mysqli_fetch_assoc($handle_moviesNew10)) !== NULL) {
+                    while (($data = mysqli_fetch_assoc($handle_movies)) !== NULL) {
                         include './inc/film.inc.php';
                     }
                     ?>
-
 
                 </div>
 

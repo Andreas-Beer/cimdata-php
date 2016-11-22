@@ -12,8 +12,6 @@
 
 <?php
 
-//echo "GEFUNDEN!!!";
-
 function reorderTitle ($title) {
   $split = explode(', ',$title);
   return $split[1] . ' ' . $split[0];
@@ -41,3 +39,7 @@ function isActive ($p1, $p2, $class = 'active') {
         return '';
    }
 };
+
+function decimalPoint_to_comma ($str) {
+    return str_replace('.', ',', $str);
+}
