@@ -12,6 +12,8 @@
 
 <?php
 
+//echo "GEFUNDEN!!!";
+
 function reorderTitle ($title) {
   $split = explode(', ',$title);
   return $split[1] . ' ' . $split[0];
@@ -31,3 +33,11 @@ function testImage($image, $dir = 'bilder/', $default = 'default2.jpg') {
     return $default;
   }
 }
+
+function isActive ($p1, $p2, $class = 'active') {
+    if ($p1 == $p2) {
+        return $class;
+    } else {
+        return '';
+    } 
+};
