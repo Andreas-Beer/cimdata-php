@@ -14,8 +14,6 @@
 
 include_once 'functions.inc.php';
 
-$curr_genreID = !empty($_GET['g']) ? $_GET['g'] : '';
-
 // Daten abfragen 
 $handle_genreAll = mysqli_query($conn, $sql_select_genres);
 ?>

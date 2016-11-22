@@ -32,7 +32,7 @@ mysqli_set_charset( $conn, "utf8" );
 // Pfade
 
 // SQL - Parts
-const PART_MOVIE_SELECT = "
+const PART_MOVIES_SELECT = "
     SELECT
         f.id,
         f.Titel,
@@ -42,8 +42,8 @@ const PART_MOVIE_SELECT = "
         f.Bild,
         f.Preis,
         fg.Name AS Filmgesellschaft,
-        g.Name AS Genre
-    FROM film AS f
+        g.Name  AS Genre
+    FROM film   AS f
     JOIN filmgesellschaft AS fg ON fg.id = f.Filmgesellschaft_id
     JOIN genre AS g ON g.id = f.Genre_id";
 
@@ -59,16 +59,19 @@ $sql_select_companies = "
     FROM filmgesellschaft
     ORDER BY Name;";
 
-$sql_select_movieByCompanyId = function ($companyId) {
-    
-    return PART_MOVIE_SELECT . "
+$sql_select_moviesByCompanyId = function ($companyId) {
+    return PART_MOVIES_SELECT . "
         WHERE fg.id = $companyId AND f.Freigabe = 1
         ORDER BY f.Titel;";
 };
 
-$sql_select_movieByGenreId = function ($genreId) {
-    
-    return PART_MOVIE_SELECT . "
+$sql_select_moviesByGenreId = function ($genreId) {
+    return PART_MOVIES_SELECT . "
         WHERE g.id = $genreId AND f.Freigabe = 1
         ORDER BY f.Titel;";
 };
+
+$sql_select_moviesNew10 = PART_MOVIES_SELECT . "
+    WHERE f.Freigabe = 1
+    ORDER BY f.Erscheinungsdatum DESC
+    LIMIT 10;";

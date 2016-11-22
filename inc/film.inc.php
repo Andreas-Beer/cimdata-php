@@ -9,12 +9,26 @@
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
 ?>
+<?php
+
+// Übername der Variablen zum weiteren Vararbeiten.
+$title    = reorderTitle($data['Titel']);
+$date     = mysqldate_to_german($data['Erscheinungsdatum']);
+$duration = $data['DauerInMinuten'];
+$genre    = $data['Genre'];
+$company  = $data['Filmgesellschaft'];
+
+?>
 
 <article class="well well-lg film row">
 
-    <div class="container">
-        <h2>###TITEL###<br /><small>###DATUM###></small></h2>
+    <div class="col-md-12">
+        <h2>
+            <?php echo $title ?><br />
+            <small><?php echo $date; ?></small>
+        </h2>
     </div>
+    
     <div class="col-xs-4 col-lg-4  center-block text-center">
         <img class="thumbnail center-block img-responsive" src="bilder/default.jpg" alt="##ALT##" title="##TITLE##"/>
         <h3 class="text-center">Preis: 35,95 €</h3>
@@ -22,9 +36,9 @@
 
     <div class="data col-xs-8 col-lg-8">
         <ul>
-            <li>###DAUER###</li>
-            <li>###GENRE###</li>
-            <li>###FILMGESELLSCHAFT###</li>
+            <li><?php echo $duration; ?> min</li>
+            <li><?php echo $genre; ?></li>
+            <li><?php echo $company; ?></li>
         </ul>
         <p>
             ###Beschreibung...###

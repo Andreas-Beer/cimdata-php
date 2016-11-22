@@ -13,8 +13,6 @@
 <?php
 include_once 'functions.inc.php';
 
-$curr_companyID = !empty($_GET['c']) ? $_GET['c'] : '';
-
 // Daten abfragen 
 $handle_companiesAll = mysqli_query($conn, $sql_select_companies);
 ?>

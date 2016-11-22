@@ -15,6 +15,10 @@
 // Die Datenbankverbindung einbinden
 require_once './inc/dbconn.php';
 
+// Empfangen der Variablen.
+$curr_genreID   = !empty($_GET['g']) ? $_GET['g'] : '';
+$curr_companyID = !empty($_GET['c']) ? $_GET['c'] : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -59,8 +63,16 @@ require_once './inc/dbconn.php';
                     <div class="well well-sm">
                         ###ANZAHL_FILME_GEFUNDEN###
                     </div>
+                    
+                    <?php
+                    
+                    $handle_moviesNew10 = mysqli_query($conn, $sql_select_moviesNew10);
+                    
+                    while (($data = mysqli_fetch_assoc($handle_moviesNew10)) !== NULL) {
+                        include './inc/film.inc.php';
+                    }
+                    ?>
 
-                    <?php include './inc/film.inc.php'; ?>
 
                 </div>
 
