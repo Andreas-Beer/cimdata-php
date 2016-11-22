@@ -36,3 +36,8 @@ $sql_select_genres = "
     SELECT *
     FROM genre
     ORDER BY Name;";
+
+$sql_select_companies = "
+    SELECT *
+    FROM filmgesellschaft
+    ORDER BY Name;";

@@ -38,7 +38,7 @@ $handle_genreAll = mysqli_query($conn, $sql_select_genres);
                   
                   $href = $_SERVER['PHP_SELF'] . '?g=' . $data['id'];
                   
-                  echo '<li class="' . isActive($data['id'], $curr_genreID) . '">';
+                  echo '<li class="' . isActive($data['id'], $curr_genreID) .  '">';
                   echo '<a href = "' . $href .'">' . $data['Name'] . '</a>';
                   echo '</li>';
                   

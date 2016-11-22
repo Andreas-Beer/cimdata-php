@@ -37,30 +37,7 @@ require_once './inc/dbconn.php';
 
                 <div class="col-sm-4 col-md-3 sidebar">
 
-                    <!-- Navigation Filmgesellschaft -->
-                    <nav>
-
-                        <!-- Suche -->
-                        <form class="navbar-form" role="search">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Suchen&hellip;">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-
-                        <ul class="nav nav-pills nav-stacked">
-
-                            <li class="active"><a href="#">###FILMGESELLSCHAFT1###</a></li>
-                            <li class="active"><a href="#">###FILMGESELLSCHAFT2###</a></li>
-                            <li class="active"><a href="#">###FILMGESELLSCHAFT3###</a></li>
-
-                        </ul>
-
-                    </nav>
+                    <?php include './inc/company.inc.php'; ?>
 
                     <!-- Container für weitere Links -->
 <!--                    <aside class="links panel panel-default hidden-xs">

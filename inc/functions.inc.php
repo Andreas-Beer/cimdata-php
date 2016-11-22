@@ -39,5 +39,5 @@ function isActive ($p1, $p2, $class = 'active') {
         return $class;
     } else {
         return '';
-    } 
+   }
 };
