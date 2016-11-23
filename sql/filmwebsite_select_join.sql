@@ -4,6 +4,12 @@ SELECT * FROM filmgesellschaft ORDER BY Name;
 # Alle Genres
 SELECT * FROM genre ORDER BY Name;
 
+# Genre anhand der ID
+SELECT name FROM genre WHERE id = 1;
+
+# Filmgesellschaft anhand der ID
+SELECT name FROM Filmgesellschaft WHERE id = 1;
+
 # Alle Filme zu einer Filmgesellschaft(z.B. Warner)
 SELECT f.id, f.Titel, f.Beschreibung, f.DauerInMinuten, f.Erscheinungsdatum, f.Bild, f.Preis, f.Freigabe, fg.Name Filmgesellschaft, g.Name Genre
 FROM film AS f

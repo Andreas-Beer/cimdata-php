@@ -75,3 +75,17 @@ $sql_select_moviesNew10 = PART_MOVIES_SELECT . "
     WHERE f.Freigabe = 1
     ORDER BY f.Erscheinungsdatum DESC
     LIMIT 10;";
+
+$sql_select_genreByID = function ($genreId) {
+    return "
+        SELECT name
+        FROM genre
+        WHERE id = $genreId;";
+};
+
+$sql_select_companyByID = function ($companyId) {
+    return "
+        SELECT name
+        FROM filmgesellschaft
+        WHERE id = $companyId;";
+};

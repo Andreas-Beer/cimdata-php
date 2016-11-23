@@ -11,21 +11,33 @@
 ?>
 
 <?php
+// die Konfigurationsdatei einbinden.
+include_once './inc/config.inc.php';
 
-function getTitle($currType = '') {
+// Die Datenbankverbindung einbinden.
+require_once './inc/dbconn.php';
+?>
+
+<?php
+
+function getTitle($currType = '', $currSubType = '') {
     
     switch ($currType) {
-        case 'c': return 'Company';
-        case 'g': return 'Genre';
-        default : return 'Default';
+        case 'c': return MSG_TITLE_COMPANY . ' ' . $currSubType;
+        case 'g': return MSG_TITLE_GENRE   . ' ' . $currSubType;
+        default : return MSG_TITLE_DEFAULT;
     }
 }
 
-// Die Datenbankverbindung einbinden
-require_once './inc/dbconn.php';
+function getSubtype ($currType, $currID = 0) {
+    
+        
+    
+}
 
 // Den Defaultwert der Variablen setzen.
 $siteType       = '';
+$subtype        = '';
 $curr_genreID   = '';
 $curr_companyID = '';
 
