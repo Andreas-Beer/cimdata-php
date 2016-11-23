@@ -19,7 +19,7 @@ $handle_genreAll = mysqli_query($conn, $sql_select_genres);
 
 <header>
     <div class="container">
-        <h1>###SEITENTITEL###</h1><!-- TODO: Dynamisieren -->
+        <h1><?php echo getTitle($siteType); ?></h1><!-- TODO: Dynamisieren -->
     </div>
 
     <!-- ### Navigation Genre ### -->

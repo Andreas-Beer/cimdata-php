@@ -12,16 +12,40 @@
 
 <?php
 
+function getTitle($currType = '') {
+    
+    switch ($currType) {
+        case 'c': return 'Company';
+        case 'g': return 'Genre';
+        default : return 'Default';
+    }
+}
+
 // Die Datenbankverbindung einbinden
 require_once './inc/dbconn.php';
 
-// Empfangen der Variablen.
-$curr_genreID   = !empty($_GET['g']) ? $_GET['g'] : '';
-$curr_companyID = !empty($_GET['c']) ? $_GET['c'] : '';
+// Den Defaultwert der Variablen setzen.
+$siteType       = '';
+$curr_genreID   = '';
+$curr_companyID = '';
+
+/*
+ * Empfangen und überprüfen der Variablen.
+ */
+
+if (!empty($_GET['g'])) {
+  $siteType = 'g';  
+  $curr_genreID = $_GET['g'];
+}
+
+if (!empty($_GET['c'])) {
+  $siteType = 'c';  
+  $curr_companyID = $_GET['c'];
+}
 
 
 /*
- * Den default-falls peichern (die 10 neustern Filme)
+ * Den default-fall speichern (die 10 neustern Filme)
  * Er wird nur überschrieben, falls eine andere ID übergeben wurde.
  */
 $sql_select_movie = $sql_select_moviesNew10;
@@ -50,7 +74,7 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <title>###Seitentitel###</title><!-- TODO: Dynamisieren -->
+        <title><?php echo getTitle($siteType); ?></title><!-- TODO: Dynamisieren -->
         <link rel="stylesheet" href="css/main.css" />
     </head>
 
