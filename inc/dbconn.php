@@ -49,6 +49,11 @@ const PART_MOVIES_SELECT = "
 
 
 // SQL - Queries
+$sql_select_films = "
+    SELECT *
+    FROM film
+    ORDER BY Titel;";
+
 $sql_select_genres = "
     SELECT *
     FROM genre

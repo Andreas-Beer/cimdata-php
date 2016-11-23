@@ -10,6 +10,14 @@
 # Version: Basisversion für Schulungszwecke
 ?>
 
+<?php
+
+// Variablen übernhemen
+// Vorläufig über get
+$isLogedIn = $_GET['login'];
+
+?>
+
 <nav class="adminbar navbar navbar-default navbar-fixed-top">
 
   <!-- Überschrift -->
@@ -17,12 +25,11 @@
     <span class="navbar-brand">Adminbar</span>
   </div>
 
-
-
   <form action="###ZIEL1###" method="post" class="navbar-form">
 
-    <!-- NICHT angemeldet -->
-
+    <!-- NICHT angemeldet ABER Admin -->
+    <?php if(!$isLogedIn): ?>
+    
     <!-- benutzer -->
     <div class="input-group">
       <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
@@ -40,11 +47,13 @@
 
 
     <!-- angemeldet -->
-
+    <?php elseif ($isLogedIn): ?>
+    
     <button type="submit" formaction="###ZIEL2###" name="website" class="btn btn-default">Zur Webseite</button>
     <button type="submit" name="dashboard" class="btn btn-default">Dashboard</button>
     <button type="submit" formaction="###ZIEL3###" name="logout" class="btn btn-default navbar-right">Logout</button>
 
+    <?php endif; ?>
 
   </form>
 

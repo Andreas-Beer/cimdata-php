@@ -107,7 +107,11 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
 
     <body>
 
-        <!-- ###ADMINBAR### -->
+        <?php
+        if (isset($_GET['adminbar'])) {
+            include './admin/inc/adminbar.inc.php';
+        }
+        ?>
 
         <?php include './inc/header.inc.php'; ?>
 

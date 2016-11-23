@@ -19,7 +19,7 @@
     </head>
     <body>
 
-        <?php include './inc/adminbar.inc.php'; ?>
+        <?php //include './inc/adminbar.inc.php'; ?>
 
         <div class="container film-list">
 

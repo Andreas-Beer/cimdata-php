@@ -10,6 +10,10 @@
 
 <?php
 
+//echo '<pre style="text-align: left;">';
+//var_dump(is_file(__DIR__ . '/../index.php'));
+//echo '</pre>';
+
 /*
  * Nachrichten / Meldungen
  * Prefix: MSG ('message')
