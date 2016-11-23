@@ -29,7 +29,7 @@ $date        = '';
 $duration    = '';
 $price       = ''; 
 $image       = '';
-$visible     = '';
+$visible     = '1';
 
 $msg_btn  = 'Speichern';
 
@@ -161,8 +161,8 @@ if ($id) {
             </div>
 
             <div class="form-group">
-              <input class="form_checkbox" type="checkbox" name="vi" id="freigabe" value="1">
-              <label class="form_label_checkbox" for="freigabe">Freigabe</label>
+              <input class="form_checkbox" type="checkbox" name="vi" id="freigabe" value="1" <?php echo $visible ? 'checked' : '' ?>>
+              <label class="form_label_checkbox" for="freigabe">Freigegeben (Für die Kunden sichtbar)</label>
             </div>
 
             <!-- versteckte Felder für ID -->

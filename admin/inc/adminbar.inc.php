@@ -13,7 +13,7 @@
 <?php
 // vorläufige Abfrage if loggedIn
 if (!isset($isLogedIn) && !empty($_GET['login'])) {
-    $_GET['login'];
+    $isLogedIn = $_GET['login'];
 } elseif (isset($isLogedIn)) {
     $isLogedIn = $isLogedIn;
 } else {
