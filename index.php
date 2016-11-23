@@ -30,41 +30,34 @@ $curr_genreID   = '';
 $curr_companyID = '';
 
 /*
- * Empfangen und überprüfen der Variablen.
- */
-
-if (!empty($_GET['g'])) {
-  $siteType = 'g';  
-  $curr_genreID = $_GET['g'];
-}
-
-if (!empty($_GET['c'])) {
-  $siteType = 'c';  
-  $curr_companyID = $_GET['c'];
-}
-
-
-/*
  * Den default-fall speichern (die 10 neustern Filme)
  * Er wird nur überschrieben, falls eine andere ID übergeben wurde.
  */
 $sql_select_movie = $sql_select_moviesNew10;
 
 /*
- * wenn eine genreID übergeben wurde
- * nimm die genre sql;
+ * Empfangen und überprüfen der Variablen.
  */
-if (!empty($curr_genreID)) {
+
+/*
+ * Wenn ein g übergeben wurde, die Auswahl also ein Genre ist.
+ */
+if (!empty($_GET['g'])) {
+    $siteType = 'g';
+    $curr_genreID = $_GET['g'];
     $sql_select_movie = $sql_select_moviesByGenreId($curr_genreID);
 }
 
 /*
- * wenn keine genreID übergeben wurde, und stattdessen eine companyID,
- * nimm die company sql;
+ * Wenn ein c übergeben wurde, die Auswahl also eine Filmgesellschaft ist.
  */
-elseif (!empty($curr_companyID)) {
+if (!empty($_GET['c'])) {
+    $siteType = 'c';
+    $curr_companyID = $_GET['c'];
     $sql_select_movie = $sql_select_moviesByCompanyId($curr_companyID);
 }
+
+$title = getTitle($siteType);
 
 $handle_movies = mysqli_query($conn, $sql_select_movie);
 ?>
@@ -74,7 +67,7 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <title><?php echo getTitle($siteType); ?></title><!-- TODO: Dynamisieren -->
+        <title><?php echo $title; ?></title>
         <link rel="stylesheet" href="css/main.css" />
     </head>
 
