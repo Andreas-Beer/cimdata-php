@@ -49,10 +49,23 @@ const PART_MOVIES_SELECT = "
 
 
 // SQL - Queries
-$sql_select_films = "
-    SELECT *
-    FROM film
-    ORDER BY Titel;";
+$sql_select_films = function ($orderBy = 'Titel'){
+    
+    return "
+    SELECT
+        f.id,
+        f.Titel,
+        f.Beschreibung,
+        f.Bild,
+        f.Preis,
+        f.Freigabe,
+        fg.Name AS Filmgesellschaft,
+        g.Name  AS Genre
+    FROM film   AS f
+    JOIN filmgesellschaft AS fg ON fg.id = f.Filmgesellschaft_id
+    JOIN genre AS g ON g.id = f.Genre_id
+    ORDER BY $orderBy;";
+};
 
 $sql_select_genres = "
     SELECT *
