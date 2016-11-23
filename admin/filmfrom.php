@@ -10,6 +10,53 @@
 # Version: Basisversion für Schulungszwecke
 ?>
 
+<?php
+include_once '../inc/config.inc.php';
+include_once '../inc/dbconn.php';
+include_once '../inc/functions.inc.php';
+?>
+
+<?php
+
+// Die Variablen mit defaultwert
+
+$id          = is_numeric($_GET['f']) ? $_GET['f'] : false;
+$company_id  = '';
+$genre_id    = '';
+$title       = '';
+$desc        = '';
+$date        = '';
+$duration    = '';
+$price       = ''; 
+$image       = '';
+$visible     = '';
+
+$msg_btn  = 'Speichern';
+
+if ($id) {
+    
+    $handler_film = mysqli_query($conn, $sql_select_moviesBymovieId($id));
+    $data = mysqli_fetch_assoc($handler_film);
+
+    $company_id = $data['Filmgesellschaft_id'];
+    $genre_id   = $data['Genre_id'];
+    $title      = $data['Titel'];
+    $desc       = $data['Beschreibung'];
+    $date       = $data['Erscheinungsdatum'];
+    $duration   = $data['DauerInMinuten'];
+    $price      = $data['Preis'];
+    $image      = $data['Bild'];
+    $visible    = $data['Freigabe'];
+    
+    $msg_btn  = 'Aktualisieren';
+    
+    echo '<pre style="text-align: left;">';
+    var_dump($company_id);
+    echo '</pre>';
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -42,9 +89,14 @@
               <label class="form_label" for="fc">Filmgesellschaften *</label>
               <select class="form_input_select form-control" name="fc" id="fc">
                 <option class="form_option" value="0">Bitte auswählen</option>
-
-                <option class="form_option">###FILMGESELLSCHAFT###</option>
-
+                <?php
+                $handler_companies = mysqli_query($conn, $sql_select_companies);
+                
+                while (($data = mysqli_fetch_assoc($handler_companies)) !== NULL) {
+                   $checked = isActive($data['id'], $company_id, 'selected');
+                   echo '<option ' . $checked . ' class="form_option">' . $data['Name'] . '</option>';
+                } 
+                ?>
               </select>
             </div>
 
@@ -54,27 +106,32 @@
               <label class="form_label" for="fg">Genres *</label>
               <select class="form_input_select form-control" name="fg" id="fg">
                 <option class="form_option" value="0">Bitte auswählen</option>
-
-                <option class="form_option">###GENRE###</option>
-
+                <?php
+                $handler_genres = mysqli_query($conn, $sql_select_genres);
+                
+                while (($data = mysqli_fetch_assoc($handler_genres)) !== NULL) {
+                   $checked = isActive($data['id'], $genre_id, 'selected');
+                   echo '<option ' . $checked . ' class="form_option">' . $data['Name'] . '</option>';
+                }
+                ?>  
               </select>
             </div>
 
             <div class="form-group">
               <label class="form_label" for="titel">Filmtitel *</label>
-              <input class="form_input form-control" type="text" name="ft" id="titel" maxlength="150" value="###TITEL###">
+              <input class="form_input form-control" type="text" name="ft" id="titel" maxlength="150" value="<?php echo $title; ?>">
             </div>
 
             <div class="form-group">
               <label class="form_label" for="beschreibung">Beschreibung</label>
-              <textarea style="resize: vertical" class="form_text form-control" rows="3" name="dc" id="beschreibung">###BESCHREIBUNG###</textarea>
+              <textarea style="resize: vertical" class="form_text form-control" rows="3" name="dc" id="beschreibung"><?php echo $desc; ?></textarea>
             </div>
 
             <div class="form-group">
               <label class="form_label" for="datum">Erscheinungsdatum *</label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-calendar" aria-hidden="true"></span></div>
-                <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="###DATUM###">
+                <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
               </div>
             </div>
 
@@ -82,7 +139,7 @@
               <label class="form_label" for="dauer">Dauer in Minuten</label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-clock-o" aria-hidden="true"></span></div>
-                <input class="form_input form-control" type="number"  min="1" max="9999" step="0.1" name="du" id="dauer" maxlength="3" value="###DAUER###">
+                <input class="form_input form-control" type="number"  min="1" max="9999" step="0.1" name="du" id="dauer" maxlength="3" value="<?php echo $duration; ?>">
                 <div class="input-group-addon">min</div>
               </div>
             </div>
@@ -91,7 +148,7 @@
               <label class="form_label" for="preis">Preis</label>
               <div class="input-group">
                 <div class="input-group-addon">€</div>
-                <input class="form_input form-control" type="number" min="0" max="100" step="0.10" pattern="[0-9]+([\,|\.][0-9]+)?" name="pr" id="preis" maxlength="10" value="###PREIS###">
+                <input class="form_input form-control" type="number" min="0" max="100" step="0.10" pattern="[0-9]+([\,|\.][0-9]+)?" name="pr" id="preis" maxlength="10" value="<?php echo $price; ?>">
               </div>
             </div>
 
@@ -99,7 +156,7 @@
               <label class="form_label" for="bild">Bild</label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-file-image-o" aria-hidden="true"></span></div>
-                <input class="form_input form-control" type="text" name="bild" id="bild" maxlength="150" value="###BILD###">
+                <input class="form_input form-control" type="text" name="bild" id="bild" maxlength="150" value="<?php echo $image; ?>">
               </div>
             </div>
 
@@ -109,13 +166,13 @@
             </div>
 
             <!-- versteckte Felder für ID -->
-            <input type="hidden" name="fid" value="###ID###">
+            <input type="hidden" name="fid" value="<?php echo $id; ?>">
           </section>
 
 
           <section id="section_submit">
 
-            <button class="btn btn-default" type="submit" name="button" value="speichern">###BUTTON_TEXT###</button>
+            <button class="btn btn-default" type="submit" name="button" value="speichern"><?php echo $msg_btn ?></button>
             <button class="btn btn-default pull-right" type="button" name="button" value="abbrechen" onClick="window.location.href = 'index.php';">Abbrechen</button>
 
           </section>

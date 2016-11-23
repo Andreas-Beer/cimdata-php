@@ -41,6 +41,9 @@ const PART_MOVIES_SELECT = "
         f.Erscheinungsdatum,
         f.Bild,
         f.Preis,
+        f.Freigabe,
+        f.Filmgesellschaft_id,
+        f.Genre_id,
         fg.Name AS Filmgesellschaft,
         g.Name  AS Genre
     FROM film   AS f
@@ -50,7 +53,6 @@ const PART_MOVIES_SELECT = "
 
 // SQL - Queries
 $sql_select_films = function ($orderBy = 'Titel'){
-    
     return "
     SELECT
         f.id,
@@ -86,6 +88,12 @@ $sql_select_moviesByCompanyId = function ($companyId) {
 $sql_select_moviesByGenreId = function ($genreId) {
     return PART_MOVIES_SELECT . "
         WHERE g.id = $genreId AND f.Freigabe = 1
+        ORDER BY f.Titel;";
+};
+
+$sql_select_moviesBymovieId = function ($movieId) {
+    return PART_MOVIES_SELECT . "
+        WHERE f.id = $movieId
         ORDER BY f.Titel;";
 };
 
