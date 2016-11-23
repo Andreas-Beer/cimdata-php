@@ -97,8 +97,10 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
 
             </div>
         </main>
-
         <?php include './inc/footer.inc.php'; ?>
+        
+        <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
 
     </body>
 </html>

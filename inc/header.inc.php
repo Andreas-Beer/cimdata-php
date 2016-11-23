@@ -11,7 +11,6 @@
 ?>
 
 <?php
-
 include_once 'functions.inc.php';
 
 // Daten abfragen 
@@ -19,35 +18,42 @@ $handle_genreAll = mysqli_query($conn, $sql_select_genres);
 ?>
 
 <header>
-  <div class="container">
-    <h1>###SEITENTITEL###</h1><!-- TODO: Dynamisieren -->
-  </div>
+    <div class="container">
+        <h1>###SEITENTITEL###</h1><!-- TODO: Dynamisieren -->
+    </div>
 
-  <!-- ### Navigation Genre ### -->
-  <nav class="navbar gradient">
-      <div class="container">
+    <!-- ### Navigation Genre ### -->
+    <nav class="navbar navbar gradient">
+        <div class="container">
 
-          <ul class="nav navbar-nav nav-pills">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#genres" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
-              <?php
-              //<li class = "active"><a href = "#">###GENRE1###</a></li>
-              
-              while (($data = mysqli_fetch_assoc($handle_genreAll)) != NULL) {
-                  
-                  $href = $_SERVER['PHP_SELF'] . '?g=' . $data['id'];
-                  
-                  echo '<li class="' . isActive($data['id'], $curr_genreID) .  '">';
-                  echo '<a href = "' . $href .'">' . $data['Name'] . '</a>';
-                  echo '</li>';
-                  
-              }             
-                      
-              ?>
+            <div id="genres" class="collapse navbar-collapse">
+                <ul class="genres nav navbar-nav">
 
-          </ul>  
+                    <?php
+                    //<li class = "active"><a href = "#">###GENRE1###</a></li>
 
-      </div>
-  </nav>
+                    while (($data = mysqli_fetch_assoc($handle_genreAll)) != NULL) {
+
+                        $href = $_SERVER['PHP_SELF'] . '?g=' . $data['id'];
+
+                        echo '<li class="' . isActive($data['id'], $curr_genreID) . '">';
+                        echo '<a href = "' . $href . '">' . $data['Name'] . '</a>';
+                        echo '</li>';
+                    }
+                    ?>
+
+                </ul>  
+            </div>
+
+        </div>
+    </nav>
 </header>
 
 <?php
