@@ -30,9 +30,27 @@ function getTitle($currType = '', $currSubType = '') {
 }
 
 function getSubtype ($currType, $currID = 0) {
+
+    // Die Abfragen global machen
+    global $sql_select_companyByID;
+    global $sql_select_genreByID;
+    global $conn;
     
-        
+    /*
+     * Eine Variable anlegen, die zum Schluss,
+     * die gewählte sql Anweisung beinhaltet
+     */
+    $sql = '';
     
+    switch ($currType) {
+        case 'c': $sql = $sql_select_companyByID($currID); break;
+        case 'g': $sql = $sql_select_genreByID($currID);   break;
+        default : return '';
+    }
+    
+    $hander = mysqli_query($conn, $sql);
+    $data   = mysqli_fetch_assoc($hander);
+    return $data['name'];
 }
 
 // Den Defaultwert der Variablen setzen.
@@ -58,6 +76,8 @@ if (!empty($_GET['g'])) {
     $siteType = 'g';
     $curr_genreID = $_GET['g'];
     $sql_select_movie = $sql_select_moviesByGenreId($curr_genreID);
+    
+    $subtype = getSubtype($siteType, $curr_genreID);
 }
 
 /*
@@ -67,9 +87,11 @@ if (!empty($_GET['c'])) {
     $siteType = 'c';
     $curr_companyID = $_GET['c'];
     $sql_select_movie = $sql_select_moviesByCompanyId($curr_companyID);
+    
+    $subtype = getSubtype($siteType, $curr_companyID);
 }
 
-$title = getTitle($siteType);
+$title = getTitle($siteType) . $subtype;
 
 $handle_movies = mysqli_query($conn, $sql_select_movie);
 ?>
