@@ -17,7 +17,8 @@ include_once '../inc/functions.inc.php';
 
 <?php
 
-$link = './filmfrom.php';
+$link_form   = './filmfrom.php';
+$link_delete = './filmdelete.php';
 
 $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
 
@@ -43,7 +44,7 @@ $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
                 <h1>Alle Filme</h1>
             </div>
 
-            <h2><a class="btn btn-primary" href="<?php echo $link; ?>?f=neu">Film hinzufügen</a></h2>
+            <h2><a class="btn btn-primary" href="<?php echo $link_form; ?>?f=neu">Film hinzufügen</a></h2>
 
             <table class="table table-striped">
                 <tr>
@@ -53,6 +54,7 @@ $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
                     <th>Filmgesellschaft</th>
                     <th>Preis €</th>
                     <th>Sichtbar</th>
+                    <th></th>
                     <th></th>
                 </tr>  
 
@@ -88,7 +90,12 @@ $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
                     <td>$company</td>
                     <td class="price">$preis</td>
                     <td class="vis $class_vis">$freigabe</th>
-                    <td><a href="$link?f=$id" class="btn btn-info">Bearbeiten</a></td>
+                    <td><a class="btn btn-sm btn-info" href="$link_form?f=$id">Bearbeiten</a></td>
+                    <td>
+                        <form action="$link_delete?f=$id" method="post">
+                            <button name="delete" value="$id" class="btn btn-sm btn-danger">Löschen</button>
+                        </form>
+                    </td>
                 </tr>                           
 HTML;
                     

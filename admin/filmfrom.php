@@ -101,16 +101,26 @@ $msgErrors = array();
 // Wenn das formular einmal abgeschickt wurde.
 if (!empty($_POST['button'])) {
     
-    // Schauen ob die Pflichtfelder Belegt sind.
+    /*
+     * Schauen ob die Pflichtfelder Belegt sind.
+     */
+    
+    // Falsche (keine) Filmgesellschaft
     if (empty($company_id)) {
         $msgErrors['fc'] = MSG_FILMFORM_MISSING_COMPANY;
     }
+    
+    // Falsches (keins) Genre
     if (empty($genre_id)) {
         $msgErrors['fg'] = MSG_FILMFORM_MISSING_GENRE;
     }
+    
+    // Falscher Titel
     if (empty($title)) {
         $msgErrors['ft'] = MSG_FILMFORM_MISSING_TITLE;
     }
+    
+    // Falsches Datum
     if (empty($date)) {
         $msgErrors['dt'] = MSG_FILMFORM_MISSING_DATE;
     }
@@ -248,7 +258,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
               <p class="msg danger"><?php getError('dt'); ?></p>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-calendar" aria-hidden="true"></span></div>
-                <input class="form_input form-control" type="text" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
+                <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
               </div>
             </div>
 

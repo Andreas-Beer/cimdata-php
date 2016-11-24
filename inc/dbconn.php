@@ -211,3 +211,12 @@ $sql_update_film = function (
             Freigabe = $freigabe
         WHERE id = $film_id;";
 };
+
+// Deletes
+$sql_delete_filmById = function ($filmId) {
+  
+    return "
+        DELETE
+        FROM film
+        WHERE id = $filmId;";
+};
