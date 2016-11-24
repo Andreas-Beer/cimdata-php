@@ -22,6 +22,17 @@ function getValue ($name) {
     return !empty($_POST[$name]) ? $_POST[$name] : '';
 }
 
+function getError ($name) {
+    
+    global $msgErrors;
+    
+    if(isset($msgErrors[$name])) {
+        echo $msgErrors[$name];
+    } else {
+        echo '';
+    }
+}
+
 // Die Variablen mit defaultwert
 
 $id          = is_numeric($_GET['f']) ? $_GET['f'] : false;
@@ -124,8 +135,9 @@ if (empty($msgErrors)) {
           <!-- alle Filmgesellschaften -->
           <section class="section_select form-group">
 
-            <div class="form-group">
+            <div class="form-group has-feedback <?php if (isset($msgErrors['fc'])) { echo 'has-error'; } ?>">
               <label class="form_label" for="fc">Filmgesellschaften *</label>
+              <p class="msg danger"><?php getError('fc') ?></p>
               <select class="form_input_select form-control" name="fc" id="fc">
                 <option class="form_option" value="0">Bitte auswählen</option>
                 <?php
@@ -141,8 +153,9 @@ if (empty($msgErrors)) {
 
             <!-- alle Genres -->
 
-            <div class="form-group">
+            <div class="form-group has-feedback <?php if (isset($msgErrors['fg'])) { echo 'has-error'; } ?>">
               <label class="form_label" for="fg">Genres *</label>
+              <p class="msg danger"><?php getError('fg'); ?></p>
               <select class="form_input_select form-control" name="fg" id="fg">
                 <option class="form_option" value="0">Bitte auswählen</option>
                 <?php
@@ -156,8 +169,9 @@ if (empty($msgErrors)) {
               </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group has-feedback <?php if (isset($msgErrors['ft'])) { echo 'has-error'; } ?>">
               <label class="form_label" for="titel">Filmtitel *</label>
+              <p class="msg danger"><?php getError('ft'); ?></p>
               <input class="form_input form-control" type="text" name="ft" id="titel" maxlength="150" value="<?php echo $title; ?>">
             </div>
 
@@ -166,8 +180,9 @@ if (empty($msgErrors)) {
               <textarea style="resize: vertical" class="form_text form-control" rows="3" name="dc" id="beschreibung"><?php echo $desc; ?></textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-group has-feedback <?php if (isset($msgErrors['dt'])) { echo 'has-error'; } ?>">
               <label class="form_label" for="datum">Erscheinungsdatum *</label>
+              <p class="msg danger"><?php getError('dt'); ?></p>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-calendar" aria-hidden="true"></span></div>
                 <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
