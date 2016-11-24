@@ -51,7 +51,11 @@ const PART_MOVIES_SELECT = "
     JOIN genre AS g ON g.id = f.Genre_id";
 
 
-// SQL - Queries
+/*
+ *  SQL - Queries
+ */
+
+// selects
 $sql_select_films = function ($orderBy = 'Titel'){
     return "
     SELECT
@@ -114,4 +118,46 @@ $sql_select_companyByID = function ($companyId) {
         SELECT name
         FROM filmgesellschaft
         WHERE id = $companyId;";
+};
+
+// inserts
+$sql_insert_newFilm = function (
+        $genre_id,
+        $filmgesellschaft_id,
+        $titel,
+        $erscheinugsdatum,
+        $freigabe,
+        
+        $dauerInMinuten = '',
+        $bild = '',
+        $beschreibung = '',
+        $preis = ''        
+        ) {
+    
+    return "
+      INSERT
+      INTO film 
+      (
+        Genre_id,
+        Filmgesellschaft_id,
+        Titel,
+        Erscheinungsdatum,
+        DauerInMinuten,
+        Bild,
+        Beschreibung,
+        Preis,
+        Freigabe
+      )
+      VALUES
+      (
+        $genre_id,
+        $filmgesellschaft_id,
+        '$titel',
+        '$erscheinugsdatum',
+        $dauerInMinuten,
+        '$bild',
+        '$beschreibung',
+        $preis,
+        $freigabe
+      );";
 };

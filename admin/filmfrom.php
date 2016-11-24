@@ -86,20 +86,26 @@ if (!empty($_POST['button'])) {
     }
 }
 
-echo '<pre style="text-align: left;">';
-var_dump($msgErrors);
-echo '</pre>';
-
 // Wenn es keine Fehler gab.
 if (empty($msgErrors)) {
     
     // Weiche, wie das Formular verarbeitet werden soll.
     if (!empty($_POST['fid'])) {
+        
         echo 'Update!';
+        
     } else {
-        echo 'Speichern!';
-    }
-    
+        
+        $sql = $sql_insert_newFilm(
+                $genre_id, $company_id, $title, $date, $visible,
+                $duration, $image, $desc, $price );
+        
+        
+        
+        echo $sql;
+        
+        
+    }  
 }
 
 ?>
