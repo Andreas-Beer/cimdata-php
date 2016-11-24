@@ -33,3 +33,4 @@ const MSG_FILMFORM_MISSING_COMPANY = 'Bitte eine Filmgesellschaft auswählen.';
 const MSG_FILMFORM_MISSING_GENRE   = 'Bitte ein Filmgenre auswählen.';
 const MSG_FILMFORM_MISSING_TITLE   = 'Bitte einen Filmtitel angeben.';
 const MSG_FILMFORM_MISSING_DATE    = 'Bitte ein Erscheinungsdatum angeben.';
+const MSG_FILMFORM_WRONG_DATE      = 'Bitte ein korrektes Erscheinungsdatum angeben.';

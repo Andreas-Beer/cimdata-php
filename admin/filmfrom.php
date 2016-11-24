@@ -33,6 +33,27 @@ function getError ($name, $default = '') {
     }
 }
 
+function formatDateToMySql ($date) {
+    
+    /*
+     * http://php.net/manual/de/function.strftime.php
+     */
+    $format    = '%Y-%m-%d';
+    
+    /*
+     * Diese Funktion arbeitet sowohl mit deutschem
+     * als auch mit englischem Datumsformat
+     */
+    $timestamp = strtotime($date); 
+    
+    /*
+     * Das Datum richtig formatieren.
+     * und
+     * zurückgeben.
+     */
+    return strftime($format, $timestamp);
+}
+
 // Die Variablen mit defaultwert
 
 $id          = is_numeric($_GET['f']) ? $_GET['f'] : false;
@@ -93,14 +114,13 @@ if (!empty($_POST['button'])) {
     if (empty($date)) {
         $msgErrors['dt'] = MSG_FILMFORM_MISSING_DATE;
     }
+    elseif(date_parse(Date($date))['error_count'] > 0) {
+        $msgErrors['dt'] = MSG_FILMFORM_WRONG_DATE;
+    }
 }
 
 // Wenn es keine Fehler gab. und die Seite einmal abgeschickt wurde.
 if (empty($msgErrors) && !isset($_GET['f'])) {
-    
-    echo '<pre style="text-align: left;">';
-    var_dump($visible);
-    echo '</pre>';
     
     $sql = false;
        
@@ -109,7 +129,10 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
      */
     
     // Update (wenn eine FilmID mit übertragen wurde)
-    if (!empty($film_id)) {      
+    if (!empty($film_id)) {   
+        
+        $date = formatDateToMySql($date);
+        
         $sql = $sql_update_film ($film_id,
             $genre_id, $company_id, $title, $date, $visible,
             $duration, $image, $desc, $price );
@@ -117,6 +140,9 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
     
     // Speichern (wenn KEINE FilmID mit übertragen wurde)
     else {
+        
+        $date = formatDateToMySql($date);
+        
         $sql = $sql_insert_newFilm(
             $genre_id, $company_id, $title, $date, $visible,
             $duration, $image, $desc, $price );             
@@ -132,7 +158,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
         
         // Die Daten senden.
         if (mysqli_query($conn, $sql)) {
-//            header('Location: ./index.php');
+            header('Location: ./index.php');
         } else {
             echo 'Der Film wurde NICHT gespeichert!';
         }
@@ -222,7 +248,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
               <p class="msg danger"><?php getError('dt'); ?></p>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-calendar" aria-hidden="true"></span></div>
-                <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
+                <input class="form_input form-control" type="text" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
               </div>
             </div>
 
