@@ -44,6 +44,7 @@ $date        = getValue('dt');
 $duration    = getValue('du');
 $price       = getValue('pr');
 $image       = getValue('img');
+$film_id     = getValue('fid');     
 $visible     = '1';
 
 $msg_btn  = 'Speichern';
@@ -86,26 +87,42 @@ if (!empty($_POST['button'])) {
     }
 }
 
-// Wenn es keine Fehler gab.
-if (empty($msgErrors)) {
+// Wenn es keine Fehler gab. und die Seite einmal abgeschickt wurde.
+if (empty($msgErrors) && !isset($_GET['f'])) {
     
-    // Weiche, wie das Formular verarbeitet werden soll.
-    if (!empty($_POST['fid'])) {
-        
-        echo 'Update!';
-        
-    } else {
-        
+    $sql = false;
+    
+    /*
+     *  Weiche, wie das Formular verarbeitet werden soll.
+     */
+    
+    // Update (wenn eine FilmID mit übertragen wurde)
+    if (!empty($film_id)) {      
+        $sql = $sql_update_film ($film_id,
+            $genre_id, $company_id, $title, $date, $visible,
+            $duration, $image, $desc, $price );
+    }
+    
+    // Speichern (wenn KEINE FilmID mit übertragen wurde)
+    else {
         $sql = $sql_insert_newFilm(
-                $genre_id, $company_id, $title, $date, $visible,
-                $duration, $image, $desc, $price );
+            $genre_id, $company_id, $title, $date, $visible,
+            $duration, $image, $desc, $price );             
+    } 
+
+    /*
+     * wenn es eine sql-Anweisung gibt
+     * (wenn das formular ohne Fehler abgeschickt wurde.)
+     */
+    if ($sql !== false) {
         
-        
-        
-        echo $sql;
-        
-        
-    }  
+        // Die Daten senden.
+        if (mysqli_query($conn, $sql)) {
+            header('Location: ./index.php');
+        } else {
+            echo 'Der Film wurde NICHT gespeichert!';
+        }
+    }
 }
 
 ?>
@@ -226,7 +243,7 @@ if (empty($msgErrors)) {
             </div>
 
             <!-- versteckte Felder für ID -->
-            <input type="hidden" name="fid" value="<?php echo $id; ?>">
+            <input type="hidden" name="fid" value="<?php echo !empty($film_id) ? $film_id : $id; ?>">
           </section>
 
 

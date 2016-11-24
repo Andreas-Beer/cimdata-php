@@ -161,3 +161,32 @@ $sql_insert_newFilm = function (
         $freigabe
       );";
 };
+
+// updates
+$sql_update_film = function (
+        $film_id,
+        $genre_id,
+        $filmgesellschaft_id,
+        $titel,
+        $erscheinugsdatum,
+        $freigabe,
+        
+        $dauerInMinuten = '',
+        $bild = '',
+        $beschreibung = '',
+        $preis = '') {
+    
+    return "
+        UPDATE film
+        SET 
+            Genre_id = $genre_id,
+            Filmgesellschaft_id = $filmgesellschaft_id,
+            Titel = '$titel',
+            Erscheinungsdatum = '$erscheinugsdatum',
+            DauerInMinuten = $dauerInMinuten,
+            Bild = '$bild',
+            Beschreibung = '$beschreibung',
+            Preis = $preis,
+            Freigabe = $freigabe
+        WHERE id = $film_id;";
+};
