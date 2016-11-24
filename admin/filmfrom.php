@@ -18,17 +18,21 @@ include_once '../inc/functions.inc.php';
 
 <?php
 
+function getValue ($name) {
+    return !empty($_POST[$name]) ? $_POST[$name] : '';
+}
+
 // Die Variablen mit defaultwert
 
 $id          = is_numeric($_GET['f']) ? $_GET['f'] : false;
-$company_id  = '';
-$genre_id    = '';
-$title       = '';
-$desc        = '';
-$date        = '';
-$duration    = '';
-$price       = ''; 
-$image       = '';
+$company_id  = getValue('fc');
+$genre_id    = getValue('fg');
+$title       = getValue('ft');
+$desc        = getValue('dc');
+$date        = getValue('dt');
+$duration    = getValue('du');
+$price       = getValue('pr');
+$image       = getValue('img');
 $visible     = '1';
 
 $msg_btn  = 'Speichern';
@@ -49,10 +53,42 @@ if ($id) {
     $visible    = $data['Freigabe'];
     
     $msg_btn  = 'Aktualisieren';
+}
+
+$msgErrors = array();
+
+// Wenn das formular einmal abgeschickt wurde.
+if (!empty($_POST['button'])) {
     
-    echo '<pre style="text-align: left;">';
-    var_dump($company_id);
-    echo '</pre>';
+    // Schauen ob die Pflichtfelder Belegt sind.
+    if (empty($company_id)) {
+        $msgErrors['fc'] = MSG_FILMFORM_MISSING_COMPANY;
+    }
+    if (empty($genre_id)) {
+        $msgErrors['fg'] = MSG_FILMFORM_MISSING_GENRE;
+    }
+    if (empty($title)) {
+        $msgErrors['ft'] = MSG_FILMFORM_MISSING_TITLE;
+    }
+    if (empty($date)) {
+        $msgErrors['dt'] = MSG_FILMFORM_MISSING_DATE;
+    }
+}
+
+echo '<pre style="text-align: left;">';
+var_dump($msgErrors);
+echo '</pre>';
+
+// Wenn es keine Fehler gab.
+if (empty($msgErrors)) {
+    
+    // Weiche, wie das Formular verarbeitet werden soll.
+    if (!empty($_POST['fid'])) {
+        echo 'Update!';
+    } else {
+        echo 'Speichern!';
+    }
+    
 }
 
 ?>
@@ -68,14 +104,17 @@ if ($id) {
   </head>
   <body>
 
-    <?php include './inc/adminbar.inc.php'; ?>
+    <?php
+    $isLogedIn = TRUE;
+//    include './inc/adminbar.inc.php';
+    ?>
 
     <div class="film-form container">
 
       <div class="page-header">
         <h1>Filmtitel bearbeiten</h1>
       </div>
-
+        
       <div>
 
         <p class="fehler"><?php // if ($meldung) echo implode($meldung, "<br>");      ?></p>
@@ -94,7 +133,7 @@ if ($id) {
                 
                 while (($data = mysqli_fetch_assoc($handler_companies)) !== NULL) {
                    $checked = isActive($data['id'], $company_id, 'selected');
-                   echo '<option ' . $checked . ' class="form_option">' . $data['Name'] . '</option>';
+                   echo '<option ' . $checked . ' class="form_option" value="' . $data['id'] . '">' . $data['Name'] . '</option>';
                 } 
                 ?>
               </select>
@@ -111,7 +150,7 @@ if ($id) {
                 
                 while (($data = mysqli_fetch_assoc($handler_genres)) !== NULL) {
                    $checked = isActive($data['id'], $genre_id, 'selected');
-                   echo '<option ' . $checked . ' class="form_option">' . $data['Name'] . '</option>';
+                   echo '<option ' . $checked . ' class="form_option" value="' . $data['id'] . '">' . $data['Name'] . '</option>';
                 }
                 ?>  
               </select>
@@ -148,15 +187,15 @@ if ($id) {
               <label class="form_label" for="preis">Preis</label>
               <div class="input-group">
                 <div class="input-group-addon">€</div>
-                <input class="form_input form-control" type="number" min="0" max="100" step="0.10" pattern="[0-9]+([\,|\.][0-9]+)?" name="pr" id="preis" maxlength="10" value="<?php echo $price; ?>">
+                <input class="form_input form-control" type="number" min="0" max="100" step="0.01" pattern="[0-9]+([\,|\.][0-9]+)?" name="pr" id="preis" maxlength="10" value="<?php echo $price; ?>">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form_label" for="bild">Bild</label>
+              <label class="form_label" for="img">Bild</label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-file-image-o" aria-hidden="true"></span></div>
-                <input class="form_input form-control" type="text" name="bild" id="bild" maxlength="150" value="<?php echo $image; ?>">
+                <input class="form_input form-control" type="text" name="img" id="bild" maxlength="150" value="<?php echo $image; ?>">
               </div>
             </div>
 
