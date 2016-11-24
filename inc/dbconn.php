@@ -129,37 +129,39 @@ $sql_insert_newFilm = function (
         $freigabe,
         
         $dauerInMinuten = '',
-        $bild = '',
-        $beschreibung = '',
-        $preis = ''        
+        $bild           = '',
+        $beschreibung   = '',
+        $preis          = ''        
         ) {
     
-    return "
-      INSERT
-      INTO film 
-      (
-        Genre_id,
-        Filmgesellschaft_id,
-        Titel,
-        Erscheinungsdatum,
-        DauerInMinuten,
-        Bild,
-        Beschreibung,
-        Preis,
-        Freigabe
-      )
-      VALUES
-      (
-        $genre_id,
-        $filmgesellschaft_id,
-        '$titel',
-        '$erscheinugsdatum',
-        $dauerInMinuten,
-        '$bild',
-        '$beschreibung',
-        $preis,
-        $freigabe
-      );";
+    // Der Anfang des SQL-Strings
+    $sql = "INSERT INTO film ( Genre_id, Filmgesellschaft_id, Titel, Erscheinungsdatum, Freigabe";
+    
+    /*
+     * Dynamisch die Abfrage zusammensetzen.
+     * (Die Spalten auflisten)
+     */
+    if(!empty($dauerInMinuten)) { $sql .= ', DauerInMinuten'; } //wenn dauerInMinuten gesetzt wurde
+    if(!empty($bild))           { $sql .= ', Bild';           } //wenn Bild gesetzt wurde
+    if(!empty($beschreibung))   { $sql .= ', Beschreibung';   } //wenn Beschreibung gesetzt wurde
+    if(!empty($preis))          { $sql .= ', Preis';          } //wenn Preis gesetzt wurde
+
+    // Der Mittelteil des SQL-Strings
+    $sql .= " ) VALUES ( $genre_id, $filmgesellschaft_id, '$titel', '$erscheinugsdatum', $freigabe";
+       
+    /*
+     * Dynamisch die Abfrage zusammensetzen.
+     * (Die Werte auflisten)
+     */
+    if(!empty($dauerInMinuten)) { $sql .= ", $dauerInMinuten"; } //wenn dauerInMinuten gesetzt wurde
+    if(!empty($bild))           { $sql .= ", '$bild'";         } //wenn Bild gesetzt wurde
+    if(!empty($beschreibung))   { $sql .= ", '$beschreibung'"; } //wenn Beschreibung gesetzt wurde
+    if(!empty($preis))          { $sql .= ", $preis";          } //wenn Preis gesetzt wurde
+    
+    // Der Schlussteil des SQL-Strings.
+    $sql .= ");";
+        
+    return $sql;
 };
 
 // updates
@@ -174,7 +176,8 @@ $sql_update_film = function (
         $dauerInMinuten = '',
         $bild = '',
         $beschreibung = '',
-        $preis = '') {
+        $preis = ''
+        ) {
     
     return "
         UPDATE film

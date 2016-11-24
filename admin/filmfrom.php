@@ -18,18 +18,18 @@ include_once '../inc/functions.inc.php';
 
 <?php
 
-function getValue ($name) {
-    return !empty($_POST[$name]) ? $_POST[$name] : '';
+function getValue ($name, $default = '') {
+    return !empty($_POST[$name]) ? $_POST[$name] : $default;
 }
 
-function getError ($name) {
+function getError ($name, $default = '') {
     
     global $msgErrors;
     
     if(isset($msgErrors[$name])) {
         echo $msgErrors[$name];
     } else {
-        echo '';
+        echo $default;
     }
 }
 
@@ -45,7 +45,15 @@ $duration    = getValue('du');
 $price       = getValue('pr');
 $image       = getValue('img');
 $film_id     = getValue('fid');     
-$visible     = '1';
+
+/*
+ * Problem:
+ * Wenn der film NICHT für die Öffentlichkeit zu sehen ist,
+ * ist der Wert leer.
+ * Wir übersetzen diesen leeren Wert in einen Null-String,
+ * damit beim Eintrag in die Datenbank, eine Null gesetzt wird.
+ */
+$visible     = getValue('vi', '0');
 
 $msg_btn  = 'Speichern';
 
@@ -90,8 +98,12 @@ if (!empty($_POST['button'])) {
 // Wenn es keine Fehler gab. und die Seite einmal abgeschickt wurde.
 if (empty($msgErrors) && !isset($_GET['f'])) {
     
-    $sql = false;
+    echo '<pre style="text-align: left;">';
+    var_dump($visible);
+    echo '</pre>';
     
+    $sql = false;
+       
     /*
      *  Weiche, wie das Formular verarbeitet werden soll.
      */
@@ -115,6 +127,8 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
      * (wenn das formular ohne Fehler abgeschickt wurde.)
      */
     if ($sql !== false) {
+        
+        echo $sql;
         
         // Die Daten senden.
         if (mysqli_query($conn, $sql)) {
