@@ -174,10 +174,15 @@ $sql_update_film = function (
         $freigabe,
         
         $dauerInMinuten = '',
-        $bild = '',
-        $beschreibung = '',
-        $preis = ''
+        $bild           = '',
+        $beschreibung   = '',
+        $preis          = ''
         ) {
+
+    $dauerInMinuten = !empty($dauerInMinuten) ? $dauerInMinuten   : 'NULL';
+    $bild           = !empty($bild)           ? "'$bild'"         : 'NULL';
+    $beschreibung   = !empty($beschreibung)   ? "'$beschreibung'" : 'NULL';
+    $preis          = !empty($preis)          ? $preis            : 'NULL';
     
     return "
         UPDATE film
@@ -187,8 +192,8 @@ $sql_update_film = function (
             Titel = '$titel',
             Erscheinungsdatum = '$erscheinugsdatum',
             DauerInMinuten = $dauerInMinuten,
-            Bild = '$bild',
-            Beschreibung = '$beschreibung',
+            Bild = $bild,
+            Beschreibung = $beschreibung,
             Preis = $preis,
             Freigabe = $freigabe
         WHERE id = $film_id;";

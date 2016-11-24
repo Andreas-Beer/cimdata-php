@@ -132,7 +132,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
         
         // Die Daten senden.
         if (mysqli_query($conn, $sql)) {
-            header('Location: ./index.php');
+//            header('Location: ./index.php');
         } else {
             echo 'Der Film wurde NICHT gespeichert!';
         }
