@@ -128,7 +128,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
      */
     if ($sql !== false) {
         
-        echo $sql;
+        echo $sql . "<hr/>";
         
         // Die Daten senden.
         if (mysqli_query($conn, $sql)) {

@@ -134,8 +134,10 @@ $sql_insert_newFilm = function (
         $preis          = ''        
         ) {
     
+    global $conn;
+
     // Der Anfang des SQL-Strings
-    $sql = "INSERT INTO film ( Genre_id, Filmgesellschaft_id, Titel, Erscheinungsdatum, Freigabe";
+    $sql = "INSERT INTO film ( Genre_id, Filmgesellschaft_id, Erscheinungsdatum, Freigabe, Titel";
     
     /*
      * Dynamisch die Abfrage zusammensetzen.
@@ -147,20 +149,24 @@ $sql_insert_newFilm = function (
     if(!empty($preis))          { $sql .= ', Preis';          } //wenn Preis gesetzt wurde
 
     // Der Mittelteil des SQL-Strings
-    $sql .= " ) VALUES ( $genre_id, $filmgesellschaft_id, '$titel', '$erscheinugsdatum', $freigabe";
-       
+    $sql .= " ) VALUES ( $genre_id, $filmgesellschaft_id, '$erscheinugsdatum', $freigabe,";
+    
+    // Der Titel mit entschärften Sonderzeichen.
+    $sql .= "'" . mysqli_real_escape_string($conn, $titel) . "'";
+            
     /*
      * Dynamisch die Abfrage zusammensetzen.
      * (Die Werte auflisten)
      */
     if(!empty($dauerInMinuten)) { $sql .= ", $dauerInMinuten"; } //wenn dauerInMinuten gesetzt wurde
-    if(!empty($bild))           { $sql .= ", '$bild'";         } //wenn Bild gesetzt wurde
-    if(!empty($beschreibung))   { $sql .= ", '$beschreibung'"; } //wenn Beschreibung gesetzt wurde
     if(!empty($preis))          { $sql .= ", $preis";          } //wenn Preis gesetzt wurde
+    
+    if(!empty($bild))           { $sql .= ", '" . mysqli_real_escape_string($conn, $bild)          . "'"; } //wenn Bild gesetzt wurde
+    if(!empty($beschreibung))   { $sql .= ", '" . mysqli_real_escape_string($conn, $beschreibung)  . "'"; } //wenn Beschreibung gesetzt wurde
     
     // Der Schlussteil des SQL-Strings.
     $sql .= ");";
-        
+            
     return $sql;
 };
 
@@ -178,12 +184,19 @@ $sql_update_film = function (
         $beschreibung   = '',
         $preis          = ''
         ) {
-
-    $dauerInMinuten = !empty($dauerInMinuten) ? $dauerInMinuten   : 'NULL';
-    $bild           = !empty($bild)           ? "'$bild'"         : 'NULL';
-    $beschreibung   = !empty($beschreibung)   ? "'$beschreibung'" : 'NULL';
-    $preis          = !empty($preis)          ? $preis            : 'NULL';
     
+        global $conn;
+
+    // Die Strings Für die Datenbank vorbereiten.
+    $titel          = mysqli_real_escape_string($conn, $titel);
+    
+    $bild           = !empty($bild)           ? "'" . mysqli_real_escape_string($conn, $bild)         . "'" : 'NULL';
+    $beschreibung   = !empty($beschreibung)   ? "'" . mysqli_real_escape_string($conn, $beschreibung) . "'" : 'NULL';
+    
+    $dauerInMinuten = !empty($dauerInMinuten) ? $dauerInMinuten   : 'NULL';
+    $preis          = !empty($preis)          ? $preis            : 'NULL';
+
+        
     return "
         UPDATE film
         SET 
