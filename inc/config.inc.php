@@ -10,19 +10,29 @@
 
 <?php
 
-//echo '<pre style="text-align: left;">';
-//var_dump(is_file(__DIR__ . '/../index.php'));
-//echo '</pre>';
+/*
+ * Pfade
+ * 
+ * Prefix:
+ *  PATH_DIR  ('falls es ein Ordner ist')
+ *  PATH_FILE ('falls es eine Date ist')
+ */
+define('PATH_DIR_ROOT', __DIR__ . '/../' );
+const PATH_DIR_IMAGE  = '../bilder/'; // TODO Relativ
+
 
 /*
  * Größen
  * (maximalgrößen für überprüfungen und Meldungen)
  */
-const SIZE_MAX_IMAGE = '500';
+const SIZE_MAX_IMAGE = 50000; //kb
+
 
 /*
  * Nachrichten / Meldungen
- * Prefix: MSG ('message')
+ * 
+ * Prefix:
+ *  MSG ('für alle Meldungen')
  */
 
 /*
@@ -44,4 +54,10 @@ const MSG_FILMFORM_WRONG_DATE      = 'Bitte ein korrektes Erscheinungsdatum ange
 /*
  * Fehlermeldungen für den Image upload
  */
-const MSG_IMAGEUPLOAD_SIZE = 'Das Bild war leider zu groß. es sind maximal' . SIZE_MAX_IMAGE . 'bytes erlaubt.';
+define('MSG_IMAGEUPLOAD_ERR_INI_SIZE', 'Die Hochgeladene Datei war zu Groß (SERVER). es sind maximal ' . ini_get('upload_max_filesize') . ' bytes erlaubt.');
+const MSG_IMAGEUPLOAD_ERR_FORM_SIZE  = 'Die Hochgeladene Datei war zu Groß (HTML). es sind maximal ' . SIZE_MAX_IMAGE . ' bytes erlaubt.';
+const MSG_IMAGEUPLOAD_ERR_PARTIAL    = 'Die Datei wurde Leider nur Teilweise Hochgeladen!';
+const MSG_IMAGEUPLOAD_ERR_NO_FILE    = 'Es wurde keine Datei ausgewählt';
+const MSG_IMAGEUPLOAD_ERR_CANT_WRITE = 'Die Datei konnt nicht gespeichert werden.';
+const MSG_IMAGEUPLOAD_ERR_EXTENSION  = 'Die Datei hatte den falschen Typ';
+const MSG_IMAGEUPLOAD_ERR_UNDOC      = 'Ein unbekannter Fehler ist aufgetreten';

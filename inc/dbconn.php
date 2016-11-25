@@ -212,6 +212,16 @@ $sql_update_film = function (
         WHERE id = $film_id;";
 };
 
+$sql_update_filmImage = function ($image_name, $id) {
+  
+    return "
+        UPDATE film
+        SET Bild = '$image_name'
+        WHERE id = $id;
+        ";
+    
+};
+
 // Deletes
 $sql_delete_filmById = function ($filmId) {
   
