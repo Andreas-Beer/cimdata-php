@@ -11,6 +11,8 @@
 ?>
 
 <?php
+include_once './inc/test_login.inc';
+
 include_once '../inc/config.inc.php';
 include_once '../inc/dbconn.php';
 include_once '../inc/functions.inc.php';

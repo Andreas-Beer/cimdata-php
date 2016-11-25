@@ -108,7 +108,9 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
     <body>
 
         <?php
-        if (isset($_GET['adminbar'])) {
+        session_start();
+        
+        if (isset($_GET['adminbar']) || $_SESSION['login'] == 'true') {
             include './admin/inc/adminbar.inc.php';
         }
         ?>

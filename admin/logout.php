@@ -1,0 +1,3 @@
+<p>LOGOUT!</p>
+
+<?php

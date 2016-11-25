@@ -9,6 +9,9 @@
 ?>
 
 <?php
+// Password Salt
+const LOGIN_PASS_SALT = 'sods/&$)?-=su3d2nso"§?';
+
 
 /*
  * Pfade

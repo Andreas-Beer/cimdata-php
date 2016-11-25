@@ -11,14 +11,61 @@
 ?>
 
 <?php
-// vorläufige Abfrage if loggedIn
-if (!isset($isLogedIn) && !empty($_GET['login'])) {
-    $isLogedIn = $_GET['login'];
-} elseif (isset($isLogedIn)) {
-    $isLogedIn = $isLogedIn;
-} else {
-    $isLogedIn = false;
+//session starten
+session_start();
+
+// defaultwert setzen...
+$user = '';
+
+// wenn ein user in der session steht, user setzen
+if (isset($_SESSION['user'])) {
+   $user = $_SESSION['user'];
 }
+// wenn ein user mit post übergeben wurde, user setzen.
+if (!empty($_POST['user'])) {
+   $user = $_POST['user']; 
+}
+
+$pass = '';
+
+// wenn ein user in der session steht, user setzen
+if (isset($_SESSION['pass'])) {
+   $pass = $_SESSION['pass'];
+}
+// wenn ein user mit post übergeben wurde, user setzen.
+if (!empty($_POST['pass'])) {
+   $pass = $_POST['pass']; 
+}
+  
+$salt = 'sods/&$)?-=su3d2nso"§?';
+$correct_user = 'root';
+$correct_pass = hash('sha1', 'cimdata2016' . $salt);
+
+$isLogedIn = false;
+if ($user === $correct_user && hash('sha1', $pass . $salt) === $correct_pass) {
+    
+   $isLogedIn = true; 
+      
+   $_SESSION['user']  = $user;
+   $_SESSION['pass']  = $pass;
+   $_SESSION['login'] = true;
+   
+}
+
+
+
+if (!empty($_POST['logout'])) {
+    
+    // die seesion zerstören
+    session_destroy();
+    
+    // den cookie löschen
+    setcookie(session_name(), '', 0, '/');
+    
+    header('Location:' . $_SERVER['PHP_SELF']);    
+}
+
+
 ?>
 
 <nav class="adminbar navbar navbar-default navbar-fixed-top">
@@ -29,7 +76,7 @@ if (!isset($isLogedIn) && !empty($_GET['login'])) {
             <span class="navbar-brand">Adminbar</span>
         </div>
 
-        <form action="###ZIEL1###" method="post" class="navbar-form">
+        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post" class="navbar-form">
 
             <!-- NICHT angemeldet ABER Admin -->
             <?php if (!$isLogedIn): ?>
@@ -54,8 +101,8 @@ if (!isset($isLogedIn) && !empty($_GET['login'])) {
             <?php else: ?>
 
                 <button type="submit" formaction="###ZIEL2###" name="website" class="btn btn-default">Zur Webseite</button>
-                <button type="submit" name="dashboard" class="btn btn-default">Dashboard</button>
-                <button type="submit" formaction="###ZIEL3###" name="logout" class="btn btn-default navbar-right">Logout</button>
+                <button type="submit" formaction="./admin" name="dashboard" class="btn btn-default">Dashboard</button>
+                <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right">Logout</button>
 
             <?php endif; ?>
 
