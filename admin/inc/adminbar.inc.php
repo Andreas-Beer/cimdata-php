@@ -51,7 +51,6 @@ if ($user === $correct_user && hash('sha1', $pass . $salt) === $correct_pass) {
    $_SESSION['login'] = true;
 }
 
-
 if (!empty($_POST['logout'])) {
     
     // die seesion zerstören
@@ -63,11 +62,10 @@ if (!empty($_POST['logout'])) {
     header('Location:' . $_SERVER['PHP_SELF']);    
 }
 
-
 ?>
 
 <nav class="adminbar navbar navbar-default navbar-fixed-top">
-    
+        
     <div class="container-fluid">
         <!-- Überschrift -->
         <div class="navbar-header hidden-xs">
@@ -98,8 +96,8 @@ if (!empty($_POST['logout'])) {
                 <!-- angemeldet -->
             <?php else: ?>
 
-                <button type="submit" formaction="###ZIEL2###" name="website" class="btn btn-default">Zur Webseite</button>
-                <button type="submit" formaction="./admin" name="dashboard" class="btn btn-default">Dashboard</button>
+                <button type="submit" formaction="<?php echo PATH_FILE_MAIN; ?>" name="website" class="btn btn-default">Zur Webseite</button>
+                <button type="submit" formaction="<?php echo PATH_FILE_DASHBOARD; ?>" name="dashboard" class="btn btn-default">Dashboard</button>
                 <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right">Logout</button>
 
             <?php endif; ?>

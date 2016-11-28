@@ -9,6 +9,7 @@
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
 ?>
+
 <?php
 
 // Übername der Variablen zum weiteren Vararbeiten.

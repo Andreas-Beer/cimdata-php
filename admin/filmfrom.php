@@ -11,16 +11,17 @@
 ?>
 
 <?php
+include_once '../config.inc.php';
+
 include_once './inc/test_login.inc';
 
-include_once '../inc/config.inc.php';
 include_once '../inc/dbconn.php';
 include_once '../inc/functions.inc.php';
 ?>
 
 <?php
 
-function getValue ($name, $default = '') {
+function getPostValue ($name, $default = '') {
     return !empty($_POST[$name]) ? $_POST[$name] : $default;
 }
 
@@ -59,15 +60,15 @@ function formatDateToMySql ($date) {
 // Die Variablen mit defaultwert
 
 $id          = is_numeric($_GET['f']) ? $_GET['f'] : false;
-$company_id  = getValue('fc');
-$genre_id    = getValue('fg');
-$title       = getValue('ft');
-$desc        = getValue('dc');
-$date        = getValue('dt');
-$duration    = getValue('du');
-$price       = getValue('pr');
-$image       = getValue('img');
-$film_id     = getValue('fid');     
+$company_id  = getPostValue('fc');
+$genre_id    = getPostValue('fg');
+$title       = getPostValue('ft');
+$desc        = getPostValue('dc');
+$date        = getPostValue('dt');
+$duration    = getPostValue('du');
+$price       = getPostValue('pr');
+$image       = getPostValue('img');
+$film_id     = getPostValue('fid');     
 
 /*
  * Problem:
@@ -76,7 +77,7 @@ $film_id     = getValue('fid');
  * Wir übersetzen diesen leeren Wert in einen Null-String,
  * damit beim Eintrag in die Datenbank, eine Null gesetzt wird.
  */
-$visible     = getValue('vi', '0');
+$visible     = getPostValue('vi', '0');
 
 $msg_btn  = 'Speichern';
 
@@ -192,7 +193,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
     <?php
     $isLogedIn = TRUE;
-//    include './inc/adminbar.inc.php';
+    include './inc/adminbar.inc.php';
     ?>
 
     <div class="film-form container">

@@ -1,6 +1,6 @@
 <?php
 # Filmkatalog, Website mit Verbindung zur MySQL-Datenbank
-# Ausgabe der Filmtitel
+# Frontend: Ausgabe der Filmtitel
 # 
 # basierien auf einem Layout von Michael Hassel(hassel@mediakontur.de)
 #
@@ -12,7 +12,7 @@
 
 <?php
 // die Konfigurationsdatei einbinden.
-include_once './inc/config.inc.php';
+include_once './config.inc.php';
 
 // Die Datenbankverbindung einbinden.
 require_once './inc/dbconn.php';

@@ -7,11 +7,32 @@
 # Stand: 23.11.2016
 # Version: Basisversion für Schulungszwecke
 ?>
+<?php
+/*
+ * Helper Functions
+ */
+function getRelativePath () {
+    
+    $root_dir = array_pop(array_unique(explode('/', str_replace(['/', '\\'], '/', ROOT))));
+        
+    $curr_script_dir   = dirname(str_replace(['/', '\\'], '/', $_SERVER['SCRIPT_NAME']));
+    $relativePath_file = explode($root_dir, $curr_script_dir);
+    $slashes           = explode('/', array_pop($relativePath_file));
+        
+    $relativePath_dir = '';
+
+    for ($i = 0; $i < count($slashes) - 1; $i++) {
+        $relativePath_dir .= DIRECTORY_SEPARATOR . '..';
+    }
+    
+    return $relativePath_dir;
+}
+
+?>
 
 <?php
 // Password Salt
 const LOGIN_PASS_SALT = 'sods/&$)?-=su3d2nso"§?';
-
 
 /*
  * Pfade
@@ -20,8 +41,21 @@ const LOGIN_PASS_SALT = 'sods/&$)?-=su3d2nso"§?';
  *  PATH_DIR  ('falls es ein Ordner ist')
  *  PATH_FILE ('falls es eine Date ist')
  */
-define('PATH_DIR_ROOT', __DIR__ . '/../' );
-const PATH_DIR_IMAGE  = '../bilder/'; // TODO Relativ
+
+// ROOT Ordner der Seite. Muss angepasst werden.
+const ROOT = 'http://localhost/php_kurs/filmwebsite/phpmySQLI_filmwebseite_neu/';
+
+/*
+ *  Seiten und Ordner absolut von Root an
+ */
+define('PATH_DIR_ROOT'    , '.' . getRelativePath() . DIRECTORY_SEPARATOR); // muss angepasst werden.
+
+const PATH_DIR_IMAGE      = PATH_DIR_ROOT . 'bilder' . DIRECTORY_SEPARATOR;
+const PATH_FILE_MAIN      = PATH_DIR_ROOT . 'index.php';
+
+const PATH_DIR_ADMIN      = PATH_DIR_ROOT  . 'admin' . DIRECTORY_SEPARATOR;
+const PATH_FILE_DASHBOARD = PATH_DIR_ADMIN . 'index.php';
+const PATH_FILE_LOGOUT    = PATH_DIR_ADMIN . 'logout.php';
 
 
 /*
