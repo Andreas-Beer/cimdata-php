@@ -11,10 +11,7 @@
 ?>
 
 <?php
-// die Konfigurationsdatei einbinden.
 include_once './config.inc.php';
-
-// Die Datenbankverbindung einbinden.
 require_once './inc/dbconn.php';
 ?>
 
