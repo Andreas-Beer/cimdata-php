@@ -11,98 +11,116 @@
 ?>
 
 <?php
+/*
+ * Functions
+ */
+function getPage() {
+  if ($_SERVER['SCRIPT_NAME'] === $_SERVER['PHP_SELF']) {
+    return pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME);
+  }
+  return '';
+}
+?>
+
+<?php
 //session starten
 session_start();
 
 // defaultwert setzen...
 $user = '';
-
-// wenn ein user in der session steht, user setzen
-if (isset($_SESSION['user'])) {
-   $user = $_SESSION['user'];
-}
-// wenn ein user mit post übergeben wurde, user setzen.
-if (!empty($_POST['user'])) {
-   $user = $_POST['user']; 
-}
-
 $pass = '';
 
 // wenn ein user in der session steht, user setzen
+if (isset($_SESSION['user'])) {
+  $user = $_SESSION['user'];
+}
+// wenn ein user mit post übergeben wurde, user setzen.
+if (!empty($_POST['user'])) {
+  $user = $_POST['user'];
+}
+
+// wenn ein user in der session steht, user setzen
 if (isset($_SESSION['pass'])) {
-   $pass = $_SESSION['pass'];
+  $pass = $_SESSION['pass'];
 }
 // wenn ein user mit post übergeben wurde, user setzen.
 if (!empty($_POST['pass'])) {
-   $pass = $_POST['pass']; 
+  $pass = $_POST['pass'];
 }
-  
-$salt = 'sods/&$)?-=su3d2nso"§?';
+
 $correct_user = 'root';
-$correct_pass = hash('sha1', 'cimdata2016' . $salt);
+$correct_pass = hash('sha1', 'cimdata2016' . LOGIN_PASS_SALT);
 
 $isLogedIn = false;
-if ($user === $correct_user && hash('sha1', $pass . $salt) === $correct_pass) {
-    
-   $isLogedIn = true; 
-      
-   $_SESSION['user']  = $user;
-   $_SESSION['pass']  = $pass;
-   $_SESSION['login'] = true;
+if ($user === $correct_user && hash('sha1', $pass . LOGIN_PASS_SALT) === $correct_pass) {
+
+  $isLogedIn = true;
+
+  $_SESSION['user'] = $user;
+  $_SESSION['pass'] = $pass;
+  $_SESSION['login'] = true;
 }
 
 if (!empty($_POST['logout'])) {
-    
-    // die seesion zerstören
-    session_destroy();
-    
-    // den cookie löschen
-    setcookie(session_name(), '', 0, '/');
-    
-    header('Location:' . $_SERVER['PHP_SELF']);    
+
+  // die seesion zerstören
+  session_destroy();
+
+  // den cookie löschen
+  setcookie(session_name(), '', 0, '/');
+
+  header('Location:' . $_SERVER['PHP_SELF']);
 }
 
+// Die Seite herausfinden
+$page = getPage();
 ?>
 
 <nav class="adminbar navbar navbar-default navbar-fixed-top">
-        
-    <div class="container-fluid">
-        <!-- Überschrift -->
-        <div class="navbar-header hidden-xs">
-            <span class="navbar-brand">Adminbar</span>
+
+  <div class="container-fluid">
+    <!-- Überschrift -->
+    <div class="navbar-header hidden-xs">
+      <span class="navbar-brand">Adminbar</span>
+    </div>
+
+    <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post" class="navbar-form">
+
+      <!-- NICHT angemeldet ABER Admin -->
+      <?php if (!$isLogedIn): ?>
+
+        <!-- benutzer -->
+        <div class="input-group">
+          <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+          <input class="form-control" name="user" maxlength="20" type="text" placeholder="Benutzer">
         </div>
 
-        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post" class="navbar-form">
+        <!-- password -->
+        <div class="input-group">
+          <div class="input-group-addon"><span class="fa fa-unlock-alt" aria-hidden="true"></span></div>
+          <input class="form-control" name="pass" maxlength="30" type="password" placeholder="Password">
+        </div>
 
-            <!-- NICHT angemeldet ABER Admin -->
-            <?php if (!$isLogedIn): ?>
-
-                <!-- benutzer -->
-                <div class="input-group">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-                    <input class="form-control" name="user" maxlength="20" type="text" placeholder="Benutzer">
-                </div>
-
-                <!-- password -->
-                <div class="input-group">
-                    <div class="input-group-addon"><span class="fa fa-unlock-alt" aria-hidden="true"></span></div>
-                    <input class="form-control" name="pass" maxlength="30" type="password" placeholder="Password">
-                </div>
-
-                <!-- Login button -->
-                <button type="submit" name="login" class="btn btn-default">Login</button>
+        <!-- Login button -->
+        <button type="submit" name="login" class="btn btn-default">Login</button>
 
 
-                <!-- angemeldet -->
-            <?php else: ?>
+        <!-- angemeldet -->
+      <?php else: ?>
 
-                <button type="submit" formaction="<?php echo PATH_FILE_MAIN; ?>" name="website" class="btn btn-default">Zur Webseite</button>
-                <button type="submit" formaction="<?php echo PATH_FILE_DASHBOARD; ?>" name="dashboard" class="btn btn-default">Dashboard</button>
-                <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right">Logout</button>
+        <?php if ($page !== 'index'): ?>
+          <button type="submit" formaction="<?php echo PATH_FILE_MAIN; ?>" name="website" class="btn btn-default">Zur Webseite</button>
+        <?php endif; ?>
 
-            <?php endif; ?>
+        <?php if ($page !== 'dashboard'): ?>
+          <button type="submit" formaction="<?php echo PATH_FILE_DASHBOARD; ?>" name="dashboard" class="btn btn-default">Dashboard</button>
+        <?php endif; ?>
 
-        </form>
-    </div>
-    
+        <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right">Logout</button>
+
+      <?php endif; ?>
+
+    </form>
+  </div>
+  
 </nav>

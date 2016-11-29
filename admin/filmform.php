@@ -12,9 +12,11 @@
 
 <?php
 include_once '../config.inc.php';
+
+include_once PATH_FILE_INCL_DBCONNECT;
+include_once PATH_FILE_INCL_FUNCTIONS;
+
 include_once './inc/test_login.inc';
-include_once '../inc/dbconn.php';
-include_once '../inc/functions.inc.php';
 ?>
 
 <?php
@@ -99,16 +101,16 @@ if ($id) {
   $data = mysqli_fetch_assoc($handler_film);
 
   $company_id = $data['Filmgesellschaft_id'];
-  $genre_id = $data['Genre_id'];
-  $title = $data['Titel'];
-  $desc = $data['Beschreibung'];
-  $date = $data['Erscheinungsdatum'];
-  $duration = $data['DauerInMinuten'];
-  $price = $data['Preis'];
-  $image = $data['Bild'];
-  $visible = $data['Freigabe'];
+  $genre_id   = $data['Genre_id'];
+  $title      = $data['Titel'];
+  $desc       = $data['Beschreibung'];
+  $date       = $data['Erscheinungsdatum'];
+  $duration   = $data['DauerInMinuten'];
+  $price      = $data['Preis'];
+  $image      = $data['Bild'];
+  $visible    = $data['Freigabe'];
 
-  $msg_btn = 'Aktualisieren';
+  $msg_btn    = 'Aktualisieren';
 }
 
 $msgErrors = array();
@@ -179,7 +181,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
     // Die Daten senden.
     if (mysqli_query($conn, $sql)) {
-      header('Location: ./index.php');
+      header('Location: ' . PATH_FILE_DASHBOARD);
     } else {
       echo 'Der Film wurde NICHT gespeichert!';
     }
@@ -200,7 +202,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
     <?php
     $isLogedIn = TRUE;
-    include './inc/adminbar.inc.php';
+    include PATH_FILE_INCL_ADMINBAR;
     ?>
 
     <div class="film-form container">
@@ -322,7 +324,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
           <section id="section_submit">
 
             <button class="btn btn-default" type="submit" name="button" value="speichern"><?php echo $msg_btn ?></button>
-            <button class="btn btn-default pull-right" type="button" name="button" value="abbrechen" onClick="window.location.href = 'index.php';">Abbrechen</button>
+            <a href="<?php echo PATH_FILE_DASHBOARD; ?>" class="btn btn-default pull-right">Abbrechen</a>
 
           </section>
 

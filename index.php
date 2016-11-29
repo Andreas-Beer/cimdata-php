@@ -12,7 +12,7 @@
 
 <?php
 include_once './config.inc.php';
-require_once './inc/dbconn.php';
+require_once PATH_FILE_INCL_DBCONNECT;
 ?>
 
 <?php
@@ -99,7 +99,7 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <title><?php echo $title; ?></title>
-        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="<?php echo PATH_FILE_STYLE_MAIN; ?>" />
     </head>
 
     <body>
@@ -108,18 +108,18 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
         session_start();
         
         if (isset($_GET['adminbar']) || $_SESSION['login'] == 'true') {
-            include './admin/inc/adminbar.inc.php';
+            include PATH_FILE_INCL_ADMINBAR;
         }
         ?>
 
-        <?php include './inc/header.inc.php'; ?>
+        <?php include PATH_FILE_INCL_HEADER; ?>
 
         <main class="main container">
             <div class="row">
 
                 <div class="col-sm-4 col-md-3 sidebar">
 
-                    <?php include './inc/company.inc.php'; ?>
+                    <?php include PATH_FILE_INCL_COMPANY; ?>
 
                     <!-- Container für weitere Links -->
 <!--                    <aside class="links panel panel-default hidden-xs">
@@ -143,7 +143,7 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
                     
                     <?php
                     while (($data = mysqli_fetch_assoc($handle_movies)) !== NULL) {
-                        include './inc/film.inc.php';
+                        include PATH_FILE_INCL_FILM;
                     }
                     ?>
 
@@ -151,10 +151,10 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
 
             </div>
         </main>
-        <?php include './inc/footer.inc.php'; ?>
+        <?php include PATH_FILE_INCL_FOOTER; ?>
         
-        <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="<?php echo PATH_FILE_JS_JQUERY; ?>" type="text/javascript"></script>
+        <script src="<?php echo PATH_FILE_JS_BOOTSTRAP; ?>" type="text/javascript"></script>
 
     </body>
 </html>

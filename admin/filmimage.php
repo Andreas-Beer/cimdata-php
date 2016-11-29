@@ -13,7 +13,7 @@
 <?php
 include_once './inc/test_login.inc';
 
-include_once '../inc/config.inc.php';
+include_once '../config.inc.php';
 include_once '../inc/dbconn.php';
 include_once '../inc/functions.inc.php';
 ?>
@@ -37,7 +37,7 @@ if ($id) {
  * zurück zur letzten, bzw. der index Seite.
  */
 if (!$id || $data === NULL) {
-    $back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : './index.php';
+    $back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH_FILE_DASHBOARD;
     header('Location: ' . $back);
 }
 
@@ -147,7 +147,7 @@ if ($uploaded_file !== false && !$has_error) {
 
         <meta charset="utf-8">
         <title>Bild bearbeiten (<?php echo $data['Titel'] ?>)</title>
-        <link rel="stylesheet" type="text/css" href="../css/main.css">  
+        <link rel="stylesheet" type="text/css" href="<?php echo PATH_FILE_STYLE_MAIN; ?>">  
 
     </head>
     <body>
@@ -160,7 +160,7 @@ $isLogedIn = TRUE;
         <div class="film-form container">
 
             <div class="page-header">
-                <h1>Bild bearbeiten (<?php echo $data['Titel'] ?>)</h1>
+              <h1>Bild bearbeiten<br/><small>(<?php echo $data['Titel'] ?>)</small></h1>
             </div>
 
             <div class="well">
@@ -173,7 +173,8 @@ $isLogedIn = TRUE;
                     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo SIZE_MAX_IMAGE; ?>" />
                     <input name="uploaded_file" type="file">
                     
-                    <button class="btn btn-info">Bild Ändern</button>
+                    <button class="btn btn-info">Bild Speichern</button>
+                    <a href="<?php echo PATH_FILE_DASHBOARD; ?>" class="btn btn-warning">Abbrechen</a>
 
                 </form>
                 

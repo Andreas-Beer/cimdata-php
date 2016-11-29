@@ -16,5 +16,5 @@ if ($id) {
 }
 
 // zurück auf die letzte Seite / oder die index seite.
-$back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : './index.php';
+$back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH_FILE_DASHBOARD;
 header('Location: ' . $back);
