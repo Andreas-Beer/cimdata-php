@@ -12,7 +12,7 @@
 
 <?php
 include_once './config.inc.php';
-require_once PATH_FILE_INCL_DBCONNECT;
+require_once PATH_FILE_DBCONNECT;
 ?>
 
 <?php
@@ -20,9 +20,9 @@ require_once PATH_FILE_INCL_DBCONNECT;
 function getTitle($currType = '', $currSubType = '') {
     
     switch ($currType) {
-        case 'c': return MSG_TITLE_COMPANY . ' ' . $currSubType;
-        case 'g': return MSG_TITLE_GENRE   . ' ' . $currSubType;
-        default : return MSG_TITLE_DEFAULT;
+        case 'c': return sprintf(TEXT_MAIN_GUI_HEADLINE_COMPANY, $currSubType);
+        case 'g': return sprintf(TEXT_MAIN_GUI_HEADLINE_GENRE, $currSubType);
+        default : return TEXT_MAIN_GUI_HEADLINE_DEFAULT;
     }
 }
 
@@ -108,18 +108,18 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
         session_start();
         
         if (isset($_GET['adminbar']) || $_SESSION['login'] == 'true') {
-            include PATH_FILE_INCL_ADMINBAR;
+            include PATH_FILE_ADMINBAR;
         }
         ?>
 
-        <?php include PATH_FILE_INCL_HEADER; ?>
+        <?php include PATH_FILE_HEADER; ?>
 
         <main class="main container">
             <div class="row">
 
                 <div class="col-sm-4 col-md-3 sidebar">
 
-                    <?php include PATH_FILE_INCL_COMPANY; ?>
+                    <?php include PATH_FILE_COMPANY; ?>
 
                     <!-- Container für weitere Links -->
 <!--                    <aside class="links panel panel-default hidden-xs">
@@ -138,12 +138,12 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
                 <div class="col-sm-8 col-md-9">
 
                     <div class="well well-sm">
-                        <?php echo $handle_movies->num_rows; ?> Filme Gefunden
+                        <?php echo sprintf(TEXT_MAIN_GUI_MSG_FILMFOUND, $handle_movies->num_rows); ?>
                     </div>
                     
                     <?php
                     while (($data = mysqli_fetch_assoc($handle_movies)) !== NULL) {
-                        include PATH_FILE_INCL_FILM;
+                        include PATH_FILE_FILM;
                     }
                     ?>
 
@@ -151,7 +151,7 @@ $handle_movies = mysqli_query($conn, $sql_select_movie);
 
             </div>
         </main>
-        <?php include PATH_FILE_INCL_FOOTER; ?>
+        <?php include PATH_FILE_FOOTER; ?>
         
         <script src="<?php echo PATH_FILE_JS_JQUERY; ?>" type="text/javascript"></script>
         <script src="<?php echo PATH_FILE_JS_BOOTSTRAP; ?>" type="text/javascript"></script>

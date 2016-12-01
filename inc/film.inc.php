@@ -16,7 +16,7 @@
 $title    = reorderTitle($data['Titel']);
 $date     = mysqldate_to_german($data['Erscheinungsdatum']);
 $image    = testImage($data['Bild']);
-$price    = decimalPoint_to_comma($data['Preis']) . ' €';
+$price    = decimalPoint_to_comma($data['Preis']);
 $duration = $data['DauerInMinuten'];
 $genre    = $data['Genre'];
 $company  = $data['Filmgesellschaft'];
@@ -35,7 +35,7 @@ $desc     = $data['Beschreibung'];
     
     <div class="col-xs-4 col-lg-4  center-block text-center">
         <img class="img-rounded img-responsive center-block" src="<?php echo $image ?>" alt="<?php echo $title ?> (Filmplakat)" title="<?php echo $title ?>"/>
-        <h3 class="text-center">Preis: <?php echo $price; ?></h3>
+        <h3 class="text-center"><?php echo sprintf(TEXT_MAIN_GUI_FILM_PRICE, $price); ?></h3>
     </div>
 
     <div class="data col-xs-8 col-lg-8">

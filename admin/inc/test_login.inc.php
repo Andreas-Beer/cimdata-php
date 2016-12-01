@@ -3,7 +3,5 @@
 session_start();
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] != 'true') {
-    
-    header('Location: ../index.php');
-    
+    header('Location: ' . PATH_FILE_MAIN);
 }

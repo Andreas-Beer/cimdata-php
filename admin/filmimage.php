@@ -11,24 +11,24 @@
 ?>
 
 <?php
-include_once './inc/test_login.inc';
-
 include_once '../config.inc.php';
-include_once '../inc/dbconn.php';
-include_once '../inc/functions.inc.php';
+
+include_once PATH_FILE_LOGINVERIFY;
+include_once PATH_FILE_DBCONNECT;
+include_once PATH_FILE_FUNCTIONS;
 ?>
 
 <?php
 /*
  * Die Übergebene ID
  */
-$id = !empty($_GET['f']) ? $_GET['f'] : false;
+$id   = !empty($_GET['f']) ? $_GET['f'] : false;
 $data = NULL;
 
 if ($id) {
-    // Wenn eine Id übergeben wurde, die Daten zu dem Film abfragen.
-    $handle_film = mysqli_query($conn, $sql_select_moviesBymovieId($id));
-    $data = mysqli_fetch_assoc($handle_film);
+  // Wenn eine Id übergeben wurde, die Daten zu dem Film abfragen.
+  $handle_film = mysqli_query($conn, $sql_select_moviesBymovieId($id));
+  $data        = mysqli_fetch_assoc($handle_film);
 }
 /*
  * Wenn keine ID übergeben wurde,
@@ -37,21 +37,20 @@ if ($id) {
  * zurück zur letzten, bzw. der index Seite.
  */
 if (!$id || $data === NULL) {
-    $back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH_FILE_DASHBOARD;
-    header('Location: ' . $back);
+  $back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH_FILE_DASHBOARD;
+  header('Location: ' . $back);
 }
 
 /*
  * Bild Hochladen
  */
 
-// Funktionen
 /*
  * Funktionen
  */
 
 //Testen ob ein Fehler aufgetreten ist
-function getError($error) {
+function getError ($error) {
 
   switch ($error) {
     case UPLOAD_ERR_OK         : return false;
@@ -66,26 +65,30 @@ function getError($error) {
 }
 
 function checkFileSize ($fileSize) {
-    
-    if ($fileSize < SIZE_MAX_IMAGE) {
-        return false;
-    } else {
-        
-        echo $fileSize;
-        
-        return MSG_IMAGEUPLOAD_ERR_FORM_SIZE;
-    }
+
+  if ($fileSize < SIZE_MAX_IMAGE) {
+    return false;
+  } else {
+
+    echo $fileSize;
+
+    return MSG_IMAGEUPLOAD_ERR_FORM_SIZE;
+  }
 }
 
 function checkFileType ($type, $types = ['jpeg', 'jpg', 'pjpeg']) {
-    
-    for ($i = 0; $i < count($types); $i++) {
-        if ($type === 'image/' . $types[$i]) {
-            return false;
-        }
-    } 
-    
-    return MSG_IMAGEUPLOAD_ERR_EXTENSION;    
+
+  if (!$type) {
+    return MSG_IMAGEUPLOAD_ERR_EXTENSION;
+  }
+
+  for ($i = 0; $i < count($types); $i++) {
+    if ($type === 'image/' . $types[$i]) {
+      return false;
+    }
+  }
+
+  return MSG_IMAGEUPLOAD_ERR_EXTENSION . "($type)";
 }
 
 /*
@@ -108,79 +111,80 @@ $msgErrors[] = checkFileType($uploaded_file['type']);
 
 $has_error = (Boolean)implode('', $msgErrors);
 
-
 // Wenn bis hierher kein Fehler aufgetreten ist, das Bild speichern.
 if ($uploaded_file !== false && !$has_error) {
 
-    // 1. Den alten Pfad merken
-    $name_old = $data['Bild'];
-    $path_old = PATH_DIR_IMAGE . $name_old;
-    
-    // 2. Den Neuen Pfad erzeugen.
-    $filmId   = $data['id'];
-    $name_new = $filmId . '_' . $uploaded_file['name'];
-    $path_new = PATH_DIR_IMAGE . $name_new;
-    
-    // 3. Den Temporären Pfad auslesen.
-    $path_temp = $uploaded_file['tmp_name'];
-    
-    // Bild hochladen.
-    move_uploaded_file($path_temp, $path_new);
-    
-    // Bild in der Datenbank eintragen.
-    mysqli_query($conn, $sql_update_filmImage($name_new, $filmId));
-    
-    // Das alte Bild löschen. (Wenn es auch ein altes gibt.)
-    if ($name_old !== NULL) {
-        unlink($path_old);
-    }
-    
-    header('Location: ./index.php');
-}
+  // 1. Den alten Pfad merken
+  $name_old = $data['Bild'];
+  $path_old = PATH_DIR_IMAGE . $name_old;
 
+  // 2. Den Neuen Pfad erzeugen.
+  $filmId   = $data['id'];
+  $name_new = $filmId . '_' . $uploaded_file['name'];
+  $path_new = PATH_DIR_IMAGE . $name_new;
+
+  // 3. Den Temporären Pfad auslesen.
+  $path_temp = $uploaded_file['tmp_name'];
+
+  // Bild hochladen.
+  move_uploaded_file($path_temp, $path_new);
+
+  // Bild in der Datenbank eintragen.
+  mysqli_query($conn, $sql_update_filmImage($name_new, $filmId));
+
+  // Das alte Bild löschen. (Wenn es auch ein altes gibt.)
+  if ($name_old !== NULL) {
+    unlink($path_old);
+  }
+
+  header('Location: ./index.php');
+}
 ?>
 
 
 <!DOCTYPE html>
 <html lang="de">
-    <head>
+  <head>
 
-        <meta charset="utf-8">
-        <title>Bild bearbeiten (<?php echo $data['Titel'] ?>)</title>
-        <link rel="stylesheet" type="text/css" href="<?php echo PATH_FILE_STYLE_MAIN; ?>">  
+    <meta charset="utf-8">
+    <title><?php echo TEXT_IMAGEEDIT_GUI_HEADLINE ?> (<?php echo $data['Titel']?>)</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo PATH_FILE_STYLE_MAIN;?>">  
 
-    </head>
-    <body>
+  </head>
+  <body>
 
-<?php
-$isLogedIn = TRUE;
-//    include './inc/adminbar.inc.php';
-?>
+    <?php include PATH_FILE_ADMINBAR; ?>
 
-        <div class="film-form container">
+    <div class="film-form container">
 
-            <div class="page-header">
-              <h1>Bild bearbeiten<br/><small>(<?php echo $data['Titel'] ?>)</small></h1>
-            </div>
+      <div class="page-header">
+        <h1><?php echo TEXT_IMAGEEDIT_GUI_HEADLINE ?><br/><small>(<?php echo $data['Titel']?>)</small></h1>
+      </div>
 
-            <div class="well">
+      <?php
+      if ($has_error) {
+        echo implode(',', $msgErrors);
+      }
+      ?>
 
-                <img src="<?php echo testImage($data['Bild'], PATH_DIR_IMAGE); ?>" />
-                <p><?php echo $data['Bild'] ?></p>
+      <div class="well">
 
-                <form method="post" action="" enctype="multipart/form-data">
-                    
-                    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo SIZE_MAX_IMAGE; ?>" />
-                    <input name="uploaded_file" type="file">
-                    
-                    <button class="btn btn-info">Bild Speichern</button>
-                    <a href="<?php echo PATH_FILE_DASHBOARD; ?>" class="btn btn-warning">Abbrechen</a>
+        <img src="<?php echo testImage($data['Bild'], PATH_DIR_IMAGE);?>" />
+        <p><?php echo $data['Bild']?></p>
 
-                </form>
-                
-            </div>
+        <form method="post" action="" enctype="multipart/form-data">
 
-        </div>
+          <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo SIZE_MAX_IMAGE;?>" />
+          <input name="uploaded_file" type="file">
 
-    </body>
+          <button class="btn btn-info">Bild Speichern</button>
+          <a href="<?php echo PATH_FILE_DASHBOARD;?>" class="btn btn-warning">Abbrechen</a>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </body>
 </html>

@@ -13,10 +13,9 @@
 <?php
 include_once '../config.inc.php';
 
-include_once PATH_FILE_INCL_DBCONNECT;
-include_once PATH_FILE_INCL_FUNCTIONS;
-
-include_once './inc/test_login.inc';
+include_once PATH_FILE_DBCONNECT;
+include_once PATH_FILE_FUNCTIONS;
+include_once PATH_FILE_LOGINVERIFY;
 ?>
 
 <?php
@@ -73,16 +72,16 @@ function formatDateToMySql($date) {
 
 // Die Variablen mit defaultwert
 
-$id = is_numeric($_GET['f']) ? $_GET['f'] : false;
+$id         = is_numeric($_GET['f']) ? $_GET['f'] : false;
 $company_id = getPostValue('fc');
-$genre_id = getPostValue('fg');
-$title = getPostValue('ft');
-$desc = getPostValue('dc');
-$date = getPostValue('dt');
-$duration = getPostValue('du');
-$price = getPostValue('pr');
-$image = getPostValue('img');
-$film_id = getPostValue('fid');
+$genre_id   = getPostValue('fg');
+$title      = getPostValue('ft');
+$desc       = getPostValue('dc');
+$date       = getPostValue('dt');
+$duration   = getPostValue('du');
+$price      = getPostValue('pr');
+$image      = getPostValue('img');
+$film_id    = getPostValue('fid');
 
 /*
  * Problem:
@@ -93,7 +92,8 @@ $film_id = getPostValue('fid');
  */
 $visible = getPostValue('vi', '0');
 
-$msg_btn = 'Speichern';
+$msg_btn  = TEXT_FILMEDIT_BUTTON_SAVE;
+$headline = TEXT_FILMEDIT_GUI_HEADLINE_NEW;
 
 if ($id) {
 
@@ -110,7 +110,8 @@ if ($id) {
   $image      = $data['Bild'];
   $visible    = $data['Freigabe'];
 
-  $msg_btn    = 'Aktualisieren';
+  $headline   = sprintf(TEXT_FILMEDIT_GUI_HEADLINE_UPDATE, $title);
+  $msg_btn    = TEXT_FILMEDIT_BUTTON_UPDATE;
 }
 
 $msgErrors = array();
@@ -194,21 +195,18 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
   <head>
 
     <meta charset="utf-8">
-    <title>Filmtitel bearbeiten</title>
-    <link rel="stylesheet" type="text/css" href="../css/main.css">  
+    <title><?php echo $headline; ?></title>
+    <link rel="stylesheet" type="text/css" href="<?php echo PATH_FILE_STYLE_MAIN; ?>">  
 
   </head>
   <body>
 
-    <?php
-    $isLogedIn = TRUE;
-    include PATH_FILE_INCL_ADMINBAR;
-    ?>
+    <?php include PATH_FILE_ADMINBAR; ?>
 
     <div class="film-form container">
 
       <div class="page-header">
-        <h1>Filmtitel bearbeiten</h1>
+        <h1><?php echo $headline; ?></h1>
       </div>
 
       <div>
@@ -225,9 +223,9 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
               echo 'has-error';
             }
             ?>">
-              <label class="form_label" for="fc">Filmgesellschaften *</label>
+              <label class="form_label" for="fc"><?php echo TEXT_FILMEDIT_GUI_COMPANIES; ?></label>
               <select class="form_input_select form-control" name="fc" id="fc">
-                <option class="form_option" value="0">Bitte auswählen</option>
+                <option class="form_option" value="0"><?php echo TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT; ?></option>
                 <?php
                 $handler_companies = mysqli_query($conn, $sql_select_companies);
 
@@ -242,9 +240,9 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
             <!-- Genres -->
             <div class="form-group has-feedback <?php if (isset($msgErrors['fg'])) { echo 'has-error'; } ?>">
-              <label class="form_label" for="fg">Genres *</label>
+              <label class="form_label" for="fg"><?php echo TEXT_FILMEDIT_GUI_GENRES; ?></label>
               <select class="form_input_select form-control" name="fg" id="fg">
-                <option class="form_option" value="0">Bitte auswählen</option>
+                <option class="form_option" value="0"><?php echo TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT; ?></option>
                 <?php
                 $handler_genres = mysqli_query($conn, $sql_select_genres);
 
@@ -260,21 +258,21 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
             <!-- Filmtitel -->
             <div class="form-group has-feedback <?php
             if (isset($msgErrors['ft'])) { echo 'has-error'; } ?>">
-              <label class="form_label" for="titel">Filmtitel *</label>
+              <label class="form_label" for="titel"><?php echo TEXT_FILMEDIT_GUI_TITLE; ?></label>
               <input class="form_input form-control" type="text" name="ft" id="titel" maxlength="150" value="<?php echo $title; ?>">
               <?php echo getError('ft'); ?>
             </div>
 
             <!-- Beschreibung -->
             <div class="form-group">
-              <label class="form_label" for="beschreibung">Beschreibung</label>
+              <label class="form_label" for="beschreibung"><?php echo TEXT_FILMEDIT_GUI_DESCRIPTION; ?></label>
               <textarea style="resize: vertical" class="form_text form-control" rows="3" name="dc" id="beschreibung"><?php echo $desc; ?></textarea>
             </div>
 
             <!-- Erscheinungsdatum -->
             <div class="form-group has-feedback <?php
             if (isset($msgErrors['dt'])) { echo 'has-error'; } ?>">
-              <label class="form_label" for="datum">Erscheinungsdatum *</label>
+              <label class="form_label" for="datum"><?php echo TEXT_FILMEDIT_GUI_DATE; ?></label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-calendar" aria-hidden="true"></span></div>
                 <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
@@ -284,7 +282,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
             <!-- Dauer in Minuten -->
             <div class="form-group">
-              <label class="form_label" for="dauer">Dauer in Minuten</label>
+              <label class="form_label" for="dauer"><?php echo TEXT_FILMEDIT_GUI_DURATION; ?></label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-clock-o" aria-hidden="true"></span></div>
                 <input class="form_input form-control" type="number"  min="1" max="9999" step="0.1" name="du" id="dauer" maxlength="3" value="<?php echo $duration; ?>">
@@ -294,16 +292,16 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
             <!-- Preis -->
             <div class="form-group">
-              <label class="form_label" for="preis">Preis</label>
+              <label class="form_label" for="preis"><?php echo TEXT_FILMEDIT_GUI_PRICE; ?></label>
               <div class="input-group">
-                <div class="input-group-addon">€</div>
+                <div class="input-group-addon"><?php echo TEXT_GLOBAL_GUI_CURRENCY; ?></div>
                 <input class="form_input form-control" type="number" min="0" max="100" step="0.01" pattern="[0-9]+([\,|\.][0-9]+)?" name="pr" id="preis" maxlength="10" value="<?php echo $price; ?>">
               </div>
             </div>
 
             <!-- Bild -->
             <div class="form-group">
-              <label class="form_label" for="img">Bild</label>
+              <label class="form_label" for="img"><?php echo TEXT_FILMEDIT_GUI_IMAGE; ?></label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="fa fa-file-image-o" aria-hidden="true"></span></div>
                 <input class="form_input form-control" type="text" name="img" id="bild" maxlength="150" value="<?php echo $image; ?>">
@@ -313,7 +311,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
             <!-- Freigegeben -->
             <div class="form-group">
               <input class="form_checkbox" type="checkbox" name="vi" id="freigabe" value="1" <?php echo $visible ? 'checked' : '' ?>>
-              <label class="form_label_checkbox" for="freigabe">Freigegeben (Für die Kunden sichtbar)</label>
+              <label class="form_label_checkbox" for="freigabe"><?php echo TEXT_FILMEDIT_GUI_VISIBILITY; ?></label>
             </div>
 
             <!-- versteckte Felder für ID -->
@@ -324,7 +322,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
           <section id="section_submit">
 
             <button class="btn btn-default" type="submit" name="button" value="speichern"><?php echo $msg_btn ?></button>
-            <a href="<?php echo PATH_FILE_DASHBOARD; ?>" class="btn btn-default pull-right">Abbrechen</a>
+            <a href="<?php echo PATH_FILE_DASHBOARD; ?>"><button type="button" class="btn btn-default pull-right"><?php echo TEXT_FILMEDIT_BUTTON_CANCEL; ?></button></a>
 
           </section>
 

@@ -81,7 +81,7 @@ $page = getPage();
   <div class="container-fluid">
     <!-- Überschrift -->
     <div class="navbar-header hidden-xs">
-      <span class="navbar-brand">Adminbar</span>
+      <span class="navbar-brand"><?php echo TEXT_ADMINBAR_GUI_HEADLINE ?></span>
     </div>
 
     <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post" class="navbar-form">
@@ -91,36 +91,36 @@ $page = getPage();
 
         <!-- benutzer -->
         <div class="input-group">
-          <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-          <input class="form-control" name="user" maxlength="20" type="text" placeholder="Benutzer">
-        </div>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+            <input class="form-control" name="user" maxlength="20" type="text" placeholder="Benutzer">
+          </div>
 
-        <!-- password -->
-        <div class="input-group">
-          <div class="input-group-addon"><span class="fa fa-unlock-alt" aria-hidden="true"></span></div>
-          <input class="form-control" name="pass" maxlength="30" type="password" placeholder="Password">
-        </div>
+          <!-- password -->
+          <div class="input-group">
+            <div class="input-group-addon"><span class="fa fa-unlock-alt" aria-hidden="true"></span></div>
+            <input class="form-control" name="pass" maxlength="30" type="password" placeholder="Password">
+          </div>
 
-        <!-- Login button -->
-        <button type="submit" name="login" class="btn btn-default">Login</button>
+          <!-- Login button -->
+          <button type="submit" name="login" class="btn btn-default">Login</button>
 
 
-        <!-- angemeldet -->
-      <?php else: ?>
+          <!-- angemeldet -->
+        <?php else:?>
 
-        <?php if ($page !== 'index'): ?>
-          <button type="submit" formaction="<?php echo PATH_FILE_MAIN; ?>" name="website" class="btn btn-default">Zur Webseite</button>
-        <?php endif; ?>
+          <?php if ($page !== 'dashboard'):?>
+            <button type="submit" formmethod="GET" formaction="<?php echo PATH_FILE_DASHBOARD;?>" name="dashboard" class="btn btn-default"><?php echo TEXT_ADMINBAR_BUTTON_TODASHBOARD; ?></button>
+          <?php endif;?>
 
-        <?php if ($page !== 'dashboard'): ?>
-          <button type="submit" formaction="<?php echo PATH_FILE_DASHBOARD; ?>" name="dashboard" class="btn btn-default">Dashboard</button>
-        <?php endif; ?>
+          <?php if ($page !== 'index'):?>
+            <button type="submit" formmethod="GET" formaction="<?php echo PATH_FILE_MAIN;?>" name="website" class="btn btn-default"><?php echo TEXT_ADMINBAR_BUTTON_TOMAIN; ?></button>
+          <?php endif;?>
 
-        <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right">Logout</button>
+          <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right"><?php echo TEXT_ADMINBAR_BUTTON_LOGOUT; ?></button>
 
-      <?php endif; ?>
+        <?php endif;?>
 
     </form>
   </div>
-  
+
 </nav>

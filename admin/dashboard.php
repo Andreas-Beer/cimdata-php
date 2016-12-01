@@ -13,12 +13,16 @@
 <?php
 include_once '../config.inc.php';
 
-include_once PATH_FILE_INCL_DBCONNECT;
-include_once PATH_FILE_INCL_FUNCTIONS;
-include_once PATH_FILE_INCL_LOGINVERIFY;
+include_once PATH_FILE_DBCONNECT;
+include_once PATH_FILE_FUNCTIONS;
+include_once PATH_FILE_LOGINVERIFY;
 ?>
 
 <?php
+$link_delete   = PATH_FILE_FILMDELETE;
+$link_filmEdit = PATH_FILE_FILMEDIT;
+$link_image    = PATH_FILE_FILMIMAGE;
+
 $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
 ?>
 
@@ -31,36 +35,30 @@ $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
     </head>
     <body>
 
-        <?php
-            $isLogedIn = TRUE;
-            include PATH_FILE_INCL_ADMINBAR;
-        ?>
+        <?php include PATH_FILE_ADMINBAR; ?>
 
         <div class="container film-list">
 
             <div class="page-header">
-                <h1>Alle Filme</h1>
+                <h1><?php echo TEXT_DASHBOARD_GUI_HEADLINE; ?></h1>
             </div>
 
-            <h2><a class="btn btn-primary" href="<?php echo $link_filmEdit; ?>?f=neu">Film hinzufügen</a></h2>
+            <h2><a class="btn btn-primary" href="<?php echo $link_filmEdit; ?>?f=neu"><?php echo TEXT_DASHBOARD_BUTTON_FILM_NEW; ?></a></h2>
 
             <table class="table table-condensed table-striped table-responsive">
                 <tr>
                     <th></th>
                     <th>#</th>
-                    <th>Titel</th>
-                    <th>Genre</th>
-                    <th>Filmgesellschaft</th>
-                    <th>Preis €</th>
-                    <th>Sichtbar</th>
-                    <th>Bild</th>
+                    <th><?php echo TEXT_DASHBOARD_GUI_THEAD_TITLE; ?></th>
+                    <th><?php echo TEXT_DASHBOARD_GUI_THEAD_GENRE; ?></th>
+                    <th><?php echo TEXT_DASHBOARD_GUI_THEAD_COMPANY; ?></th>
+                    <th><?php echo TEXT_DASHBOARD_GUI_THEAD_PRICE; ?></th>
+                    <th><?php echo TEXT_DASHBOARD_GUI_THEAD_VISIBLE; ?></th>
+                    <th><?php echo TEXT_DASHBOARD_GUI_THEAD_IMAGE; ?></th>
                     <th></th>
                 </tr>  
 
                 <?php
-                $link_filmEdit = PATH_FILE_FILMEDIT;
-                $link_delete   = './filmdelete.php';
-                $link_image    = PATH_FILE_FILMIMAGE;
 
                 while (($data = mysqli_fetch_assoc($handle_films_all)) != NULL) {
 
@@ -73,9 +71,9 @@ $handle_films_all = mysqli_query($conn, $sql_select_films('id'));
                   $preis    = decimalPoint_to_comma($data['Preis']);
                   $freigabe = $data['Freigabe'] === '1' ? 'JA' : 'NEIN';
 
-                  $btn_edi = 'Bearbeiten';
-                  $btn_img = $data['Bild'] !== NULL ? 'Bearbeiten' : 'NEU';
-                  $btn_del = 'Löschen';
+                  $btn_edi = TEXT_DASHBOARD_BUTTON_FILM_EDIT;
+                  $btn_img = $data['Bild'] !== NULL ? TEXT_DASHBOARD_BUTTON_IMAGE_EDIT : TEXT_DASHBOARD_BUTTON_IMAGE_NEW;
+                  $btn_del = TEXT_DASHBOARD_BUTTON_DELETE_FILM;
 
                   $class_vis = $freigabe === 'JA' ? 'true' : 'false';
 

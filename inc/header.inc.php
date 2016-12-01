@@ -11,7 +11,7 @@
 ?>
 
 <?php
-include_once PATH_FILE_INCL_FUNCTIONS;
+include_once PATH_FILE_FUNCTIONS;
 
 // Daten abfragen 
 $handle_genreAll = mysqli_query($conn, $sql_select_genres);
