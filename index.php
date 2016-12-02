@@ -17,144 +17,117 @@ require_once PATH_FILE_DBCONNECT;
 
 <?php
 
-function getTitle($currType = '', $currSubType = '') {
-    
-    switch ($currType) {
-        case 'c': return sprintf(TEXT_MAIN_GUI_HEADLINE_COMPANY, $currSubType);
-        case 'g': return sprintf(TEXT_MAIN_GUI_HEADLINE_GENRE, $currSubType);
-        default : return TEXT_MAIN_GUI_HEADLINE_DEFAULT;
-    }
+function getData () {
+
+  $type = '';
+  $id   = '';
+
+  $data = array();
+
+  if (!empty($_GET['g']) && is_numeric($_GET['g'])) {
+    $type      = 'g';
+    $id        = $_GET[$type];
+    $title_arr = getDataFromDB(sql_select_genreByID($id));
+    $category  = $title_arr[0]['name'];
+
+    $data['id']    = $id;
+    $data['title'] = sprintf(TEXT_MAIN_GUI_HEADLINE_GENRE, $category);
+    $data['data']  = getDataFromDB(sql_select_moviesByGenreId($id));
+  }
+  
+  elseif (!empty($_GET['c']) && is_numeric($_GET['c'])) {
+    $type      = 'c';
+    $id        = $_GET[$type];
+    $title_arr = getDataFromDB(sql_select_companyByID($id));
+    $category  = $title_arr[0]['name'];
+
+
+    $data['id']    = $id;
+    $data['title'] = sprintf(TEXT_MAIN_GUI_HEADLINE_COMPANY, $category);
+    $data['data']  = getDataFromDB(sql_select_moviesByCompanyId($id));
+  }
+  
+  else {
+    $data['id']    = $id;
+    $data['title'] = TEXT_MAIN_GUI_HEADLINE_DEFAULT;
+    $data['data']  = getDataFromDB(sql_select_moviesNew10());
+  }
+
+
+  return $data;
 }
 
-function getSubtype ($currType, $currID = 0) {
+$dbCompanies = getDataFromDB(sql_select_companies());
+$dbGenres    = getDataFromDB(sql_select_genres());
+$siteData    = getData();
 
-    // Die Abfragen global machen
-    global $sql_select_companyByID;
-    global $sql_select_genreByID;
-    global $conn;
-    
-    /*
-     * Eine Variable anlegen, die zum Schluss,
-     * die gewählte sql Anweisung beinhaltet
-     */
-    $sql = '';
-    
-    switch ($currType) {
-        case 'c': $sql = $sql_select_companyByID($currID); break;
-        case 'g': $sql = $sql_select_genreByID($currID);   break;
-        default : return '';
-    }
-    
-    $hander = mysqli_query($conn, $sql);
-    $data   = mysqli_fetch_assoc($hander);
-    return $data['name'];
-}
-
-// Den Defaultwert der Variablen setzen.
-$siteType       = '';
-$subtype        = '';
-$curr_genreID   = '';
-$curr_companyID = '';
-
-/*
- * Den default-fall speichern (die 10 neustern Filme)
- * Er wird nur überschrieben, falls eine andere ID übergeben wurde.
- */
-$sql_select_movie = $sql_select_moviesNew10;
-
-/*
- * Empfangen und überprüfen der Variablen.
- */
-
-/*
- * Wenn ein g übergeben wurde, die Auswahl also ein Genre ist.
- */
-if (!empty($_GET['g'])) {
-    $siteType = 'g';
-    $curr_genreID = $_GET['g'];
-    $sql_select_movie = $sql_select_moviesByGenreId($curr_genreID);
-    
-    $subtype = getSubtype($siteType, $curr_genreID);
-}
-
-/*
- * Wenn ein c übergeben wurde, die Auswahl also eine Filmgesellschaft ist.
- */
-if (!empty($_GET['c'])) {
-    $siteType = 'c';
-    $curr_companyID = $_GET['c'];
-    $sql_select_movie = $sql_select_moviesByCompanyId($curr_companyID);
-    
-    $subtype = getSubtype($siteType, $curr_companyID);
-}
-
-$title = getTitle($siteType) . $subtype;
-
-$handle_movies = mysqli_query($conn, $sql_select_movie);
+$title = htmlspecialchars($siteData['title']);
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <title><?php echo $title; ?></title>
-        <link rel="stylesheet" href="<?php echo PATH_FILE_STYLE_MAIN; ?>" />
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title><?php echo $title;?></title>
+    <link rel="stylesheet" href="<?php echo PATH_FILE_STYLE_MAIN;?>" />
+  </head>
 
-    <body>
+  <body>
 
-        <?php
-        session_start();
-        
-        if (isset($_GET['adminbar']) || $_SESSION['login'] == 'true') {
-            include PATH_FILE_ADMINBAR;
-        }
-        ?>
+    <?php
+    session_start();
 
-        <?php include PATH_FILE_HEADER; ?>
+    if (isset($_GET['adminbar']) || !empty($_SESSION['login']) == true) {
+      include PATH_FILE_ADMINBAR;
+    }
+    ?>
 
-        <main class="main container">
-            <div class="row">
+    <?php include PATH_FILE_HEADER;?>
 
-                <div class="col-sm-4 col-md-3 sidebar">
+    <main class="main container">
+      <div class="row">
 
-                    <?php include PATH_FILE_COMPANY; ?>
+        <div class="col-sm-4 col-md-3 sidebar">
 
-                    <!-- Container für weitere Links -->
-<!--                    <aside class="links panel panel-default hidden-xs">
-                        <div class="panel-heading">
-                            Weitere Links
-                        </div>
-                        <div class="panel-body">
-                            <ul class="list-unstyled">
-                                <li><a href="">###Link###</a></li>
-                            </ul>
-                        </div>
-                    </aside>-->
+          <?php include PATH_FILE_COMPANY;?>
 
-                </div>
-
-                <div class="col-sm-8 col-md-9">
-
-                    <div class="well well-sm">
-                        <?php echo sprintf(TEXT_MAIN_GUI_MSG_FILMFOUND, $handle_movies->num_rows); ?>
-                    </div>
-                    
-                    <?php
-                    while (($data = mysqli_fetch_assoc($handle_movies)) !== NULL) {
-                        include PATH_FILE_FILM;
-                    }
-                    ?>
-
-                </div>
-
+          <!-- Container für weitere Links -->
+<!--          <aside class="links panel panel-default hidden-xs">
+            <div class="panel-heading">
+              Weitere Links
             </div>
-        </main>
-        <?php include PATH_FILE_FOOTER; ?>
-        
-        <script src="<?php echo PATH_FILE_JS_JQUERY; ?>" type="text/javascript"></script>
-        <script src="<?php echo PATH_FILE_JS_BOOTSTRAP; ?>" type="text/javascript"></script>
+            <div class="panel-body">
+              <ul class="list-unstyled">
+                <li><a href="">###Link###</a></li>
+              </ul>
+            </div>
+          </aside>-->
 
-    </body>
+        </div>
+
+        <div class="col-sm-8 col-md-9">
+
+          <div class="well well-sm">
+            <?php
+            echo sprintf(TEXT_MAIN_GUI_MSG_FILMFOUND, count($siteData['data']));
+            ?>
+          </div>
+
+          <?php
+          foreach ($siteData['data'] as $data) {
+            include PATH_FILE_FILM;
+          }
+          ?>
+
+        </div>
+
+      </div>
+    </main>
+    <?php include PATH_FILE_FOOTER;?>
+
+    <script src="<?php echo PATH_FILE_JS_JQUERY;?>" type="text/javascript"></script>
+    <script src="<?php echo PATH_FILE_JS_BOOTSTRAP;?>" type="text/javascript"></script>
+
+  </body>
 </html>

@@ -11,10 +11,7 @@
 ?>
 
 <?php
-include_once 'functions.inc.php';
-
-// Daten abfragen 
-$handle_companiesAll = mysqli_query($conn, $sql_select_companies);
+include_once PATH_FILE_FUNCTIONS;
 ?>
 
 <nav>
@@ -23,7 +20,7 @@ $handle_companiesAll = mysqli_query($conn, $sql_select_companies);
   <form class="navbar-form" role="search">
     <div class="form-group">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="<?php echo TEXT_MAIN_GUI_SEARCH_PLACEHOLDER; ?>">
+        <input type="text" class="form-control" placeholder="<?php echo TEXT_MAIN_GUI_SEARCH_PLACEHOLDER;?>">
         <span class="input-group-btn">
           <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
         </span>
@@ -37,11 +34,11 @@ $handle_companiesAll = mysqli_query($conn, $sql_select_companies);
     <?php
 //        <li class = "active"><a href = "#">###FILMGESELLSCHAFT1###</a></li>
 
-    while (($data = mysqli_fetch_assoc($handle_companiesAll)) !== NULL) {
+    foreach ($dbCompanies as $data) {
 
       $href = $_SERVER['PHP_SELF'] . '?c=' . $data['id'];
 
-      echo '<li class="' . isActive($curr_companyID, $data['id']) . '">';
+      echo '<li class="' . isActive($siteData['id'], $data['id']) . '">';
       echo '<a href = "' . $href . '">' . $data['Name'] . '</a>';
       echo '</li>';
     }
@@ -49,5 +46,3 @@ $handle_companiesAll = mysqli_query($conn, $sql_select_companies);
   </ul>
 
 </nav>
-<?php
-mysqli_free_result($handle_companiesAll);

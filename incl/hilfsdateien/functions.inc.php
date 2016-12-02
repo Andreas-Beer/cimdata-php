@@ -15,6 +15,11 @@
 
 function reorderTitle($title) {
     $split = explode(', ', $title);
+    
+    if (count($split) <= 1) {
+      return $title;
+    }
+    
     return $split[1] . ' ' . $split[0];
 }
 
@@ -22,8 +27,7 @@ function mysqldate_to_german($mysqldate) {
     return strftime("%d.%m.%Y", strtotime($mysqldate));
 }
 
-function testImage($image, $dir = PATH_DIR_IMAGE, $default = 'default2.jpg') {
-
+function testImage($image, $dir = PATH_DIR_IMAGE, $default = 'default.jpg') {
     $image   = $dir . $image;
     $default = $dir . $default;
     
@@ -45,5 +49,5 @@ function isActive($p1, $p2, $class = 'active') {
 ;
 
 function decimalPoint_to_comma($str) {
-    return str_replace('.', ',', $str);
+  return str_replace('.', ',', $str);
 }

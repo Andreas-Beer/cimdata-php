@@ -12,9 +12,6 @@
 
 <?php
 include_once PATH_FILE_FUNCTIONS;
-
-// Daten abfragen 
-$handle_genreAll = mysqli_query($conn, $sql_select_genres);
 ?>
 
 <header>
@@ -38,12 +35,12 @@ $handle_genreAll = mysqli_query($conn, $sql_select_genres);
 
                     <?php
                     //<li class = "active"><a href = "#">###GENRE1###</a></li>
-
-                    while (($data = mysqli_fetch_assoc($handle_genreAll)) != NULL) {
+                    
+                    foreach ($dbGenres as  $data) {
 
                         $href = $_SERVER['PHP_SELF'] . '?g=' . $data['id'];
 
-                        echo '<li class="' . isActive($data['id'], $curr_genreID) . '">';
+                        echo '<li class="' . isActive($data['id'], $siteData['id']) . '">';
                         echo '<a href = "' . $href . '">' . $data['Name'] . '</a>';
                         echo '</li>';
                     }
@@ -55,8 +52,3 @@ $handle_genreAll = mysqli_query($conn, $sql_select_genres);
         </div>
     </nav>
 </header>
-
-<?php
-// Daten freigeben.
-mysqli_free_result($handle_genreAll);
-?>

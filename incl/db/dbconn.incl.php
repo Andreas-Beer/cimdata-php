@@ -73,7 +73,7 @@ const PART_MOVIES_SELECT = "
  */
 
 // selects
-$sql_select_films = function ($orderBy = 'Titel'){
+function sql_select_films ($orderBy = 'Titel'){
     return "
     SELECT
         f.id,
@@ -88,57 +88,63 @@ $sql_select_films = function ($orderBy = 'Titel'){
     JOIN filmgesellschaft AS fg ON fg.id = f.Filmgesellschaft_id
     JOIN genre AS g ON g.id = f.Genre_id
     ORDER BY $orderBy;";
-};
+}
 
-$sql_select_genres = "
+function sql_select_genres () {
+  return "
     SELECT *
     FROM genre
     ORDER BY Name;";
+}
 
-$sql_select_companies = "
+function sql_select_companies () {
+  return "
     SELECT *
     FROM filmgesellschaft
     ORDER BY Name;";
+}
 
-$sql_select_moviesByCompanyId = function ($companyId) {
+function sql_select_moviesByCompanyId ($companyId) {
     return PART_MOVIES_SELECT . "
         WHERE fg.id = $companyId AND f.Freigabe = 1
         ORDER BY f.Titel;";
-};
+}
 
-$sql_select_moviesByGenreId = function ($genreId) {
+function sql_select_moviesByGenreId ($genreId) {
     return PART_MOVIES_SELECT . "
         WHERE g.id = $genreId AND f.Freigabe = 1
         ORDER BY f.Titel;";
-};
+}
 
-$sql_select_movieByMovieId = function ($movieId) {
+function sql_select_movieByMovieId ($movieId) {
     return PART_MOVIES_SELECT . "
         WHERE f.id = $movieId
         ORDER BY f.Titel;";
-};
+}
 
-$sql_select_moviesNew10 = PART_MOVIES_SELECT . "
+function sql_select_moviesNew10 () {
+  return PART_MOVIES_SELECT . "
     WHERE f.Freigabe = 1
     ORDER BY f.Erscheinungsdatum DESC
     LIMIT 10;";
+}
 
-$sql_select_genreByID = function ($genreId) {
+function sql_select_genreByID ($genreId) {
     return "
-        SELECT name
+      SELECT name
         FROM genre
         WHERE id = $genreId;";
-};
+}
 
-$sql_select_companyByID = function ($companyId) {
+function sql_select_companyByID ($companyId) {
     return "
         SELECT name
         FROM filmgesellschaft
         WHERE id = $companyId;";
-};
+}
 
 // inserts
-$sql_insert_newFilm = function (
+function sql_insert_newFilm (
         $genre_id,
         $filmgesellschaft_id,
         $titel,
@@ -185,10 +191,10 @@ $sql_insert_newFilm = function (
     $sql .= ");";
             
     return $sql;
-};
+}
 
 // updates
-$sql_update_film = function (
+function sql_update_film (
         $film_id,
         $genre_id,
         $filmgesellschaft_id,
@@ -227,9 +233,9 @@ $sql_update_film = function (
             Preis = $preis,
             Freigabe = $freigabe
         WHERE id = $film_id;";
-};
+}
 
-$sql_update_filmImage = function ($image_name, $id) {
+function sql_update_filmImage ($image_name, $id) {
   
     return "
         UPDATE film
@@ -237,13 +243,13 @@ $sql_update_filmImage = function ($image_name, $id) {
         WHERE id = $id;
         ";
     
-};
+}
 
 // Deletes
-$sql_delete_filmById = function ($filmId) {
+function sql_delete_filmById ($filmId) {
   
     return "
         DELETE
         FROM film
         WHERE id = $filmId;";
-};
+}
