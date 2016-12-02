@@ -10,12 +10,29 @@
 ?>
 
 <?php
-# PHP-Warnungen und Fehler ausblenden
-//error_reporting(0);
-# PHP-Notizen ausblenden
-error_reporting( E_ALL ^ E_NOTICE );
+function getDataFromDB ($query) {
+  
+  // Datenbank Verbindungsversuch
+  if (!$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_BASE)) {
+    die("Verbindungsfehler");
+  }
+  
+  // Den Zeichensatz umstellen
+  mysqli_set_charset( $conn, "utf8" );
+  
+  // Datenbank Abfrageversuch
+  if (!$result = mysqli_query($conn, $query)) {
+    die("Abfragefehler");
+  }
+  
+  // Versuch 
+  if(!$data = mysqli_fetch_all($result, MYSQLI_ASSOC)) {
+    return False;
+  }
+   
+  return $data;
+}
 
-######## Datenbankverbindung herstellen ########
 
 // Angaben zur Datenbankverbindung
 const DB_HOST = "localhost";
@@ -95,7 +112,7 @@ $sql_select_moviesByGenreId = function ($genreId) {
         ORDER BY f.Titel;";
 };
 
-$sql_select_moviesBymovieId = function ($movieId) {
+$sql_select_movieByMovieId = function ($movieId) {
     return PART_MOVIES_SELECT . "
         WHERE f.id = $movieId
         ORDER BY f.Titel;";

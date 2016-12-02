@@ -27,7 +27,7 @@ $data = NULL;
 
 if ($id) {
   // Wenn eine Id übergeben wurde, die Daten zu dem Film abfragen.
-  $handle_film = mysqli_query($conn, $sql_select_moviesBymovieId($id));
+  $handle_film = mysqli_query($conn, $sql_select_movieByMovieId($id));
   $data        = mysqli_fetch_assoc($handle_film);
 }
 /*

@@ -56,8 +56,8 @@ if ($user === $correct_user && hash('sha1', $pass . LOGIN_PASS_SALT) === $correc
 
   $isLogedIn = true;
 
-  $_SESSION['user'] = $user;
-  $_SESSION['pass'] = $pass;
+  $_SESSION['user']  = $user;
+  $_SESSION['pass']  = $pass;
   $_SESSION['login'] = true;
 }
 

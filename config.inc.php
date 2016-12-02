@@ -15,7 +15,10 @@
  */
 function getRelativePath () {
     
-    $root_dir = array_pop(array_unique(explode('/', str_replace(['/', '\\'], '/', ROOT))));
+    // Besser unterteilen.
+  
+    $root_dir = array_unique(explode('/', str_replace(['/', '\\'], '/', ROOT)));
+    $root_dir = array_pop($root_dir);
         
     $curr_script_dir   = dirname(str_replace(['/', '\\'], '/', $_SERVER['SCRIPT_NAME']));
     $relativePath_file = explode($root_dir, $curr_script_dir);
@@ -30,9 +33,14 @@ function getRelativePath () {
     return $relativePath_dir;
 }
 
-?>
 
-<?php
+# PHP-Warnungen und Fehler ausblenden
+error_reporting(0);
+# PHP-Notizen ausblenden
+error_reporting(E_ALL);
+//error_reporting(E_ALL ^ E_NOTICE);
+
+
 /*
  * Login Konfiguration
  */
@@ -43,12 +51,14 @@ const LOGIN_PASS_SALT = 'sods/&$)?-=su3d2nso"§?';
  */
 
 /* Ordner */
-const NAME_DIR_INCLUDE       = 'inc';
+const NAME_DIR_INCLUDE       = 'incl';
 const NAME_DIR_IMAGES        = 'bilder';
 const NAME_DIR_ADMIN         = 'admin';
 const NAME_DIR_STYLES        = 'css';
 const NAME_DIR_FONTS         = 'fonts';
 const NAME_DIR_JS            = 'js'; 
+const NAME_DIR_DATABASE      = 'db';
+const NAME_DIR_HELPERS       = 'hilfsdateien';
   
 
 /* dateien */    
@@ -77,7 +87,7 @@ const NAME_FILE_FILM         = 'film.inc.php';
 const NAME_FILE_COMPANY      = 'company.inc.php';
      
 // hilfsdateien     
-const NAME_FILE_DBCONNECT    = 'dbconn.php';
+const NAME_FILE_DBCONNECT    = 'dbconn.incl.php';
 const NAME_FILE_FUNCTIONS    = 'functions.inc.php';
 
 /*
@@ -97,41 +107,44 @@ const ROOT = 'http://localhost/php_kurs/filmwebsite/phpmySQLI_filmwebseite_neu/'
 define('PATH_DIR_ROOT'       , '.' . getRelativePath() . DIRECTORY_SEPARATOR); 
     
 /* Ordner */    
-const PATH_DIR_ADMIN         = PATH_DIR_ROOT  . NAME_DIR_ADMIN   . DIRECTORY_SEPARATOR; 
-const PATH_DIR_INCL_ADMIN    = PATH_DIR_ADMIN . NAME_DIR_INCLUDE . DIRECTORY_SEPARATOR; 
+const PATH_DIR_ADMIN         = PATH_DIR_ROOT  . NAME_DIR_ADMIN    . DIRECTORY_SEPARATOR; 
+const PATH_DIR_ADMIN_INCL    = PATH_DIR_ADMIN . NAME_DIR_INCLUDE  . DIRECTORY_SEPARATOR; 
         
-const PATH_DIR_INCL          = PATH_DIR_ROOT  . NAME_DIR_INCLUDE . DIRECTORY_SEPARATOR; 
-const PATH_DIR_IMAGE         = PATH_DIR_ROOT  . NAME_DIR_IMAGES  . DIRECTORY_SEPARATOR; 
-const PATH_DIR_STYLES        = PATH_DIR_ROOT  . NAME_DIR_STYLES  . DIRECTORY_SEPARATOR; 
-const PATH_DIR_JS            = PATH_DIR_ROOT  . NAME_DIR_JS      . DIRECTORY_SEPARATOR; 
+const PATH_DIR_INCL          = PATH_DIR_ROOT  . NAME_DIR_INCLUDE  . DIRECTORY_SEPARATOR;
+const PATH_DIR_INCL_DB       = PATH_DIR_INCL  . NAME_DIR_DATABASE . DIRECTORY_SEPARATOR;
+const PATH_DIR_INCL_HELPERS  = PATH_DIR_INCL  . NAME_DIR_HELPERS  . DIRECTORY_SEPARATOR;
+
+const PATH_DIR_IMAGE         = PATH_DIR_ROOT  . NAME_DIR_IMAGES   . DIRECTORY_SEPARATOR; 
+const PATH_DIR_STYLES        = PATH_DIR_ROOT  . NAME_DIR_STYLES   . DIRECTORY_SEPARATOR; 
+const PATH_DIR_JS            = PATH_DIR_ROOT  . NAME_DIR_JS       . DIRECTORY_SEPARATOR; 
         
 /* Dateien */    
 // style    
-const PATH_FILE_STYLE_MAIN   = PATH_DIR_STYLES     . NAME_FILE_STYLE_MAIN;
-    
-// js    
-const PATH_FILE_JS_BOOTSTRAP = PATH_DIR_JS         . NAME_FILE_JS_BOOTSTRAP;
-const PATH_FILE_JS_JQUERY    = PATH_DIR_JS         . NAME_FILE_JS_JQUERY;
-    
-// php    
-const PATH_FILE_MAIN         = PATH_DIR_ROOT       . NAME_FILE_MAIN;   
-const PATH_FILE_DASHBOARD    = PATH_DIR_ADMIN      . NAME_FILE_DASHBOARD;
-const PATH_FILE_LOGOUT       = PATH_DIR_ADMIN      . NAME_FILE_LOGOUT;
-const PATH_FILE_FILMEDIT     = PATH_DIR_ADMIN      . NAME_FILE_FILMEDIT;
-const PATH_FILE_FILMIMAGE    = PATH_DIR_ADMIN      . NAME_FILE_FILMIMAGE;
-const PATH_FILE_FILMDELETE   = PATH_DIR_ADMIN      . NAME_FILE_FILMDELETE;
-    
-// Includs    
-const PATH_FILE_ADMINBAR     = PATH_DIR_INCL_ADMIN . NAME_FILE_ADMINBAR;
-const PATH_FILE_LOGINVERIFY  = PATH_DIR_INCL_ADMIN . NAME_FILE_LOGINVARIFY;
-const PATH_FILE_FOOTER       = PATH_DIR_INCL       . NAME_FILE_FOOTER;
-const PATH_FILE_HEADER       = PATH_DIR_INCL       . NAME_FILE_HEADER;
-const PATH_FILE_FILM         = PATH_DIR_INCL       . NAME_FILE_FILM;
-const PATH_FILE_COMPANY      = PATH_DIR_INCL       . NAME_FILE_COMPANY;
-       
-// Hilfsdateien       
-const PATH_FILE_DBCONNECT    = PATH_DIR_INCL       . NAME_FILE_DBCONNECT;
-const PATH_FILE_FUNCTIONS    = PATH_DIR_INCL       . NAME_FILE_FUNCTIONS;
+const PATH_FILE_STYLE_MAIN   = PATH_DIR_STYLES       . NAME_FILE_STYLE_MAIN;
+      
+// js      
+const PATH_FILE_JS_BOOTSTRAP = PATH_DIR_JS           . NAME_FILE_JS_BOOTSTRAP;
+const PATH_FILE_JS_JQUERY    = PATH_DIR_JS           . NAME_FILE_JS_JQUERY;
+      
+// php      
+const PATH_FILE_MAIN         = PATH_DIR_ROOT         . NAME_FILE_MAIN;   
+const PATH_FILE_DASHBOARD    = PATH_DIR_ADMIN        . NAME_FILE_DASHBOARD;
+const PATH_FILE_LOGOUT       = PATH_DIR_ADMIN        . NAME_FILE_LOGOUT;
+const PATH_FILE_FILMEDIT     = PATH_DIR_ADMIN        . NAME_FILE_FILMEDIT;
+const PATH_FILE_FILMIMAGE    = PATH_DIR_ADMIN        . NAME_FILE_FILMIMAGE;
+const PATH_FILE_FILMDELETE   = PATH_DIR_ADMIN        . NAME_FILE_FILMDELETE;
+      
+// Includs      
+const PATH_FILE_ADMINBAR     = PATH_DIR_ADMIN_INCL   . NAME_FILE_ADMINBAR;
+const PATH_FILE_LOGINVERIFY  = PATH_DIR_ADMIN_INCL   . NAME_FILE_LOGINVARIFY;
+const PATH_FILE_FOOTER       = PATH_DIR_INCL         . NAME_FILE_FOOTER;
+const PATH_FILE_HEADER       = PATH_DIR_INCL         . NAME_FILE_HEADER;
+const PATH_FILE_FILM         = PATH_DIR_INCL         . NAME_FILE_FILM;
+const PATH_FILE_COMPANY      = PATH_DIR_INCL         . NAME_FILE_COMPANY;
+         
+// Hilfsdateien         
+const PATH_FILE_DBCONNECT    = PATH_DIR_INCL_DB      . NAME_FILE_DBCONNECT;
+const PATH_FILE_FUNCTIONS    = PATH_DIR_INCL_HELPERS . NAME_FILE_FUNCTIONS;
 
 
 /*
@@ -214,8 +227,8 @@ const TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT   = 'Bitte Auswählen';
 const TEXT_FILMEDIT_GUI_COMPANIES          = TEXT_GLOBAL_GUI_REQUIRED . 'Filmgesellschaften';
 const TEXT_FILMEDIT_GUI_GENRES             = TEXT_GLOBAL_GUI_REQUIRED . 'Genres';
 const TEXT_FILMEDIT_GUI_TITLE              = TEXT_GLOBAL_GUI_REQUIRED . 'Filmtitel';
-const TEXT_FILMEDIT_GUI_DESCRIPTION        = 'Beschreibung';
 const TEXT_FILMEDIT_GUI_DATE               = TEXT_GLOBAL_GUI_REQUIRED . 'Erscheinungsdatum';
+const TEXT_FILMEDIT_GUI_DESCRIPTION        = 'Beschreibung';
 const TEXT_FILMEDIT_GUI_DURATION           = 'Dauer';
 const TEXT_FILMEDIT_GUI_PRICE              = 'Preis';
 const TEXT_FILMEDIT_GUI_IMAGE              = 'Bild';

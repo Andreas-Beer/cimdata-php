@@ -97,7 +97,7 @@ $headline = TEXT_FILMEDIT_GUI_HEADLINE_NEW;
 
 if ($id) {
 
-  $handler_film = mysqli_query($conn, $sql_select_moviesBymovieId($id));
+  $handler_film = mysqli_query($conn, $sql_select_movieByMovieId($id));
   $data = mysqli_fetch_assoc($handler_film);
 
   $company_id = $data['Filmgesellschaft_id'];
