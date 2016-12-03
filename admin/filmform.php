@@ -49,28 +49,9 @@ function getError($name, $glyphicon = true, $default = '') {
   return $msg;
 }
 
-function formatDateToMySql($date) {
-
-  /*
-   * http://php.net/manual/de/function.strftime.php
-   */
-  $format = '%Y-%m-%d';
-
-  /*
-   * Diese Funktion arbeitet sowohl mit deutschem
-   * als auch mit englischem Datumsformat
-   */
-  $timestamp = strtotime($date);
-
-  /*
-   * Das Datum richtig formatieren.
-   * und
-   * zurückgeben.
-   */
-  return strftime($format, $timestamp);
-}
-
 // Die Variablen mit defaultwert
+$msg_btn  = TEXT_FILMEDIT_BUTTON_SAVE;
+$headline = TEXT_FILMEDIT_GUI_HEADLINE_NEW;
 
 $id         = is_numeric($_GET['f']) ? $_GET['f'] : false;
 $company_id = getPostValue('fc');
@@ -83,17 +64,7 @@ $price      = getPostValue('pr');
 $image      = getPostValue('img');
 $film_id    = getPostValue('fid');
 
-/*
- * Problem:
- * Wenn der film NICHT für die Öffentlichkeit zu sehen ist,
- * ist der Wert leer.
- * Wir übersetzen diesen leeren Wert in einen Null-String,
- * damit beim Eintrag in die Datenbank, eine Null gesetzt wird.
- */
 $visible = getPostValue('vi', '0');
-
-$msg_btn  = TEXT_FILMEDIT_BUTTON_SAVE;
-$headline = TEXT_FILMEDIT_GUI_HEADLINE_NEW;
 
 if ($id) {
 
@@ -188,6 +159,10 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
     }
   }
 }
+
+// Daten um dei Seiten darzustellen
+$genres    = getDataFromDB(sql_select_genres());
+$companies = getDataFromDB(sql_select_companies());
 ?>
 
 <!DOCTYPE html>
@@ -227,12 +202,14 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
               <select class="form_input_select form-control" name="fc" id="fc">
                 <option class="form_option" value="0"><?php echo TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT; ?></option>
                 <?php
-                $handler_companies = mysqli_query($conn, sql_select_companies());
-
-                while (($data = mysqli_fetch_assoc($handler_companies)) !== NULL) {
+                
+                foreach ($companies as $data) {
                   $checked = isActive($data['id'], $company_id, 'selected');
-                  echo '<option ' . $checked . ' class="form_option" value="' . $data['id'] . '">' . $data['Name'] . '</option>';
+                  echo '<option ' . $checked . ' class="form_option" value="' . $data['id'] . '">';
+                  echo $data['Name'];
+                  echo '</option>';
                 }
+
                 ?>
               </select>
               <?php echo getError('fc', false) ?>
@@ -244,12 +221,14 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
               <select class="form_input_select form-control" name="fg" id="fg">
                 <option class="form_option" value="0"><?php echo TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT; ?></option>
                 <?php
-                $handler_genres = mysqli_query($conn, $sql_select_genres);
-
-                while (($data = mysqli_fetch_assoc($handler_genres)) !== NULL) {
+                
+                foreach ($genres as $data) {
                   $checked = isActive($data['id'], $genre_id, 'selected');
-                  echo '<option ' . $checked . ' class="form_option" value="' . $data['id'] . '">' . $data['Name'] . '</option>';
+                  echo '<option ' . $checked . ' class="form_option" value="' . $data['id'] . '">';
+                  echo $data['Name'];
+                  echo '</option>';
                 }
+                
                 ?>  
               </select>
               <?php echo getError('fg', false); ?>
@@ -320,10 +299,8 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
 
           <section id="section_submit">
-
             <button class="btn btn-default" type="submit" name="button" value="speichern"><?php echo $msg_btn ?></button>
-            <a href="<?php echo PATH_FILE_DASHBOARD; ?>"><button type="button" class="btn btn-default pull-right"><?php echo TEXT_FILMEDIT_BUTTON_CANCEL; ?></button></a>
-
+            <a class="btn btn-default pull-right" href="<?php echo PATH_FILE_DASHBOARD; ?>"><?php echo TEXT_FILMEDIT_BUTTON_CANCEL; ?></a>
           </section>
 
         </form>

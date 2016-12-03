@@ -1,4 +1,5 @@
 <?php
+
 # Filmkatalog, Website mit Verbindung zur MySQL-Datenbank
 # Formular zum Einfügen und bearbeiten von Filmen
 #
@@ -8,17 +9,19 @@
 # Email: andreasbeer@gmx.com
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
-?>
 
+?>
 <?php
+
 include_once '../config.inc.php';
 
 include_once PATH_FILE_LOGINVERIFY;
 include_once PATH_FILE_DBCONNECT;
 include_once PATH_FILE_FUNCTIONS;
-?>
 
+?>
 <?php
+
 /*
  * Die Übergebene ID
  */
@@ -27,7 +30,7 @@ $data = NULL;
 
 if ($id) {
   // Wenn eine Id übergeben wurde, die Daten zu dem Film abfragen.
-  $handle_film = mysqli_query($conn, $sql_select_movieByMovieId($id));
+  $handle_film = mysqli_query($conn, sql_select_movieByMovieId($id));
   $data        = mysqli_fetch_assoc($handle_film);
 }
 /*
@@ -130,14 +133,14 @@ if ($uploaded_file !== false && !$has_error) {
   move_uploaded_file($path_temp, $path_new);
 
   // Bild in der Datenbank eintragen.
-  mysqli_query($conn, $sql_update_filmImage($name_new, $filmId));
+  mysqli_query($conn, sql_update_filmImage($name_new, $filmId));
 
   // Das alte Bild löschen. (Wenn es auch ein altes gibt.)
   if ($name_old !== NULL) {
     unlink($path_old);
   }
 
-  header('Location: ./index.php');
+  header('Location: ' . PATH_FILE_DASHBOARD);
 }
 ?>
 

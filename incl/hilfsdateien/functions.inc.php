@@ -12,7 +12,6 @@
 ?>
 
 <?php
-
 function reorderTitle($title) {
     $split = explode(', ', $title);
     
@@ -23,8 +22,12 @@ function reorderTitle($title) {
     return $split[1] . ' ' . $split[0];
 }
 
-function mysqldate_to_german($mysqldate) {
-    return strftime("%d.%m.%Y", strtotime($mysqldate));
+function mysqlDateToGermanDate($mysqldate) {
+  return strftime("%d.%m.%Y", strtotime($mysqldate));
+}
+
+function formatDateToMySql($date) {
+  return strftime('%Y-%m-%d', strtotime($date));
 }
 
 function testImage($image, $dir = PATH_DIR_IMAGE, $default = 'default.jpg') {
@@ -45,8 +48,6 @@ function isActive($p1, $p2, $class = 'active') {
         return '';
     }
 }
-
-;
 
 function decimalPoint_to_comma($str) {
   return str_replace('.', ',', $str);

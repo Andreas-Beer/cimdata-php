@@ -109,14 +109,14 @@ $page = getPage();
         <?php else:?>
 
           <?php if ($page !== 'dashboard'):?>
-            <button type="submit" formmethod="GET" formaction="<?php echo PATH_FILE_DASHBOARD;?>" name="dashboard" class="btn btn-default"><?php echo TEXT_ADMINBAR_BUTTON_TODASHBOARD; ?></button>
+            <a class="btn btn-default" href="<?php echo PATH_FILE_DASHBOARD;?>"><?php echo TEXT_ADMINBAR_BUTTON_TODASHBOARD; ?></a>
           <?php endif;?>
 
           <?php if ($page !== 'index'):?>
-            <button type="submit" formmethod="GET" formaction="<?php echo PATH_FILE_MAIN;?>" name="website" class="btn btn-default"><?php echo TEXT_ADMINBAR_BUTTON_TOMAIN; ?></button>
+            <a class="btn btn-default" href="<?php echo PATH_FILE_MAIN;?>"><?php echo TEXT_ADMINBAR_BUTTON_TOMAIN; ?></a>
           <?php endif;?>
 
-          <button type="submit" name="logout" value="logout" class="btn btn-default navbar-right"><?php echo TEXT_ADMINBAR_BUTTON_LOGOUT; ?></button>
+          <button class="btn btn-default navbar-right" type="submit" name="logout" value="logout"><?php echo TEXT_ADMINBAR_BUTTON_LOGOUT; ?></button>
 
         <?php endif;?>
 

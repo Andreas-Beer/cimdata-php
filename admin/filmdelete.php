@@ -1,7 +1,7 @@
 <?php
-include_once '../inc/dbconn.php';
+include_once '../config.inc.php';
+include_once PATH_FILE_DBCONNECT;
 ?>
-
 <?php
 
 // Die ID annehmen
@@ -10,9 +10,8 @@ $id = !empty($_POST['delete']) && is_numeric($_POST['delete']) ? $_POST['delete'
 
 // schauen, ob eine ID übergeben wurde
 if ($id) {  
-    
     // Den angegebenen Film löschen (unwiederrufbar!)
-    mysqli_query($conn, $sql_delete_filmById($_POST['delete']));
+    mysqli_query($conn, sql_delete_filmById($_POST['delete']));
 }
 
 // zurück auf die letzte Seite / oder die index seite.

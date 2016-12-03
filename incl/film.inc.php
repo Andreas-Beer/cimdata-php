@@ -14,7 +14,7 @@
 
 // Übername der Variablen zum weiteren Vararbeiten.
 $title    = reorderTitle($data['Titel']);
-$date     = mysqldate_to_german($data['Erscheinungsdatum']);
+$date     = mysqlDateToGermanDate($data['Erscheinungsdatum']);
 $image    = testImage($data['Bild']);
 $price    = decimalPoint_to_comma($data['Preis']);
 $duration = htmlspecialchars($data['DauerInMinuten']);
