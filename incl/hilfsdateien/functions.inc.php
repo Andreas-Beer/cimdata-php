@@ -30,7 +30,8 @@ function formatDateToMySql($date) {
   return strftime('%Y-%m-%d', strtotime($date));
 }
 
-function testImage($image, $dir = PATH_DIR_IMAGE, $default = 'default.jpg') {
+
+function testImage($image, $dir = PATH_DIR_IMAGE, $default = NAME_FILE_DEFAULT_IMAGE) {
     $image   = $dir . $image;
     $default = $dir . $default;
     

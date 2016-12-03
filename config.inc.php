@@ -91,6 +91,9 @@ const NAME_FILE_FILM_DASHBOARD = 'film_dashboard.incl.php';
 const NAME_FILE_DBCONNECT      = 'dbconn.incl.php';
 const NAME_FILE_FUNCTIONS      = 'functions.inc.php';
 
+// Default
+const NAME_FILE_DEFAULT_IMAGE  = 'default.jpg';
+
 /*
  * Pfade
  * 
@@ -147,6 +150,9 @@ const PATH_FILE_COMPANY        = PATH_DIR_INCL         . NAME_FILE_COMPANY;
 // Hilfsdateien           
 const PATH_FILE_DBCONNECT      = PATH_DIR_INCL_DB      . NAME_FILE_DBCONNECT;
 const PATH_FILE_FUNCTIONS      = PATH_DIR_INCL_HELPERS . NAME_FILE_FUNCTIONS;
+
+// Default
+const PATH_DIR_DEFAULT_IMAGE   = PATH_DIR_IMAGE        . NAME_FILE_DEFAULT_IMAGE; 
 
 
 /*
@@ -217,10 +223,10 @@ const TEXT_DASHBOARD_GUI_THEAD_PRICE       = 'Preis' . ' ' . TEXT_GLOBAL_GUI_CUR
 const TEXT_DASHBOARD_GUI_THEAD_VISIBLE     = 'Sichtbar';
 const TEXT_DASHBOARD_GUI_THEAD_IMAGE       = 'Bild';
 const TEXT_DASHBOARD_BUTTON_FILM_NEW       = 'Film hinzufügen';
-const TEXT_DASHBOARD_BUTTON_FILM_EDIT      = 'Bearbeiten';
-const TEXT_DASHBOARD_BUTTON_IMAGE_NEW      = 'NEU';
-const TEXT_DASHBOARD_BUTTON_IMAGE_EDIT     = 'Bearbeiten';
-const TEXT_DASHBOARD_BUTTON_DELETE_FILM    = 'Löschen';
+const TEXT_DASHBOARD_BUTTON_FILM_EDIT      = 'Film Bearbeiten';
+const TEXT_DASHBOARD_BUTTON_IMAGE_NEW      = 'NEU Anlegen';
+const TEXT_DASHBOARD_BUTTON_IMAGE_EDIT     = 'Ändern';
+const TEXT_DASHBOARD_BUTTON_DELETE_FILM    = 'Film Löschen';
   
 // FilmEdit  
 const TEXT_FILMEDIT_GUI_HEADLINE_NEW       = 'Neuen Film Anlegen';

@@ -30,13 +30,17 @@ $class_vis  = $freigabe === 'JA' ? 'true' : 'false';
  */
 $button_img = TEXT_DASHBOARD_BUTTON_IMAGE_EDIT;
 
-if ($data['Bild'] === NULL || $data['Bild'] === '') {
+
+if ($data['Bild'] === NULL || $data['Bild'] === '' || testImage($data['Bild']) === PATH_DIR_DEFAULT_IMAGE) {
   $button_img = TEXT_DASHBOARD_BUTTON_IMAGE_NEW;
 }
 
 ?>
 <tr>
-  <td class="text-center"><a class="btn btn-sm btn-info" href="<?php echo $link_filmEdit; ?>?f=<?php echo $id; ?>"><?php echo $button_edi; ?></a></td>
+  <td class="text-center">
+    <a class="btn btn-sm btn-primary" href="<?php echo $link_filmEdit; ?>?f=<?php echo $id; ?>"><?php echo $button_edi; ?></a>
+  </td>
+
   <td class="text-right"><?php echo $id; ?></td>
   <td><?php echo $title; ?></td>
   <td><?php echo $genre; ?></td>
