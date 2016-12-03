@@ -196,7 +196,7 @@ const TEXT_GLOBAL_GUI_REQUIRED             = '* ';
 const TEXT_MAIN_GUI_HEADLINE_DEFAULT       = 'Die 10 neusten Filme';
 const TEXT_MAIN_GUI_HEADLINE_COMPANY       = 'Filme der Filmgesellschaft: %s';
 const TEXT_MAIN_GUI_HEADLINE_GENRE         = 'Filme des Genres: %s';
-const TEXT_MAIN_GUI_FILM_PRICE             = 'Preis %s' . TEXT_GLOBAL_GUI_CURRENCY;
+const TEXT_MAIN_GUI_FILM_PRICE             = 'Preis: %s&nbsp;' . TEXT_GLOBAL_GUI_CURRENCY;
 const TEXT_MAIN_GUI_SEARCH_PLACEHOLDER     = 'Suchen&hellip;';
 const TEXT_MAIN_GUI_MSG_FILMFOUND          = '%d Filme Gefunden';
   

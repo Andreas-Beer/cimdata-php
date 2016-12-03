@@ -71,13 +71,13 @@ $title = htmlspecialchars($siteData['title']);
 
   <body>
 
-<?php
-session_start();
+    <?php
+    session_start();
 
-if (isset($_GET['adminbar']) || !empty($_SESSION['login']) == true) {
-  include PATH_FILE_ADMINBAR;
-}
-?>
+    if (isset($_GET['adminbar']) || !empty($_SESSION['login']) == true) {
+      include PATH_FILE_ADMINBAR;
+    }
+    ?>
 
     <?php include PATH_FILE_HEADER; ?>
 
@@ -102,15 +102,11 @@ if (isset($_GET['adminbar']) || !empty($_SESSION['login']) == true) {
 
             <!-- Navigation -->
             <ul class="nav nav-pills nav-stacked">
-
               <?php
-              //        <li class = "active"><a href = "#">###FILMGESELLSCHAFT1###</a></li>
-
               foreach ($dbCompanies as $data) {
                 include PATH_FILE_COMPANY;
               }
               ?>
-              
             </ul>
 
           </nav>
@@ -132,9 +128,9 @@ if (isset($_GET['adminbar']) || !empty($_SESSION['login']) == true) {
         <div class="col-sm-8 col-md-9">
 
           <div class="well well-sm">
-<?php
-echo sprintf(TEXT_MAIN_GUI_MSG_FILMFOUND, count($siteData['data']));
-?>
+            <?php
+            echo sprintf(TEXT_MAIN_GUI_MSG_FILMFOUND, count($siteData['data']));
+            ?>
           </div>
 
             <?php
@@ -147,7 +143,8 @@ echo sprintf(TEXT_MAIN_GUI_MSG_FILMFOUND, count($siteData['data']));
 
       </div>
     </main>
-<?php include PATH_FILE_FOOTER; ?>
+    
+    <?php include PATH_FILE_FOOTER; ?>
 
     <script src="<?php echo PATH_FILE_JS_JQUERY; ?>" type="text/javascript"></script>
     <script src="<?php echo PATH_FILE_JS_BOOTSTRAP; ?>" type="text/javascript"></script>
