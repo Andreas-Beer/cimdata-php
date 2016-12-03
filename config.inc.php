@@ -64,31 +64,32 @@ const NAME_DIR_HELPERS       = 'hilfsdateien';
 /* dateien */    
 
 // css
-const NAME_FILE_STYLE_MAIN   = 'main.css';
-
-// js
-const NAME_FILE_JS_BOOTSTRAP = 'bootstrap.min.js';
-const NAME_FILE_JS_JQUERY    = 'jquery-1.12.4.min.js';
-   
-// php
-const NAME_FILE_MAIN         = 'index.php';
-const NAME_FILE_DASHBOARD    = 'dashboard.php';
-const NAME_FILE_LOGOUT       = 'logout.php';
-const NAME_FILE_LOGINVARIFY  = 'test_login.inc.php';
-const NAME_FILE_FILMEDIT     = 'filmform.php';
-const NAME_FILE_FILMIMAGE    = 'filmimage.php';
-const NAME_FILE_FILMDELETE   = 'filmdelete.php';
+const NAME_FILE_STYLE_MAIN     = 'main.css';
+  
+// js  
+const NAME_FILE_JS_BOOTSTRAP   = 'bootstrap.min.js';
+const NAME_FILE_JS_JQUERY      = 'jquery-1.12.4.min.js';
      
-// include     
-const NAME_FILE_FOOTER       = 'footer.inc.php';
-const NAME_FILE_HEADER       = 'header.inc.php';
-const NAME_FILE_ADMINBAR     = 'adminbar.inc.php';
-const NAME_FILE_FILM         = 'film.inc.php';
-const NAME_FILE_COMPANY      = 'company.inc.php';
+// php  
+const NAME_FILE_MAIN           = 'index.php';
+const NAME_FILE_DASHBOARD      = 'dashboard.php';
+const NAME_FILE_LOGOUT         = 'logout.php';
+const NAME_FILE_LOGINVARIFY    = 'test_login.inc.php';
+const NAME_FILE_FILMEDIT       = 'filmform.php';
+const NAME_FILE_FILMIMAGE      = 'filmimage.php';
+const NAME_FILE_FILMDELETE     = 'filmdelete.php';
+       
+// include       
+const NAME_FILE_FOOTER         = 'footer.inc.php';
+const NAME_FILE_ADMINBAR       = 'adminbar.inc.php';
+const NAME_FILE_GENRE          = 'genre.inc.php';
+const NAME_FILE_COMPANY        = 'company.inc.php';
+const NAME_FILE_FILM_MAIN      = 'film.inc.php';
+const NAME_FILE_FILM_DASHBOARD = 'film_dashboard.incl.php';
      
 // hilfsdateien     
-const NAME_FILE_DBCONNECT    = 'dbconn.incl.php';
-const NAME_FILE_FUNCTIONS    = 'functions.inc.php';
+const NAME_FILE_DBCONNECT      = 'dbconn.incl.php';
+const NAME_FILE_FUNCTIONS      = 'functions.inc.php';
 
 /*
  * Pfade
@@ -104,47 +105,48 @@ const ROOT = 'http://localhost/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-
 /*
  *  Seiten und Ordner absolut von Root an
  */
-define('PATH_DIR_ROOT'       , '.' . getRelativePath() . DIRECTORY_SEPARATOR); 
-    
-/* Ordner */    
-const PATH_DIR_ADMIN         = PATH_DIR_ROOT  . NAME_DIR_ADMIN    . DIRECTORY_SEPARATOR; 
-const PATH_DIR_ADMIN_INCL    = PATH_DIR_ADMIN . NAME_DIR_INCLUDE  . DIRECTORY_SEPARATOR; 
-        
-const PATH_DIR_INCL          = PATH_DIR_ROOT  . NAME_DIR_INCLUDE  . DIRECTORY_SEPARATOR;
-const PATH_DIR_INCL_DB       = PATH_DIR_INCL  . NAME_DIR_DATABASE . DIRECTORY_SEPARATOR;
-const PATH_DIR_INCL_HELPERS  = PATH_DIR_INCL  . NAME_DIR_HELPERS  . DIRECTORY_SEPARATOR;
-
-const PATH_DIR_IMAGE         = PATH_DIR_ROOT  . NAME_DIR_IMAGES   . DIRECTORY_SEPARATOR; 
-const PATH_DIR_STYLES        = PATH_DIR_ROOT  . NAME_DIR_STYLES   . DIRECTORY_SEPARATOR; 
-const PATH_DIR_JS            = PATH_DIR_ROOT  . NAME_DIR_JS       . DIRECTORY_SEPARATOR; 
+define('PATH_DIR_ROOT'         , '.' . getRelativePath() . DIRECTORY_SEPARATOR); 
+      
+/* Ordner */      
+const PATH_DIR_ADMIN           = PATH_DIR_ROOT  . NAME_DIR_ADMIN    . DIRECTORY_SEPARATOR; 
+const PATH_DIR_ADMIN_INCL      = PATH_DIR_ADMIN . NAME_DIR_INCLUDE  . DIRECTORY_SEPARATOR; 
+          
+const PATH_DIR_INCL            = PATH_DIR_ROOT  . NAME_DIR_INCLUDE  . DIRECTORY_SEPARATOR;
+const PATH_DIR_INCL_DB         = PATH_DIR_INCL  . NAME_DIR_DATABASE . DIRECTORY_SEPARATOR;
+const PATH_DIR_INCL_HELPERS    = PATH_DIR_INCL  . NAME_DIR_HELPERS  . DIRECTORY_SEPARATOR;
+  
+const PATH_DIR_IMAGE           = PATH_DIR_ROOT  . NAME_DIR_IMAGES   . DIRECTORY_SEPARATOR; 
+const PATH_DIR_STYLES          = PATH_DIR_ROOT  . NAME_DIR_STYLES   . DIRECTORY_SEPARATOR; 
+const PATH_DIR_JS              = PATH_DIR_ROOT  . NAME_DIR_JS       . DIRECTORY_SEPARATOR; 
         
 /* Dateien */    
 // style    
-const PATH_FILE_STYLE_MAIN   = PATH_DIR_STYLES       . NAME_FILE_STYLE_MAIN;
-      
-// js      
-const PATH_FILE_JS_BOOTSTRAP = PATH_DIR_JS           . NAME_FILE_JS_BOOTSTRAP;
-const PATH_FILE_JS_JQUERY    = PATH_DIR_JS           . NAME_FILE_JS_JQUERY;
-      
-// php      
-const PATH_FILE_MAIN         = PATH_DIR_ROOT         . NAME_FILE_MAIN;   
-const PATH_FILE_DASHBOARD    = PATH_DIR_ADMIN        . NAME_FILE_DASHBOARD;
-const PATH_FILE_LOGOUT       = PATH_DIR_ADMIN        . NAME_FILE_LOGOUT;
-const PATH_FILE_FILMEDIT     = PATH_DIR_ADMIN        . NAME_FILE_FILMEDIT;
-const PATH_FILE_FILMIMAGE    = PATH_DIR_ADMIN        . NAME_FILE_FILMIMAGE;
-const PATH_FILE_FILMDELETE   = PATH_DIR_ADMIN        . NAME_FILE_FILMDELETE;
-      
-// Includs      
-const PATH_FILE_ADMINBAR     = PATH_DIR_ADMIN_INCL   . NAME_FILE_ADMINBAR;
-const PATH_FILE_LOGINVERIFY  = PATH_DIR_ADMIN_INCL   . NAME_FILE_LOGINVARIFY;
-const PATH_FILE_FOOTER       = PATH_DIR_INCL         . NAME_FILE_FOOTER;
-const PATH_FILE_HEADER       = PATH_DIR_INCL         . NAME_FILE_HEADER;
-const PATH_FILE_FILM         = PATH_DIR_INCL         . NAME_FILE_FILM;
-const PATH_FILE_COMPANY      = PATH_DIR_INCL         . NAME_FILE_COMPANY;
-         
-// Hilfsdateien         
-const PATH_FILE_DBCONNECT    = PATH_DIR_INCL_DB      . NAME_FILE_DBCONNECT;
-const PATH_FILE_FUNCTIONS    = PATH_DIR_INCL_HELPERS . NAME_FILE_FUNCTIONS;
+const PATH_FILE_STYLE_MAIN     = PATH_DIR_STYLES       . NAME_FILE_STYLE_MAIN;
+        
+// js        
+const PATH_FILE_JS_BOOTSTRAP   = PATH_DIR_JS           . NAME_FILE_JS_BOOTSTRAP;
+const PATH_FILE_JS_JQUERY      = PATH_DIR_JS           . NAME_FILE_JS_JQUERY;
+        
+// php        
+const PATH_FILE_MAIN           = PATH_DIR_ROOT         . NAME_FILE_MAIN;   
+const PATH_FILE_DASHBOARD      = PATH_DIR_ADMIN        . NAME_FILE_DASHBOARD;
+const PATH_FILE_LOGOUT         = PATH_DIR_ADMIN        . NAME_FILE_LOGOUT;
+const PATH_FILE_FILMEDIT       = PATH_DIR_ADMIN        . NAME_FILE_FILMEDIT;
+const PATH_FILE_FILMIMAGE      = PATH_DIR_ADMIN        . NAME_FILE_FILMIMAGE;
+const PATH_FILE_FILMDELETE     = PATH_DIR_ADMIN        . NAME_FILE_FILMDELETE;
+        
+// Includs        
+const PATH_FILE_ADMINBAR       = PATH_DIR_ADMIN_INCL   . NAME_FILE_ADMINBAR;
+const PATH_FILE_LOGINVERIFY    = PATH_DIR_ADMIN_INCL   . NAME_FILE_LOGINVARIFY;
+const PATH_FILE_FILM_DASHBOARD = PATH_DIR_ADMIN_INCL   . NAME_FILE_FILM_DASHBOARD;
+const PATH_FILE_FOOTER         = PATH_DIR_INCL         . NAME_FILE_FOOTER;
+const PATH_FILE_FILM_MAIN      = PATH_DIR_INCL         . NAME_FILE_FILM_MAIN;
+const PATH_FILE_GENRE          = PATH_DIR_INCL         . NAME_FILE_GENRE;
+const PATH_FILE_COMPANY        = PATH_DIR_INCL         . NAME_FILE_COMPANY;
+           
+// Hilfsdateien           
+const PATH_FILE_DBCONNECT      = PATH_DIR_INCL_DB      . NAME_FILE_DBCONNECT;
+const PATH_FILE_FUNCTIONS      = PATH_DIR_INCL_HELPERS . NAME_FILE_FUNCTIONS;
 
 
 /*

@@ -12,4 +12,16 @@
     &.true  { color: green; }
     &.false { color: red; }
   }
+  
+  table {
+    
+    tr:first-of-type {
+      background: $own_admin_list_header_bg;
+    }
+    
+    th {
+      text-align: center;
+    }
+    
+  }
 }

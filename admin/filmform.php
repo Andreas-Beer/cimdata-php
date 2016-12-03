@@ -97,7 +97,7 @@ $headline = TEXT_FILMEDIT_GUI_HEADLINE_NEW;
 
 if ($id) {
 
-  $handler_film = mysqli_query($conn, $sql_select_movieByMovieId($id));
+  $handler_film = mysqli_query($conn, sql_select_movieByMovieId($id));
   $data = mysqli_fetch_assoc($handler_film);
 
   $company_id = $data['Filmgesellschaft_id'];
@@ -160,7 +160,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
     $date = formatDateToMySql($date);
 
-    $sql = $sql_update_film($film_id, $genre_id, $company_id, $title, $date, $visible, $duration, $image, $desc, $price);
+    $sql = sql_update_film($film_id, $genre_id, $company_id, $title, $date, $visible, $duration, $image, $desc, $price);
   }
 
   // Speichern (wenn KEINE FilmID mit übertragen wurde)
@@ -168,7 +168,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
     $date = formatDateToMySql($date);
 
-    $sql = $sql_insert_newFilm(
+    $sql = sql_insert_newFilm(
         $genre_id, $company_id, $title, $date, $visible, $duration, $image, $desc, $price);
   }
 
@@ -227,7 +227,7 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
               <select class="form_input_select form-control" name="fc" id="fc">
                 <option class="form_option" value="0"><?php echo TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT; ?></option>
                 <?php
-                $handler_companies = mysqli_query($conn, $sql_select_companies);
+                $handler_companies = mysqli_query($conn, sql_select_companies());
 
                 while (($data = mysqli_fetch_assoc($handler_companies)) !== NULL) {
                   $checked = isActive($data['id'], $company_id, 'selected');

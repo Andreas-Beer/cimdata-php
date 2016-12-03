@@ -30,20 +30,26 @@ function getData() {
     $title_arr = getDataFromDB(sql_select_genreByID($id));
     $category  = $title_arr[0]['name'];
 
+    $data['type']   = $type;
     $data['id']    = $id;
     $data['title'] = sprintf(TEXT_MAIN_GUI_HEADLINE_GENRE, $category);
     $data['data']  = getDataFromDB(sql_select_moviesByGenreId($id));
-  } elseif (!empty($_GET['c']) && is_numeric($_GET['c'])) {
+  }
+  
+  elseif (!empty($_GET['c']) && is_numeric($_GET['c'])) {
     $type      = 'c';
     $id        = $_GET[$type];
     $title_arr = getDataFromDB(sql_select_companyByID($id));
     $category  = $title_arr[0]['name'];
 
-
+    $data['type']   = $type;
     $data['id']    = $id;
     $data['title'] = sprintf(TEXT_MAIN_GUI_HEADLINE_COMPANY, $category);
     $data['data']  = getDataFromDB(sql_select_moviesByCompanyId($id));
-  } else {
+  }
+  
+  else {
+    $data['type']   = false;
     $data['id']    = $id;
     $data['title'] = TEXT_MAIN_GUI_HEADLINE_DEFAULT;
     $data['data']  = getDataFromDB(sql_select_moviesNew10());
@@ -79,7 +85,37 @@ $title = htmlspecialchars($siteData['title']);
     }
     ?>
 
-    <?php include PATH_FILE_HEADER; ?>
+    <header>
+      <div class="container">
+        <h1><?php echo $title; ?></h1>
+      </div>
+
+      <!-- ### Navigation Genre ### -->
+      <nav class="navbar navbar gradient">
+        <div class="container">
+
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#genres" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <div id="genres" class="collapse navbar-collapse">
+            <ul class="genres nav navbar-nav">
+
+              <?php
+              foreach ($dbGenres as $data) {
+                include PATH_FILE_GENRE;
+              }
+              ?>
+
+            </ul>  
+          </div>
+
+        </div>
+      </nav>
+    </header>
 
     <main class="main container">
       <div class="row">
@@ -111,18 +147,6 @@ $title = htmlspecialchars($siteData['title']);
 
           </nav>
 
-          <!-- Container für weitere Links -->
-<!--          <aside class="links panel panel-default hidden-xs">
-            <div class="panel-heading">
-              Weitere Links
-            </div>
-            <div class="panel-body">
-              <ul class="list-unstyled">
-                <li><a href="">###Link###</a></li>
-              </ul>
-            </div>
-          </aside>-->
-
         </div>
 
         <div class="col-sm-8 col-md-9">
@@ -133,17 +157,17 @@ $title = htmlspecialchars($siteData['title']);
             ?>
           </div>
 
-            <?php
-            foreach ($siteData['data'] as $data) {
-              include PATH_FILE_FILM;
-            }
-            ?>
+          <?php
+          foreach ($siteData['data'] as $data) {
+            include PATH_FILE_FILM_MAIN;
+          }
+          ?>
 
         </div>
 
       </div>
     </main>
-    
+
     <?php include PATH_FILE_FOOTER; ?>
 
     <script src="<?php echo PATH_FILE_JS_JQUERY; ?>" type="text/javascript"></script>

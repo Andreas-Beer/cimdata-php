@@ -9,8 +9,18 @@
       
       &:hover,
       &:focus {
-        background: $own_nav-bg-gradient;
-        color: black;
+        background: transparent;
+        color: $own_main_highlight_darker;
+      }
+    }
+    
+    &.active > a {
+      color: black;
+      background: $own_nav-bg-gradient;
+      
+      &:hover,
+      &:focus {
+        color: white;
       }
     }
   }
@@ -19,7 +29,7 @@
 .genres {
   > li {
     > a { 
-      color: $own_nav-color;
+      color: $own_nav_text;
       padding-left: 20px;
       padding-right: 20px;
       border-radius: 0;
@@ -27,14 +37,6 @@
 
     &.active > a {
       background: $own_nav-bg-gradient;
-      color: black;
-
-      &,
-      &:hover,
-      &:focus {
-        background: $own_nav-bg-gradient;
-        color: black;
-      }
     }
   }
 }
@@ -42,7 +44,6 @@
 .nav-stacked {
   > li {
     > a {
-      color: black;
       text-align: left;
       margin-left: 1em;
     }

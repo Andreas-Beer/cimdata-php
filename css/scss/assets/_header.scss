@@ -31,14 +31,14 @@ header {
     margin: auto;
 
     .navbar-toggle {
-      border: 1px solid $own_nav-color;
+      border: 1px solid $own_nav_text;
       
       &:hover {
         background: rgba(255,255,255,.3);
       }
       
       .icon-bar {
-        background: $own_nav-color;
+        background: $own_nav_text;
       }
       
     }
