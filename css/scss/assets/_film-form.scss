@@ -1,0 +1,25 @@
+.film-form {
+  
+  margin-top: 50px;
+  max-width: 600px;
+  
+  .input-group-addon {
+    min-width: 40px;
+  }
+  
+  label {
+    margin-left: 10px;
+  }
+  
+  
+  button {
+    width: 30%;
+  }
+   
+  .validation_msg {
+      position: absolute;
+      margin-top: 3px;
+      right: 8px;
+      font-size: 0.84em;
+  }
+}

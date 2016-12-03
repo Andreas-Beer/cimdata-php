@@ -99,7 +99,7 @@ const NAME_FILE_FUNCTIONS    = 'functions.inc.php';
  */
 
 // ROOT Ordner der Seite. Muss angepasst werden.
-const ROOT = 'http://localhost/php_kurs/filmwebsite/phpmySQLI_filmwebseite_neu/';
+const ROOT = 'http://localhost/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-filmwebseite/';
 
 /*
  *  Seiten und Ordner absolut von Root an

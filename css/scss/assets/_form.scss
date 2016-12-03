@@ -1,0 +1,9 @@
+input.form-control,
+textArea.form-control,
+select.form-control {    
+  &:focus,
+  &:active {
+    box-shadow: none;
+    outline: none;
+  }
+}

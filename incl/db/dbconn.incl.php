@@ -10,6 +10,12 @@
 ?>
 
 <?php
+// Angaben zur Datenbankverbindung
+const DB_HOST = "localhost";
+const DB_USER = "root";
+const DB_PASS = "";
+const DB_BASE = "filmwebsite";
+
 function getDataFromDB ($query) {
   
   // Datenbank Verbindungsversuch
@@ -32,13 +38,6 @@ function getDataFromDB ($query) {
    
   return $data;
 }
-
-
-// Angaben zur Datenbankverbindung
-const DB_HOST = "localhost";
-const DB_USER = "root";
-const DB_PASS = "cimdata2016";
-const DB_BASE = "filmwebsite";
 
 // Verbindung zum Datenbankserver herstellen
 // was nach or die steht, wird allein ausgegeben, falls davor ein Fehler auftritt.
