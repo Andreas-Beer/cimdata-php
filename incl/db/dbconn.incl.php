@@ -16,7 +16,7 @@ const DB_USER = "root";
 const DB_PASS = "";
 const DB_BASE = "filmwebsite";
 
-function getDataFromDB ($query) {
+function getDBData ($query) {
   
   // Datenbank Verbindungsversuch
   if (!$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_BASE)) {
@@ -39,13 +39,9 @@ function getDataFromDB ($query) {
   return $data;
 }
 
-// Verbindung zum Datenbankserver herstellen
-// was nach or die steht, wird allein ausgegeben, falls davor ein Fehler auftritt.
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_BASE) or die("<h1>Verbindungsfehler</h1>");
-
-mysqli_set_charset( $conn, "utf8" );
-
-// Pfade
+/*
+ * Vorbereitete SQL-Abfragen.
+ */
 
 // SQL - Parts
 const PART_MOVIES_SELECT = "
@@ -66,10 +62,6 @@ const PART_MOVIES_SELECT = "
     JOIN filmgesellschaft AS fg ON fg.id = f.Filmgesellschaft_id
     JOIN genre AS g ON g.id = f.Genre_id";
 
-
-/*
- *  SQL - Queries
- */
 
 // selects
 function sql_select_films ($orderBy = 'Titel'){

@@ -27,40 +27,40 @@ function getData() {
   if (!empty($_GET['g']) && is_numeric($_GET['g'])) {
     $type      = 'g';
     $id        = $_GET[$type];
-    $title_arr = getDataFromDB(sql_select_genreByID($id));
+    $title_arr = getDBData(sql_select_genreByID($id));
     $category  = $title_arr[0]['name'];
 
     $data['type']   = $type;
     $data['id']    = $id;
     $data['title'] = sprintf(TEXT_MAIN_GUI_HEADLINE_GENRE, $category);
-    $data['data']  = getDataFromDB(sql_select_moviesByGenreId($id));
+    $data['data']  = getDBData(sql_select_moviesByGenreId($id));
   }
   
   elseif (!empty($_GET['c']) && is_numeric($_GET['c'])) {
     $type      = 'c';
     $id        = $_GET[$type];
-    $title_arr = getDataFromDB(sql_select_companyByID($id));
+    $title_arr = getDBData(sql_select_companyByID($id));
     $category  = $title_arr[0]['name'];
 
     $data['type']   = $type;
     $data['id']    = $id;
     $data['title'] = sprintf(TEXT_MAIN_GUI_HEADLINE_COMPANY, $category);
-    $data['data']  = getDataFromDB(sql_select_moviesByCompanyId($id));
+    $data['data']  = getDBData(sql_select_moviesByCompanyId($id));
   }
   
   else {
     $data['type']   = false;
     $data['id']    = $id;
     $data['title'] = TEXT_MAIN_GUI_HEADLINE_DEFAULT;
-    $data['data']  = getDataFromDB(sql_select_moviesNew10());
+    $data['data']  = getDBData(sql_select_moviesNew10());
   }
 
 
   return $data;
 }
 
-$dbCompanies = getDataFromDB(sql_select_companies());
-$dbGenres    = getDataFromDB(sql_select_genres());
+$dbCompanies = getDBData(sql_select_companies());
+$dbGenres    = getDBData(sql_select_genres());
 $siteData    = getData();
 
 $title = htmlspecialchars($siteData['title']);

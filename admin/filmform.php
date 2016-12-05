@@ -161,8 +161,8 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 }
 
 // Daten um dei Seiten darzustellen
-$genres    = getDataFromDB(sql_select_genres());
-$companies = getDataFromDB(sql_select_companies());
+$genres    = getDBData(sql_select_genres());
+$companies = getDBData(sql_select_companies());
 ?>
 
 <!DOCTYPE html>

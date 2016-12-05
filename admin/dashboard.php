@@ -28,7 +28,7 @@ $link_image    = PATH_FILE_FILMIMAGE;
 $button_edi    = TEXT_DASHBOARD_BUTTON_FILM_EDIT;
 $button_del    = TEXT_DASHBOARD_BUTTON_DELETE_FILM;
 
-$films_all     = getDataFromDB(sql_select_films('id'));
+$films_all     = getDBData(sql_select_films('id'));
 
 ?>
 <!DOCTYPE html>

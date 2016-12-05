@@ -13,11 +13,23 @@
 /*
  * Helper Functions
  */
+
+/**
+ * Ermittelt den relativen Pfad zum Root Verzeichneis von der aktuellen Datei aus.
+ * 
+ * @return string Der Relative Pfad zum Root Verzeichnis
+ */
 function getRelativePath () {
     
-    // Besser unterteilen.
+    // TODO:Besser unterteilen.
+    
+    // den Pfad Unterteiler Vereinhetlichen.
+    $root = str_replace(['\\'], '/', ROOT);
   
-    $root_dir = array_unique(explode('/', str_replace(['/', '\\'], '/', ROOT)));
+  
+  
+  
+    $root_dir = array_unique(explode('/', $root));
     $root_dir = array_pop($root_dir);
         
     $curr_script_dir   = dirname(str_replace(['/', '\\'], '/', $_SERVER['SCRIPT_NAME']));
@@ -33,13 +45,12 @@ function getRelativePath () {
     return $relativePath_dir;
 }
 
-
-# PHP-Warnungen und Fehler ausblenden
+/*
+ * Fehler-Anzeigelevel Einstellungen.
+ */
 error_reporting(0);
-# PHP-Notizen ausblenden
+error_reporting(E_ALL ^ E_NOTICE);
 error_reporting(E_ALL);
-//error_reporting(E_ALL ^ E_NOTICE);
-
 
 /*
  * Login Konfiguration
@@ -58,7 +69,7 @@ const NAME_DIR_STYLES        = 'css';
 const NAME_DIR_FONTS         = 'fonts';
 const NAME_DIR_JS            = 'js'; 
 const NAME_DIR_DATABASE      = 'db';
-const NAME_DIR_HELPERS       = 'hilfsdateien';
+const NAME_DIR_HELPERS       = 'helpers';
   
 
 /* dateien */    
