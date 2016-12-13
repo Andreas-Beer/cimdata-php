@@ -96,24 +96,24 @@ if (!empty($_POST['button'])) {
 
   // Falsche (keine) Filmgesellschaft
   if (empty($company_id)) {
-    $msgErrors['fc'] = MSG_FILMFORM_MISSING_COMPANY;
+    $msgErrors['fc'] = MSG_FILMFORM_ERR_MISSING_COMPANY;
   }
 
   // Falsches (keins) Genre
   if (empty($genre_id)) {
-    $msgErrors['fg'] = MSG_FILMFORM_MISSING_GENRE;
+    $msgErrors['fg'] = MSG_FILMFORM_ERR_MISSING_GENRE;
   }
 
   // Falscher Titel
   if (empty($title)) {
-    $msgErrors['ft'] = MSG_FILMFORM_MISSING_TITLE;
+    $msgErrors['ft'] = MSG_FILMFORM_ERR_MISSING_TITLE;
   }
 
   // Falsches Datum
   if (empty($date)) {
-    $msgErrors['dt'] = MSG_FILMFORM_MISSING_DATE;
+    $msgErrors['dt'] = MSG_FILMFORM_ERR_MISSING_DATE;
   } elseif (date_parse(Date($date))['error_count'] > 0) {
-    $msgErrors['dt'] = MSG_FILMFORM_WRONG_DATE;
+    $msgErrors['dt'] = MSG_FILMFORM_ERR_WRONG_DATE;
   }
 }
 
@@ -251,19 +251,22 @@ $companies = getDBData(sql_select_companies());
             <!-- Erscheinungsdatum -->
             <div class="form-group has-feedback <?php
             if (isset($msgErrors['dt'])) { echo 'has-error'; } ?>">
+              
               <label class="form_label" for="datum"><?php echo TEXT_FILMEDIT_GUI_DATE; ?></label>
               <div class="input-group">
-                <div class="input-group-addon"><span class="fa fa-calendar" aria-hidden="true"></span></div>
+                <div class="input-group-addon"><?php echo TEXT_FILMEDIT_ICON_DATE ?></div>
                 <input class="form_input form-control" type="date" name="dt" id="datum" maxlength="10" value="<?php echo $date; ?>">
               </div>
+              
               <?php echo getError('dt'); ?>
+              
             </div>
 
             <!-- Dauer in Minuten -->
             <div class="form-group">
               <label class="form_label" for="dauer"><?php echo TEXT_FILMEDIT_GUI_DURATION; ?></label>
               <div class="input-group">
-                <div class="input-group-addon"><span class="fa fa-clock-o" aria-hidden="true"></span></div>
+                <div class="input-group-addon"><?php echo TEXT_FIMLEDIT_ICON_DURATION; ?></div>
                 <input class="form_input form-control" type="number"  min="1" max="9999" step="0.1" name="du" id="dauer" maxlength="3" value="<?php echo $duration; ?>">
                 <div class="input-group-addon">min</div>
               </div>
@@ -273,7 +276,7 @@ $companies = getDBData(sql_select_companies());
             <div class="form-group">
               <label class="form_label" for="preis"><?php echo TEXT_FILMEDIT_GUI_PRICE; ?></label>
               <div class="input-group">
-                <div class="input-group-addon"><?php echo TEXT_GLOBAL_GUI_CURRENCY; ?></div>
+                <div class="input-group-addon"><?php echo TEXT_FILMEDIT_ICON_CURRENCY; ?></div>
                 <input class="form_input form-control" type="number" min="0" max="100" step="0.01" pattern="[0-9]+([\,|\.][0-9]+)?" name="pr" id="preis" maxlength="10" value="<?php echo $price; ?>">
               </div>
             </div>
@@ -282,7 +285,9 @@ $companies = getDBData(sql_select_companies());
             <div class="form-group">
               <label class="form_label" for="img"><?php echo TEXT_FILMEDIT_GUI_IMAGE; ?></label>
               <div class="input-group">
-                <div class="input-group-addon"><span class="fa fa-file-image-o" aria-hidden="true"></span></div>
+                <div class="input-group-addon">
+                  <?php echo TEXT_FILMEDIT_ICON_IMAGE ?>
+                </div>
                 <input class="form_input form-control" type="text" name="img" id="bild" maxlength="150" value="<?php echo $image; ?>">
               </div>
             </div>

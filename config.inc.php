@@ -8,7 +8,6 @@
 # Stand: 23.11.2016
 # Version: Basisversion für Schulungszwecke
 
-
 /*
  * Helper Functions
  */
@@ -222,89 +221,4 @@ const PATH_DIR_DEFAULT_IMAGE   = PATH_DIR_IMAGE        . NAME_FILE_DEFAULT_IMAGE
  */
 const SIZE_MAX_IMAGE = 50000; //kb
 
-
-/*
- * Nachrichten / Meldungen
- * 
- * Prefix:
- *  MSG ('für alle Meldungen')
- */
-
-/*
- * Fehlermeldungen für das Film Formular
- */
-const MSG_FILMFORM_MISSING_COMPANY    = 'Bitte eine Filmgesellschaft auswählen.';
-const MSG_FILMFORM_MISSING_GENRE      = 'Bitte ein Filmgenre auswählen.';
-const MSG_FILMFORM_MISSING_TITLE      = 'Bitte einen Filmtitel angeben.';
-const MSG_FILMFORM_MISSING_DATE       = 'Bitte ein Erscheinungsdatum angeben.';
-const MSG_FILMFORM_WRONG_DATE         = 'Bitte ein korrektes Erscheinungsdatum angeben.';
-
-/*
- * Fehlermeldungen für den Image upload
- */
-define('MSG_IMAGEUPLOAD_ERR_INI_SIZE' , 'Die Hochgeladene Datei war zu Groß (SERVER). es sind maximal ' . ini_get('upload_max_filesize') . ' bytes erlaubt.');
-const MSG_IMAGEUPLOAD_ERR_FORM_SIZE   = 'Die Hochgeladene Datei war zu Groß (HTML). es sind maximal ' . SIZE_MAX_IMAGE . ' bytes erlaubt.';
-const MSG_IMAGEUPLOAD_ERR_PARTIAL     = 'Die Datei wurde Leider nur Teilweise Hochgeladen!';
-const MSG_IMAGEUPLOAD_ERR_NO_FILE     = 'Es wurde keine Datei ausgewählt';
-const MSG_IMAGEUPLOAD_ERR_CANT_WRITE  = 'Die Datei konnt nicht gespeichert werden.';
-const MSG_IMAGEUPLOAD_ERR_EXTENSION   = 'Die Datei hatte den falschen Typ';
-const MSG_IMAGEUPLOAD_ERR_UNDOC       = 'Ein unbekannter Fehler ist aufgetreten';
-
-/*
- * Text z.B. auf Buttons und Überschriften.
- * 
- * Schema:
- * TEXT_<Seite>_<Elementtyp>_<Elementbezeichung>[_<Elementeigenschaft>]
- */
-
-// Global
-const TEXT_GLOBAL_GUI_CURRENCY             = '€';
-const TEXT_GLOBAL_GUI_REQUIRED             = '* ';
-  
-// Main  
-const TEXT_MAIN_GUI_HEADLINE_DEFAULT       = 'Die 10 neusten Filme';
-const TEXT_MAIN_GUI_HEADLINE_COMPANY       = 'Filme der Filmgesellschaft: %s';
-const TEXT_MAIN_GUI_HEADLINE_GENRE         = 'Filme des Genres: %s';
-const TEXT_MAIN_GUI_FILM_PRICE             = 'Preis: %s&nbsp;' . TEXT_GLOBAL_GUI_CURRENCY;
-const TEXT_MAIN_GUI_SEARCH_PLACEHOLDER     = 'Suchen&hellip;';
-const TEXT_MAIN_GUI_MSG_FILMFOUND          = '%d Filme Gefunden';
-  
-// Adminbar  
-const TEXT_ADMINBAR_GUI_HEADLINE           = 'Adminbar';
-const TEXT_ADMINBAR_BUTTON_TODASHBOARD     = 'Dashboard';
-const TEXT_ADMINBAR_BUTTON_TOMAIN          = 'Zur Webseite';
-const TEXT_ADMINBAR_BUTTON_LOGOUT          = 'Logout';
-  
-// Daschboard  
-const TEXT_DASHBOARD_GUI_HEADLINE          = 'Alle Filme';
-const TEXT_DASHBOARD_GUI_THEAD_TITLE       = 'Titel';
-const TEXT_DASHBOARD_GUI_THEAD_GENRE       = 'Genre';
-const TEXT_DASHBOARD_GUI_THEAD_COMPANY     = 'Filmgesellschaft';
-const TEXT_DASHBOARD_GUI_THEAD_PRICE       = 'Preis' . ' ' . TEXT_GLOBAL_GUI_CURRENCY;
-const TEXT_DASHBOARD_GUI_THEAD_VISIBLE     = 'Sichtbar';
-const TEXT_DASHBOARD_GUI_THEAD_IMAGE       = 'Bild';
-const TEXT_DASHBOARD_BUTTON_FILM_NEW       = 'Film hinzufügen';
-const TEXT_DASHBOARD_BUTTON_FILM_EDIT      = 'Film Bearbeiten';
-const TEXT_DASHBOARD_BUTTON_IMAGE_NEW      = 'NEU Anlegen';
-const TEXT_DASHBOARD_BUTTON_IMAGE_EDIT     = 'Ändern';
-const TEXT_DASHBOARD_BUTTON_DELETE_FILM    = 'Film Löschen';
-  
-// FilmEdit  
-const TEXT_FILMEDIT_GUI_HEADLINE_NEW       = 'Neuen Film Anlegen';
-const TEXT_FILMEDIT_GUI_HEADLINE_UPDATE    = 'Filmtitel bearbeiten<br><small>%s</small>';
-const TEXT_FILMEDIT_GUI_DROPDOWN_DEFAULT   = 'Bitte Auswählen';
-const TEXT_FILMEDIT_GUI_COMPANIES          = TEXT_GLOBAL_GUI_REQUIRED . 'Filmgesellschaften';
-const TEXT_FILMEDIT_GUI_GENRES             = TEXT_GLOBAL_GUI_REQUIRED . 'Genres';
-const TEXT_FILMEDIT_GUI_TITLE              = TEXT_GLOBAL_GUI_REQUIRED . 'Filmtitel';
-const TEXT_FILMEDIT_GUI_DATE               = TEXT_GLOBAL_GUI_REQUIRED . 'Erscheinungsdatum';
-const TEXT_FILMEDIT_GUI_DESCRIPTION        = 'Beschreibung';
-const TEXT_FILMEDIT_GUI_DURATION           = 'Dauer';
-const TEXT_FILMEDIT_GUI_PRICE              = 'Preis';
-const TEXT_FILMEDIT_GUI_IMAGE              = 'Bild';
-const TEXT_FILMEDIT_GUI_VISIBILITY         = 'Freigegeben (Für die Kunden sichtbar)';
-const TEXT_FILMEDIT_BUTTON_SAVE            = 'Speichern';
-const TEXT_FILMEDIT_BUTTON_CANCEL          = 'Abbrechen';
-const TEXT_FILMEDIT_BUTTON_UPDATE          = 'Aktualisieren';
-
-// ImageEdit
-const TEXT_IMAGEEDIT_GUI_HEADLINE          = 'Bild bearbeiten';
+include_once PATH_DIR_ROOT . 'incl/config/text_icons_DE-de.php';

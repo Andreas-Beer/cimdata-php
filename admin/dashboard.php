@@ -10,23 +10,12 @@
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
 
-?>
-<?php
-
 include_once '../config.inc.php';
 
 include_once PATH_FILE_DBCONNECT;
 include_once PATH_FILE_FUNCTIONS;
 include_once PATH_FILE_LOGINVERIFY;
 
-?>
-<?php
-
-$link_delete   = PATH_FILE_FILMDELETE;
-$link_filmEdit = PATH_FILE_FILMEDIT;
-$link_image    = PATH_FILE_FILMIMAGE;
-$button_edi    = TEXT_DASHBOARD_BUTTON_FILM_EDIT;
-$button_del    = TEXT_DASHBOARD_BUTTON_DELETE_FILM;
 
 $films_all     = getDBData(sql_select_films('id'));
 
@@ -48,7 +37,11 @@ $films_all     = getDBData(sql_select_films('id'));
         <h1><?php echo TEXT_DASHBOARD_GUI_HEADLINE; ?></h1>
       </div>
 
-      <h2><a class="btn btn-primary" href="<?php echo $link_filmEdit; ?>?f=neu"><?php echo TEXT_DASHBOARD_BUTTON_FILM_NEW; ?></a></h2>
+      <h2>
+        <a class="btn btn-primary" href="<?php echo PATH_FILE_FILMEDIT; ?>?f=neu">
+          <?php echo TEXT_GLOBAL_ICON_ADD . ' ' . TEXT_DASHBOARD_BUTTON_FILM_NEW; ?>
+        </a>
+      </h2>
 
       <table class="table table-condensed table-striped table-responsive">
         <tr>

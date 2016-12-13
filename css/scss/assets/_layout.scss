@@ -10,10 +10,10 @@ body {
 
 main {
   margin-top: 30px;
-  
+
   .sidebar {
     text-align: center;
-    
+
     a {
       color: black;
     }
@@ -26,11 +26,27 @@ footer {
   position: absolute;
   width: 100%;
   background: $own_navbar-gradient;
-  
+
   .navbar {
     height: 20px;
     padding-top: 10px;
     color: $own_nav_text;
     border: none;
   }
+}
+
+// ICONS
+.btn {
+
+  .glyphicon {
+    font-size: 1.2em;
+    top: 4px;
+    right: 10px;
+  }
+
+  .fa {
+    font-size: 1.2em;
+    padding-right: 10px;
+  }
+
 }

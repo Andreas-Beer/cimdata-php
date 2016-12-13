@@ -3,17 +3,7 @@ $own_main_highlight        : #ffc042;
 $own_main_highlight_lighter: lighten($own_main_highlight, 15);
 $own_main_highlight_darker : darken($own_main_highlight, 15);
 
-
-// BOOTSTRAP SIZE
-$bs_size_xs: 767px;
-$bs_size_sm: 768px;
-$bs_size_md: 992px;
-$bs_size_lg: 1200px;
-
-
 $own_nav_text: #cccccc;
-
-
 
 // nav
 $own_nav-bg-gradient: linear-gradient(to bottom, $own_main_highlight_lighter 0%, $own_main_highlight 50%, $own_main_highlight_darker 100%);
@@ -25,4 +15,11 @@ $own_navbar-gradient: linear-gradient(to bottom, #75695b 0%, #3a342d 50%, #24201
 $own_well-gardient: linear-gradient(to bottom, #fefefe 0%, #f8f8f8 100%);
 
 // film-list
-$own_admin_list_header_bg: linear-gradient(to bottom, #f8f8f8 0%, #d7dfe0 100%);;
+$own_admin_list_header_bg: linear-gradient(to bottom, #f8f8f8 0%, #d7dfe0 100%);
+
+
+// BOOTSTRAP SIZE
+$bs_size_xs: 767px;
+$bs_size_sm: 768px;
+$bs_size_md: 992px;
+$bs_size_lg: 1200px;

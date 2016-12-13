@@ -10,60 +10,32 @@
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
 
-?>
-<?php
-
 include_once '../config.inc.php';
 
 include_once PATH_FILE_LOGINVERIFY;
 include_once PATH_FILE_DBCONNECT;
 include_once PATH_FILE_FUNCTIONS;
 
-?>
-<?php
-
-/*
- * Die Übergebene ID
+/**
+ * Hilfs-Funktionen
  */
-$id   = !empty($_GET['f']) ? $_GET['f'] : false;
-$data = NULL;
-
-if ($id) {
-  // Wenn eine Id übergeben wurde, die Daten zu dem Film abfragen.
-  $handle_film = mysqli_query($conn, sql_select_movieByMovieId($id));
-  $data        = mysqli_fetch_assoc($handle_film);
-}
-/*
- * Wenn keine ID übergeben wurde,
- * Oder eine nicht existente,
- * 
- * zurück zur letzten, bzw. der index Seite.
- */
-if (!$id || $data === NULL) {
+function locationBack() {
   $back = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH_FILE_DASHBOARD;
   header('Location: ' . $back);
 }
-
-/*
- * Bild Hochladen
- */
-
-/*
- * Funktionen
- */
 
 //Testen ob ein Fehler aufgetreten ist
 function getError ($error) {
 
   switch ($error) {
     case UPLOAD_ERR_OK         : return false;
-    case UPLOAD_ERR_INI_SIZE   : return MSG_IMAGEUPLOAD_ERR_INI_SIZE;
-    case UPLOAD_ERR_FORM_SIZE  : return MSG_IMAGEUPLOAD_ERR_FORM_SIZE;
+    case UPLOAD_ERR_INI_SIZE   : return MSG_IMAGEUPLOAD_ERR_TOBIG_INI;
+    case UPLOAD_ERR_FORM_SIZE  : return MSG_IMAGEUPLOAD_ERR_TOBIG_FORM;
     case UPLOAD_ERR_PARTIAL    : return MSG_IMAGEUPLOAD_ERR_PARTIAL;
-    case UPLOAD_ERR_NO_FILE    : return MSG_IMAGEUPLOAD_ERR_NO_FILE;
-    case UPLOAD_ERR_CANT_WRITE : return MSG_IMAGEUPLOAD_ERR_CANT_WRITE;
-    case UPLOAD_ERR_EXTENSION  : return MSG_IMAGEUPLOAD_ERR_EXTENSION;
-    default                    : return MSG_IMAGEUPLOAD_ERR_UNDOC;
+    case UPLOAD_ERR_NO_FILE    : return MSG_IMAGEUPLOAD_ERR_MISSING_FILE;
+    case UPLOAD_ERR_CANT_WRITE : return MSG_IMAGEUPLOAD_ERR_RESTRICT_WRITE;
+    case UPLOAD_ERR_EXTENSION  : return MSG_IMAGEUPLOAD_ERR_WRONG_EXTENSION;
+    default                    : return MSG_IMAGEUPLOAD_ERR_OTHER;
   }
 }
 
@@ -75,14 +47,14 @@ function checkFileSize ($fileSize) {
 
     echo $fileSize;
 
-    return MSG_IMAGEUPLOAD_ERR_FORM_SIZE;
+    return MSG_IMAGEUPLOAD_ERR_TOBIG_FORM;
   }
 }
 
 function checkFileType ($type, $types = ['jpeg', 'jpg', 'pjpeg']) {
 
   if (!$type) {
-    return MSG_IMAGEUPLOAD_ERR_EXTENSION;
+    return MSG_IMAGEUPLOAD_ERR_WRONG_EXTENSION;
   }
 
   for ($i = 0; $i < count($types); $i++) {
@@ -91,8 +63,28 @@ function checkFileType ($type, $types = ['jpeg', 'jpg', 'pjpeg']) {
     }
   }
 
-  return MSG_IMAGEUPLOAD_ERR_EXTENSION . "($type)";
+  return MSG_IMAGEUPLOAD_ERR_WRONG_EXTENSION . "($type)";
 }
+
+
+/*
+ * Die Übergebene ID
+ */
+$id   = !empty($_GET['f']) ? $_GET['f'] : false;
+$data = getDBData(sql_select_movieByMovieId($id));
+
+// Wenn keine id oder eine flasche übergeben wurde
+if(!$id || !$data) {
+  locationBack();
+}
+
+// der datensatz liegt an erster Stele im Array
+$data = $data[0];
+
+
+/*
+ * Bild Hochladen
+ */
 
 /*
  * Auswertung
@@ -148,7 +140,7 @@ if ($uploaded_file !== false && !$has_error) {
 <!DOCTYPE html>
 <html lang="de">
   <head>
-
+    
     <meta charset="utf-8">
     <title><?php echo TEXT_IMAGEEDIT_GUI_HEADLINE ?> (<?php echo $data['Titel']?>)</title>
     <link rel="stylesheet" type="text/css" href="<?php echo PATH_FILE_STYLE_MAIN;?>">  
@@ -172,7 +164,7 @@ if ($uploaded_file !== false && !$has_error) {
 
       <div class="well">
 
-        <img src="<?php echo testImage($data['Bild'], PATH_DIR_IMAGE);?>" />
+        <img class="img-responsive img-thumbnail" src="<?php echo testImage($data['Bild'], PATH_DIR_IMAGE);?>" />
         <p><?php echo $data['Bild']?></p>
 
         <form method="post" action="" enctype="multipart/form-data">
@@ -180,8 +172,13 @@ if ($uploaded_file !== false && !$has_error) {
           <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo SIZE_MAX_IMAGE;?>" />
           <input name="uploaded_file" type="file">
 
-          <button class="btn btn-info">Bild Speichern</button>
-          <a href="<?php echo PATH_FILE_DASHBOARD;?>" class="btn btn-warning">Abbrechen</a>
+          <button class="btn btn-info">
+            <?php echo TEXT_IMAGEEDIT_BUTTON_SAVE ?>
+          </button>
+          
+          <a href="<?php echo PATH_FILE_DASHBOARD;?>" class="btn btn-warning pull-right">
+            <?php echo TEXT_IMAGEEDIT_BUTTON_CANCEL ?>
+          </a>
 
         </form>
 

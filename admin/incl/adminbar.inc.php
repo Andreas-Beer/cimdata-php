@@ -24,7 +24,7 @@ function getPage() {
 
 <?php
 //session starten
-session_start();
+@session_start();
 
 // defaultwert setzen...
 $user = '';

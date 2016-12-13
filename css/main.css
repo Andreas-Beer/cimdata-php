@@ -8150,6 +8150,14 @@ footer .navbar {
   color: #cccccc;
   border: none; }
 
+.btn .glyphicon {
+  font-size: 1.2em;
+  top: 4px;
+  right: 10px; }
+.btn .fa {
+  font-size: 1.2em;
+  padding-right: 10px; }
+
 input.form-control:focus, input.form-control:active, textArea.form-control:focus, textArea.form-control:active, select.form-control:focus, select.form-control:active {
   box-shadow: none;
   outline: none; }
@@ -8263,6 +8271,11 @@ aside.links {
   background: linear-gradient(to bottom, #f8f8f8 0%, #d7dfe0 100%); }
 .film-list table th {
   text-align: center; }
+.film-list .btn .glyphicon {
+  top: 2px;
+  right: 2px; }
+.film-list .btn .fa {
+  padding-right: 4px; }
 
 .adminbar {
   border-bottom: 2px solid grey; }
