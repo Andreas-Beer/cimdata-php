@@ -11,21 +11,86 @@
 /*
  * Helper Functions
  */
-function getRelativePath () {
-    
-    $root_dir = array_pop(array_unique(explode('/', str_replace(['/', '\\'], '/', ROOT))));
-        
-    $curr_script_dir   = dirname(str_replace(['/', '\\'], '/', $_SERVER['SCRIPT_NAME']));
-    $relativePath_file = explode($root_dir, $curr_script_dir);
-    $slashes           = explode('/', array_pop($relativePath_file));
-          
-    $relativePath_dir = '';
 
-    for ($i = 0; $i < count($slashes) - 1; $i++) {
-        $relativePath_dir .= DIRECTORY_SEPARATOR . '..';
-    }
+/**
+ * 
+ * @param  string $URL
+ * @return string
+ */
+function extractLastPart($URL) {
+  
+  // Spalte den Pfad in seine Bestandteile auf
+  $path_parts = array_unique(explode('/', $URL));
+  
+  // Lösche Leere Einträge
+  $path_parts = array_diff($path_parts, array(''));
+
+  // extrahiere das letzte Teil
+  $dir = array_pop($path_parts);
+
+  return $dir;
+}
+
+/**
+ * Gleiche die arten der Trennzeichen des Pfades an
+ * 
+ * @param  string $dir Die URL, die angeglichen werden soll
+ * @return string Die angeglichene URL
+ */
+function levelingDirSeperators($dir) {
+  return str_replace('\\', '/', $dir);
+}
+
+/**
+ * Ermittelt den Relativen Pfad zu der aktuellen 
+ * 
+ * @param  string $current_url
+ * @return string Der Relative Pfad vom Root zur aktuellen Datei
+ */
+function calcRelativeDirPath ($current_url) {
+  
+  // gleiche bei den Beiden Pfade die Trennzeichen an 
+  $curr_dir_leveled = levelingDirSeperators($current_url);
+  $root_dir_leveled = levelingDirSeperators(ROOT);
+  
+  $curr_dir     = dirname($curr_dir_leveled);
+  $root_dir_end = extractLastPart($root_dir_leveled);
     
-    return $relativePath_dir;
+  // Teile den Aktuellen Pfad an dem Ende des Root Pfades
+  $path_parts = explode($root_dir_end, $curr_dir);
+  
+  // Der relative Pfad ist der letzte Teil
+  $rel_path = array_pop($path_parts);
+    
+  return $rel_path;
+}
+
+/**
+ * Ermittelt den relativen Pfad zum Root Verzeichneis der aktuellen url aus.
+ * 
+ * @param  string $current_url Die aktuelle URL
+ * @return string Der Relative Pfad zum Root Verzeichnis
+ */
+function calcRelativeRootPath($current_url) {
+    
+  // Ermittle den Relativen Pfad zu der Aktuellen Datei
+  $rel_path = calcRelativeDirPath($current_url);
+  
+  // Teile den Pfad in seine Ordner
+  $rel_backPath_parts = explode('/', $rel_path);
+  
+  // entferne die Leeren Einträge
+  $rel_path_dirs_cleaned = array_diff($rel_backPath_parts, array(''));
+
+  // Ersetze jeden Eintrag durch \..
+  $rel_backPath_parts = array_map(
+    function ($e) { return DIRECTORY_SEPARATOR . '..'; },
+    $rel_path_dirs_cleaned);
+  
+  // implodiere das array um den Pfad, zurück zum root zu erhalten
+  $rel_backPath = implode('', $rel_backPath_parts);
+
+  return $rel_backPath;
 }
 
 ?>
@@ -86,12 +151,12 @@ const NAME_FILE_FUNCTIONS    = 'functions.inc.php';
  */
 
 // ROOT Ordner der Seite. Muss angepasst werden.
-const ROOT = 'http://localhost/php_kurs/filmwebsite/phpmySQLI_filmwebseite_neu/';
+const ROOT = 'http://localhost/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-filmwebseite/';
 
 /*
  *  Seiten und Ordner absolut von Root an
  */
-define('PATH_DIR_ROOT'           , '.' . getRelativePath() . DIRECTORY_SEPARATOR); // muss angepasst werden.
+define('PATH_DIR_ROOT'           , '.' . calcRelativeRootPath($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR); // muss angepasst werden.
    
 /* Ordner */   
 const PATH_DIR_ADMIN             = PATH_DIR_ROOT  . NAME_DIR_ADMIN   . DIRECTORY_SEPARATOR;

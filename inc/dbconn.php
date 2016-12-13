@@ -19,7 +19,7 @@ error_reporting( E_ALL ^ E_NOTICE );
 
 // Angaben zur Datenbankverbindung
 const DB_HOST = "localhost";
-const DB_USER = "root";
+const DB_USER = "cimdata";
 const DB_PASS = "cimdata2016";
 const DB_BASE = "filmwebsite";
 
