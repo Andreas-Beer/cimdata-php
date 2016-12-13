@@ -8,14 +8,10 @@
 # Email: andreasbeer@gmx.com
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
-?>
 
-<?php
 include_once './config.inc.php';
 require_once PATH_FILE_DBCONNECT;
-?>
 
-<?php
 
 function getData() {
 

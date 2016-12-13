@@ -9,9 +9,8 @@
 # Email: andreasbeer@gmx.com
 # Stand: 19.09.2016
 # Version: Basisversion für Schulungszwecke
-?>
 
-<?php
+
 function reorderTitle($title) {
     $split = explode(', ', $title);
     

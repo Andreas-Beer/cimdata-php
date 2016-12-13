@@ -1,7 +1,14 @@
 // COLORS
-$own_main_highlight         : #ffc042;
-$own_main_highlight_lighter : lighten($own_main_highlight, 15);
-$own_main_highlight_darker  : darken($own_main_highlight, 15);
+$own_main_highlight        : #ffc042;
+$own_main_highlight_lighter: lighten($own_main_highlight, 15);
+$own_main_highlight_darker : darken($own_main_highlight, 15);
+
+
+// BOOTSTRAP SIZE
+$bs_size_xs: 767px;
+$bs_size_sm: 768px;
+$bs_size_md: 992px;
+$bs_size_lg: 1200px;
 
 
 $own_nav_text: #cccccc;

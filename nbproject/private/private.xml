@@ -9,7 +9,7 @@
         </group>
         <group name="Cimdata_phpMySQL_I_filmweseite">
             <file>file:/E:/xampp/htdocs/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-filmwebseite/config.inc.php</file>
-            <file>file:/E:/xampp/htdocs/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-filmwebseite/incl/db/dbconn.incl.php</file>
+            <file>file:/E:/xampp/htdocs/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-filmwebseite/incl/helpers/functions.inc.php</file>
             <file>file:/E:/xampp/htdocs/Cimdata_dozent/PHP_MySQL_I/_Material/cimdata-php-filmwebseite/index.php</file>
         </group>
     </open-files>

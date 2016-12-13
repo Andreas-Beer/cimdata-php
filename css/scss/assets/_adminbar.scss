@@ -1,0 +1,33 @@
+.adminbar {
+  border-bottom: 2px solid grey;
+
+  .input-group-addon{
+    width: 40px; 
+  }
+
+  .btn{
+    width: 110px; 
+  }
+}
+
+@media screen and (max-width : $bs_size_xs){
+
+  .adminbar {
+
+    .input-group{
+      width: 74%; 
+    }
+
+    .navbar-form {
+      position: relative;
+    }
+
+    .login{
+      position: absolute;
+      right: 15px;
+      top: 27px;
+      width: 22%; 
+    }
+  }
+
+}

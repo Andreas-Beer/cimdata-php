@@ -91,34 +91,40 @@ $page = getPage();
 
         <!-- benutzer -->
         <div class="input-group">
-            <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-            <input class="form-control" name="user" maxlength="20" type="text" placeholder="Benutzer">
-          </div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+          <input class="form-control" name="user" maxlength="20" type="text" placeholder="Benutzer">
+        </div>
 
-          <!-- password -->
-          <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-unlock-alt" aria-hidden="true"></span></div>
-            <input class="form-control" name="pass" maxlength="30" type="password" placeholder="Password">
-          </div>
+        <!-- password -->
+        <div class="input-group">
+          <div class="input-group-addon"><span class="fa fa-unlock-alt" aria-hidden="true"></span></div>
+          <input class="form-control" name="pass" maxlength="30" type="password" placeholder="Password">
+        </div>
 
-          <!-- Login button -->
-          <button type="submit" name="login" class="btn btn-default">Login</button>
+        <!-- Login button -->
+        <button type="submit" name="login" class="login btn btn-default">Login</button>
 
 
-          <!-- angemeldet -->
-        <?php else:?>
+        <!-- angemeldet -->
+      <?php else: ?>
 
-          <?php if ($page !== 'dashboard'):?>
-            <a class="btn btn-default" href="<?php echo PATH_FILE_DASHBOARD;?>"><?php echo TEXT_ADMINBAR_BUTTON_TODASHBOARD; ?></a>
-          <?php endif;?>
+        <?php if ($page !== 'dashboard'): ?>
+          <a class="btn btn-default" href="<?php echo PATH_FILE_DASHBOARD; ?>">
+            <span class="text-primary"><?php echo TEXT_ADMINBAR_BUTTON_TODASHBOARD; ?></span>
+          </a>
+        <?php endif; ?>
 
-          <?php if ($page !== 'index'):?>
-            <a class="btn btn-default" href="<?php echo PATH_FILE_MAIN;?>"><?php echo TEXT_ADMINBAR_BUTTON_TOMAIN; ?></a>
-          <?php endif;?>
+        <?php if ($page !== 'index'): ?>
+          <a class="btn btn-default" href="<?php echo PATH_FILE_MAIN; ?>">
+            <?php echo TEXT_ADMINBAR_BUTTON_TOMAIN; ?>
+          </a>
+        <?php endif; ?>
 
-          <button class="btn btn-default navbar-right" type="submit" name="logout" value="logout"><?php echo TEXT_ADMINBAR_BUTTON_LOGOUT; ?></button>
+        <button class="btn btn-default navbar-right" type="submit" name="logout" value="logout">
+          <span class="text-danger"><?php echo TEXT_ADMINBAR_BUTTON_LOGOUT; ?></span>
+        </button>
 
-        <?php endif;?>
+      <?php endif; ?>
 
     </form>
   </div>
