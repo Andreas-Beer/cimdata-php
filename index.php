@@ -22,7 +22,12 @@ function getData() {
 
   if (!empty($_GET['g']) && is_numeric($_GET['g'])) {
     $id        = $_GET['g'];
-    $title_arr = getDBData(sql_select_genreByID($id));
+    $title_arr = getDBData(sql_select_genreByID($id)); 
+    
+    if (!$title_arr)  {
+      header('Location:' . $_SERVER['SCRIPT_NAME']);
+    }
+    
     $category  = $title_arr[0]['name'];
 
     $data['type']  = 'g';
@@ -34,6 +39,11 @@ function getData() {
   elseif (!empty($_GET['c']) && is_numeric($_GET['c'])) {
     $id        = $_GET['c'];
     $title_arr = getDBData(sql_select_companyByID($id));
+    
+    if (!$title_arr)  {
+      header('Location:' . $_SERVER['SCRIPT_NAME']);
+    }
+    
     $category  = $title_arr[0]['name'];
 
     $data['type']  = 'c';
