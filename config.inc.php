@@ -47,11 +47,11 @@ function levelingDirSeperators($dir) {
  * @param  string $current_url
  * @return string Der Relative Pfad vom Root zur aktuellen Datei
  */
-function calcRelativeDirPath ($current_url) {
+function calcRelativeDirPath ($current_url, $root) {
   
   // gleiche bei den Beiden Pfade die Trennzeichen an 
   $curr_dir_leveled = levelingDirSeperators($current_url);
-  $root_dir_leveled = levelingDirSeperators(ROOT);
+  $root_dir_leveled = levelingDirSeperators($root);
   
   $curr_dir     = dirname($curr_dir_leveled);
   $root_dir_end = extractLastPart($root_dir_leveled);
@@ -71,10 +71,10 @@ function calcRelativeDirPath ($current_url) {
  * @param  string $current_url Die aktuelle URL
  * @return string Der Relative Pfad zum Root Verzeichnis
  */
-function calcRelativeRootPath($current_url) {
+function calcRelativeRootPath($current_url, $root) {
     
   // Ermittle den Relativen Pfad zu der Aktuellen Datei
-  $rel_path = calcRelativeDirPath($current_url);
+  $rel_path = calcRelativeDirPath($current_url, $root);
   
   // Teile den Pfad in seine Ordner
   $rel_backPath_parts = explode('/', $rel_path);
@@ -176,7 +176,7 @@ const ROOT = 'filmwebseite/';
 /*
  *  Seiten und Ordner absolut von Root an
  */
-define('PATH_DIR_ROOT'         , '.' . calcRelativeRootPath($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR); 
+define('PATH_DIR_ROOT'         , '.' . calcRelativeRootPath($_SERVER['SCRIPT_NAME'], ROOT) . DIRECTORY_SEPARATOR); 
       
 /* Ordner */      
 const PATH_DIR_ADMIN           = PATH_DIR_ROOT  . NAME_DIR_ADMIN    . DIRECTORY_SEPARATOR; 

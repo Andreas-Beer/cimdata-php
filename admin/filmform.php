@@ -68,9 +68,9 @@ $visible = getPostValue('vi', '0');
 
 if ($id) {
 
-  $handler_film = mysqli_query($conn, sql_select_movieByMovieId($id));
-  $data = mysqli_fetch_assoc($handler_film);
-
+  $data = getDBData(sql_select_movieByMovieId($id));
+  $data = $data[0];
+  
   $company_id = $data['Filmgesellschaft_id'];
   $genre_id   = $data['Genre_id'];
   $title      = $data['Titel'];
@@ -81,8 +81,8 @@ if ($id) {
   $image      = $data['Bild'];
   $visible    = $data['Freigabe'];
 
-  $headline   = sprintf(TEXT_FILMEDIT_GUI_HEADLINE_UPDATE, $title);
-  $msg_btn    = TEXT_FILMEDIT_BUTTON_UPDATE;
+  $headline = sprintf(TEXT_FILMEDIT_GUI_HEADLINE_UPDATE, $title);
+  $msg_btn  = TEXT_FILMEDIT_BUTTON_UPDATE;
 }
 
 $msgErrors = array();
@@ -128,19 +128,14 @@ if (empty($msgErrors) && !isset($_GET['f'])) {
 
   // Update (wenn eine FilmID mit übertragen wurde)
   if (!empty($film_id)) {
-
     $date = formatDateToMySql($date);
-
     $sql = sql_update_film($film_id, $genre_id, $company_id, $title, $date, $visible, $duration, $image, $desc, $price);
   }
 
   // Speichern (wenn KEINE FilmID mit übertragen wurde)
   else {
-
     $date = formatDateToMySql($date);
-
-    $sql = sql_insert_newFilm(
-        $genre_id, $company_id, $title, $date, $visible, $duration, $image, $desc, $price);
+    $sql = sql_insert_newFilm($genre_id, $company_id, $title, $date, $visible, $duration, $image, $desc, $price);
   }
 
   /*
