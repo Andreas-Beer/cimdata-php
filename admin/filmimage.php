@@ -134,6 +134,7 @@ if ($uploaded_file !== false && !$has_error) {
 
   header('Location: ' . PATH_FILE_DASHBOARD);
 }
+
 ?>
 
 

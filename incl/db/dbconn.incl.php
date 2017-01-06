@@ -10,12 +10,6 @@
 ?>
 
 <?php
-// Angaben zur Datenbankverbindung
-const DB_HOST = "localhost";
-const DB_USER = "root";
-const DB_PASS = "";
-const DB_BASE = "filmwebsite";
-
 function getDBData ($query) {
   
   // Datenbank Verbindungsversuch
@@ -31,9 +25,9 @@ function getDBData ($query) {
     die("Abfragefehler");
   }
   
-  // Versuch 
+  // Wenn es keine Daten gibt, ein leeres Array zurückgeben. 
   if(!$data = mysqli_fetch_all($result, MYSQLI_ASSOC)) {
-    return False;
+    return array();
   }
    
   return $data;
@@ -65,7 +59,7 @@ const PART_MOVIES_SELECT = "
 
 // selects
 function sql_select_films ($orderBy = 'Titel'){
-    return "
+  return "
     SELECT
         f.id,
         f.Titel,
@@ -95,7 +89,7 @@ function sql_select_companies () {
     ORDER BY Name;";
 }
 
-function sql_select_moviesByCompanyId ($companyId) {
+function sql_select_moviesByCompanyId ($companyId) {  
     return PART_MOVIES_SELECT . "
         WHERE fg.id = $companyId AND f.Freigabe = 1
         ORDER BY f.Titel;";
@@ -209,8 +203,7 @@ function sql_update_film (
     
     $dauerInMinuten = !empty($dauerInMinuten) ? $dauerInMinuten   : 'NULL';
     $preis          = !empty($preis)          ? $preis            : 'NULL';
-
-        
+      
     return "
         UPDATE film
         SET 
@@ -227,7 +220,6 @@ function sql_update_film (
 }
 
 function sql_update_filmImage ($image_name, $id) {
-  
     return "
         UPDATE film
         SET Bild = '$image_name'
@@ -238,7 +230,6 @@ function sql_update_filmImage ($image_name, $id) {
 
 // Deletes
 function sql_delete_filmById ($filmId) {
-  
     return "
         DELETE
         FROM film

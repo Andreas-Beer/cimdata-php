@@ -101,6 +101,14 @@ error_reporting(E_ALL ^ E_NOTICE);
 error_reporting(E_ALL);
 
 /*
+ *  Angaben zur Datenbankverbindung
+ */
+const DB_HOST = "localhost";
+const DB_USER = "root";
+const DB_PASS = "";
+const DB_BASE = "filmwebsite";
+
+/*
  * Login Konfiguration
  */
 const LOGIN_PASS_SALT = 'sods/&$)?-=su3d2nso"§?';
@@ -221,4 +229,4 @@ const PATH_DIR_DEFAULT_IMAGE   = PATH_DIR_IMAGE        . NAME_FILE_DEFAULT_IMAGE
  */
 const SIZE_MAX_IMAGE = 50000; //kb
 
-include_once PATH_DIR_ROOT . 'incl/config/text_icons_DE-de.php';
+include_once PATH_DIR_ROOT . 'incl/config/text_icons_de.php';
